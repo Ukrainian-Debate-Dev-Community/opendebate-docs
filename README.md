@@ -1,15 +1,27 @@
 # opendebate-docs
 
-To install dependencies:
+Documentation site for the OpenDebate platform, built with [VitePress](https://vitepress.dev).
+
+## Getting Started
 
 ```bash
-bun install
+make setup   # install dependencies
+make dev     # start dev server
 ```
 
-To run:
+## Make Targets
 
-```bash
-bun run index.ts
-```
+| Target | Description |
+|---|---|
+| `make setup` | Install dependencies |
+| `make dev` | Start development server |
+| `make build` | Production build |
+| `make test` | Build check |
+| `make test-all` | Build check |
+| `make lint` | Run linter |
+| `make fmt` | Auto-format code |
+| `make clean` | Remove build artifacts and node_modules |
 
-This project was created using `bun init` in bun v1.3.9. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
