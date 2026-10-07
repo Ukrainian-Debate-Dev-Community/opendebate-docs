@@ -1,0 +1,59 @@
+{
+  "id": "jud-room",
+  "title": "room panel — allocation + motion + publish",
+  "column": "judge",
+  "order": 10,
+  "path": "<span class=\"m8b\">M9</span> GET /c/:club/judge/r/:room",
+  "api": [
+    "POST rooms/:id/motion (on publish)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "nadia"
+  },
+  "chrome": {
+    "crumb": "my room R2",
+    "segs": [
+      {
+        "label": "Publish motion",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Allocation (same dnd allocator, scoped to R2)"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "sd og::Anna · Bohdan",
+          "sd oo::Daryna · Olesia",
+          "sd cg::Hlib · Marko",
+          "sd co::Iryna · Sofia"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Motion"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "motion text · <b>infoslide</b> · <b>keyword</b> (three fields, always)",
+        "hidden until Publish — publishing shows it to the room and starts 15:00 prep"
+      ]
+    }
+  ]
+}
