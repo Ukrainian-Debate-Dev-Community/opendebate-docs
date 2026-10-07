@@ -1,0 +1,118 @@
+{
+  "id": "engine-api",
+  "column": "engine-api",
+  "kind": "swagger",
+  "order": 10,
+  "groups": [
+    {
+      "title": "users",
+      "rows": [
+        {
+          "id": "eng-register",
+          "t": "engine: register user",
+          "method": "POST",
+          "path": "/api/users/register",
+          "m8b": false,
+          "desc": "open — {username, password}; cab shadows every person (incl. guests)"
+        }
+      ]
+    },
+    {
+      "title": "organisations (= clubs)",
+      "rows": [
+        {
+          "id": "eng-org",
+          "t": "engine: organisations",
+          "method": "POST",
+          "m8b": false,
+          "path": "/api/organisations · <span class=\"m put\" style=\"width:auto\">PUT</span> /:id",
+          "desc": "admin create {name, owner_id}; owner swap on change-head"
+        }
+      ]
+    },
+    {
+      "title": "events (= sessions)",
+      "rows": [
+        {
+          "id": "eng-event",
+          "t": "engine: events",
+          "method": "POST",
+          "m8b": false,
+          "path": "/api/events · <span class=\"m get\" style=\"width:auto\">GET</span>/<span class=\"m put\" style=\"width:auto\">PUT</span> /:id · <span class=\"m del\" style=\"width:auto\">DEL</span> /:id",
+          "desc": "org — create, read, status (completed on finish), soft archive"
+        },
+        {
+          "id": "eng-part",
+          "t": "engine: participants",
+          "method": "POST",
+          "m8b": false,
+          "path": "/api/events/:id/participants · <span class=\"m del\" style=\"width:auto\">DEL</span> /:pid",
+          "desc": "org — {user_id, role speaker|adjudicator}; DEL 409 once placed in a room"
+        }
+      ]
+    },
+    {
+      "title": "rounds & rooms",
+      "rows": [
+        {
+          "id": "eng-rooms",
+          "t": "engine: rounds and rooms",
+          "method": "POST",
+          "m8b": false,
+          "path": "/api/events/:id/rounds · /api/rounds/:id/rooms · <span class=\"m del\" style=\"width:auto\">DEL</span> /api/rooms/:id",
+          "desc": "org — rooms take {adjudicators:[chair], teams:[{name, participant_ids(1-2), position}]} INLINE TEMP teams; 1 pid = iron (engine duplicates the speaker); DEL pending only → rebuild"
+        },
+        {
+          "id": "eng-rooms-get",
+          "t": "engine: list rooms",
+          "method": "GET",
+          "path": "/api/rounds/:id/rooms",
+          "m8b": false,
+          "desc": "read — rooms + teams + RoomSpeakers + per-room Motion"
+        }
+      ]
+    },
+    {
+      "title": "room actions (play)",
+      "rows": [
+        {
+          "id": "eng-motion",
+          "t": "engine: per-room motion",
+          "method": "POST",
+          "path": "/api/rooms/:id/motion",
+          "m8b": false,
+          "desc": "chair — {motion_text, infoslide?} creates RELEASED motion + rooms.motion_id atomically; cab calls it on PUBLISH (draft+keyword live gateway-side)"
+        },
+        {
+          "id": "eng-scores",
+          "t": "engine: scores",
+          "method": "POST",
+          "path": "/api/rooms/:id/scores",
+          "m8b": false,
+          "desc": "chair — 8 speeches keyed per SLOT (iron's two both count) + teamRankings 1..4"
+        },
+        {
+          "id": "eng-confirm",
+          "t": "engine: confirm/reopen",
+          "method": "PATCH",
+          "path": "/api/rooms/:id/confirm · unconfirm · reopen",
+          "m8b": false,
+          "desc": "org (no chair fall-through on confirm — cab confirms as head after its judge gate)"
+        }
+      ]
+    },
+    {
+      "title": "standings — today (rule 0 source)",
+      "rows": [
+        {
+          "id": "eng-stand",
+          "t": "engine: standings",
+          "method": "GET",
+          "m8b": false,
+          "path": "/api/events/:id/standings[/calculated]/{teams|speakers}",
+          "desc": "read — raw room→rank; calculated: teams Σ(N−rank) · speakers Σ(score×(1+(N−rank)×0.1))"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "jud-ballot",
+  "title": "ballot",
+  "column": "judge",
+  "order": 20,
+  "path": "GET/POST …/rooms/:id/ballot",
+  "api": [
+    "POST scores + PATCH confirm"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "nadia"
+  },
+  "chrome": {
+    "crumb": "ballot — R2",
+    "segs": [
+      {
+        "label": "Submit ballot",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "sd og::OG · who-dropdowns · iron · 78 + 76.5 = <b>154.5 · 1st</b>"
+        ],
+        [
+          "sd oo::OO · 77 + 75.5 = 152.5 · 2nd"
+        ],
+        [
+          "sd cg::CG · 74 + 76 = 150.0 · 3rd"
+        ],
+        [
+          "sd co::CO · iron · 75 + 73.5 = 148.5 · 4th"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "50-100 step 0.5 · ranks derive · tied totals block submit · after ballot: Finish room (gold) · reopen own room while live"
+    }
+  ]
+}

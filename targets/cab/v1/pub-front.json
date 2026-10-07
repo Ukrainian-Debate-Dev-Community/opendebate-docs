@@ -1,0 +1,60 @@
+{
+  "id": "pub-front",
+  "title": "/ front",
+  "column": "public",
+  "order": 10,
+  "path": "GET /",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Clubs",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "debate clubs of Ukraine",
+    "segs": [
+      {
+        "label": "Sign in",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "City",
+        "Members",
+        "Tonight"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "24",
+          "mut::<b>session running</b>, 2 rooms"
+        ],
+        [
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "Lviv",
+          "17",
+          "mut::sign-ups open, Thu 18:30"
+        ],
+        [
+          "<a href=\"#\">Odesa Debates</a>",
+          "Odesa",
+          "11",
+          "mut::quiet"
+        ]
+      ]
+    }
+  ]
+}

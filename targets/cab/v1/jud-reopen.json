@@ -1,0 +1,42 @@
+{
+  "id": "jud-reopen",
+  "title": "reopen own room (while live)",
+  "column": "judge",
+  "order": 40,
+  "path": "PATCH /rooms/:id/reopen (own room, while live)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "nadia"
+  },
+  "chrome": {
+    "crumb": "ballot — R2 · confirmed",
+    "segs": [
+      {
+        "label": "Reopen room",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "ballot submitted 19:12 · <b>confirmed</b>",
+        "reopen puts the ballot back into editing while the session is live"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "after Finish session rooms lock — reopen is gone."
+    }
+  ]
+}

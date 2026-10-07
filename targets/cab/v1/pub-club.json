@@ -1,0 +1,88 @@
+{
+  "id": "pub-club",
+  "title": "/c/:club welcome",
+  "column": "public",
+  "order": 20,
+  "path": "GET /c/:club",
+  "api": [
+    "GET organisations/:id events + rooms"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Club",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "club",
+    "segs": [
+      {
+        "label": "Send request",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "<b>Kyiv Debate Club</b> · Kyiv · Thursdays 18:30 · KNU",
+        "Come debate with us — beginners welcome, English and Ukrainian rounds."
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Recent sessions"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Date",
+        "Name",
+        "Winner"
+      ],
+      "rows": [
+        [
+          "2 Oct",
+          "<a href=\"#\">Thursday practice</a>",
+          "mut::won by Anna &amp; Bohdan"
+        ],
+        [
+          "25 Sep",
+          "<a href=\"#\">Open night</a>",
+          "mut::won by Daryna &amp; Olesia"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Top members"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::1",
+          "Anna Kovalenko",
+          "mut::22 played · 14 wins · 64%"
+        ],
+        [
+          "rk::2",
+          "Bohdan Shevchenko",
+          "mut::19 played · 11 wins · 58%"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "all sessions live on the separate Sessions page; join opens the /c/:club/join form."
+    }
+  ]
+}
