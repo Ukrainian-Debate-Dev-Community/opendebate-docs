@@ -1,0 +1,41 @@
+{
+  "id": "user-join",
+  "title": "/c/:club/join — join request",
+  "column": "user",
+  "order": 4,
+  "path": "GET/POST /c/:club/join",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Club",
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › join",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Join request"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Join Kyiv Debate Club</b>",
+        "<p class=\"mut\">The club head reads your answers before approving.</p>",
+        "About me · Contact → <b>Send request</b>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Reached from the gold \"Request to join\" on the club page; lands in the head's Join requests."
+    }
+  ]
+}

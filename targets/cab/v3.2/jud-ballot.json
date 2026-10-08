@@ -1,0 +1,88 @@
+{
+  "id": "jud-ballot",
+  "title": "ballot — scores, live totals",
+  "column": "judge",
+  "order": 3,
+  "path": "GET/POST /c/:club/s/:sess/rooms/:id/ballot",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › session › ballot R41",
+    "segs": [
+      {
+        "label": "Submit ballot",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Room R41 · ballot"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Side",
+        "Speaker",
+        "Score",
+        "Total",
+        "Rank"
+      ],
+      "rows": [
+        [
+          "code::OG",
+          "Anna / Bohdan",
+          "78 / 76",
+          "num::154",
+          "1st"
+        ],
+        [
+          "code::OO",
+          "Daryna / Olesia",
+          "75 / 74",
+          "num::149",
+          "2nd"
+        ],
+        [
+          "code::CG",
+          "Hlib / Marko",
+          "72 / 73",
+          "num::145",
+          "3rd"
+        ],
+        [
+          "code::CO",
+          "Taras / Taras",
+          "74 / 70",
+          "num::144",
+          "4th"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "All totals distinct — ballot valid. Submit lives in the chrome."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Whole-number scores 50–100. The BallotMath hook sums teams and derives ranks as you type; two equal totals block submit (\"Two teams share a total — BP forbids ties\"). An iron's one speaker fills both slots."
+    }
+  ],
+  "api": [
+    "POST rooms/:id/scores",
+    "PATCH rooms/:id/confirm"
+  ]
+}

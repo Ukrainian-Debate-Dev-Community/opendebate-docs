@@ -1,0 +1,70 @@
+{
+  "id": "par-session-signup",
+  "title": "session — registered, sign-ups open",
+  "column": "participant",
+  "order": 1,
+  "path": "GET /c/:club/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice — sign-ups open",
+    "segs": [
+      {
+        "label": "Cancel my registration",
+        "kind": "quiet"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "good",
+      "html": "You are registered to speak tonight."
+    },
+    {
+      "type": "section",
+      "title": "Session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Thursday practice</b> · 9 Oct 2026"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Who's registered"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Signed up as"
+      ],
+      "rows": [
+        [
+          "Anna",
+          "speaker"
+        ],
+        [
+          "Bohdan",
+          "speaker"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Cancel works only while sign-ups are open. A guest via /l/:code sees the same page."
+    }
+  ]
+}

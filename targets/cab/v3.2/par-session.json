@@ -1,0 +1,83 @@
+{
+  "id": "par-session",
+  "title": "session — running, my room tinted",
+  "column": "participant",
+  "order": 2,
+  "path": "GET /c/:club/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice — running",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "good",
+      "html": "You are registered to speak tonight."
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Registration is closed for this session."
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Room 41 motion: <b>This House would ban homework</b>"
+    },
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Judge",
+        "Status"
+      ],
+      "rows": [
+        [
+          "rk::<a href=\"#\">R41</a>",
+          "sd og::Team Anna",
+          "sd oo::Team Daryna",
+          "sd cg::Team Hlib",
+          "sd co::Taras (iron)",
+          "Petro",
+          "st::motion set · debating — waiting for the ballot"
+        ],
+        [
+          "rk::<a href=\"#\">R42</a>",
+          "sd og::Team Olesia",
+          "sd oo::Team Marko",
+          "sd cg::—",
+          "sd co::—",
+          "Iryna",
+          "st::motion pending · waiting to start"
+        ]
+      ],
+      "rowClass": {
+        "0": "me"
+      }
+    },
+    {
+      "type": "note",
+      "text": "My room's row is tinted and its motion appears in a banner the moment the judge publishes. LiveView: re-renders the moment anything in the session changes (PubSub topic <code>session:&lt;uuid&gt;</code>) — no refresh, no polling."
+    }
+  ]
+}

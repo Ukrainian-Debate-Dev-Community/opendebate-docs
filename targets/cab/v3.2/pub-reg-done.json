@@ -1,0 +1,50 @@
+{
+  "id": "pub-reg-done",
+  "title": "/r/:sess — registered, personal link",
+  "column": "public",
+  "order": 41,
+  "path": "POST /r/:sess → registered",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Register",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › registered",
+    "segs": [
+      {
+        "label": "Open my session page",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "good",
+      "html": "You are registered to speak as Olena."
+    },
+    {
+      "type": "section",
+      "title": "Your personal link"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Your link <span class=\"cpy\">cab.uadebate.com/l/x7k2…</span> copy",
+        "Keep this link — it IS your access: anyone with it acts as you."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "<code>GET /l/:code</code> signs the browser in as the guest — only an anonymous browser or another guest identity adopts it; a signed-in account is never replaced."
+    }
+  ]
+}

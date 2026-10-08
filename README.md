@@ -20,6 +20,9 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3.2/*.json   version 3.2 (rebuilt from the code, page by page: real routes and
+                      templates, LiveView pages marked, records-backed lists, live
+                      allocator with server draft, stage-by-stage owner session)
     cab/v3.1/*.json   version 3.1 (ladder gains the User step — anonymous split from
                       signed-in; cabinet/my page/account/join/session re-homed there;
                       club standings get their own page, three tabs, latest finished

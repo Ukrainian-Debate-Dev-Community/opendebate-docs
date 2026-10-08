@@ -1,0 +1,64 @@
+{
+  "id": "jud-session",
+  "title": "session — my ballot one click away",
+  "column": "judge",
+  "order": 1,
+  "path": "GET /c/:club/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice — running",
+    "segs": [
+      {
+        "label": "Fill ballot — R41",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Judge",
+        "Status"
+      ],
+      "rows": [
+        [
+          "rk::<a href=\"#\">R41</a>",
+          "sd og::Team Anna",
+          "sd oo::Team Daryna",
+          "sd cg::Team Hlib",
+          "sd co::Taras (iron)",
+          "<b>you</b>",
+          "st::motion set · debating — waiting for the ballot"
+        ]
+      ],
+      "rowClass": {
+        "0": "me"
+      }
+    },
+    {
+      "type": "note",
+      "text": "Judge powers come from chairing a room; before rooms exist a judge is a spectator."
+    }
+  ]
+}

@@ -40,6 +40,7 @@ const v22 = boardChunk("v2.2");
 const v23 = boardChunk("v2.3");
 const v3 = boardChunk("v3");
 const v31 = boardChunk("v3.1");
+const v32 = boardChunk("v3.2");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
@@ -47,16 +48,17 @@ assert(v22.length > 0, "v2.2 board present");
 assert(v23.length > 0, "v2.3 board present");
 assert(v3.length > 0, "v3 board present");
 assert(v31.length > 0, "v3.1 board present");
+assert(v32.length > 0, "v3.2 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -147,6 +149,27 @@ for (const id of ["pub-club-standings", "user-join", "user-cabinet", "user-my-pa
 for (const id of ["pub-join", "mem-cabinet", "mem-my-page", "mem-account", "mem-session"]) {
   assert(!v31.includes(`data-id="${id}"`), `v3.1 no longer contains ${id}`);
 }
+
+/* v3.2: the board is rebuilt from the code — real routes, live pages, records-backed lists */
+const v32pages = v32.split('data-col="phoenix-api"')[0];
+for (const id of ["pub-privacy", "pub-error", "pub-session-signup", "pub-session-done", "pub-room", "pub-reg-done",
+                  "user-reg", "par-session-signup", "jud-session", "own-sess-closed", "own-sess-done"]) {
+  assert(v32.includes(`data-id="${id}"`), `v3.2 contains ${id}`);
+}
+for (const id of ["user-session", "par-room", "pub-standings-speakers", "pub-standings-judges"]) {
+  assert(!v32.includes(`data-id="${id}"`), `v3.2 no longer contains ${id}`);
+}
+assert(!v32.includes("ENGINE-NEW"), "v3.2 carries no ENGINE-NEW placeholders");
+assert(!/no-store|cached hard/.test(v32), "v3.2 makes no cache claims");
+assert(v32.includes("ceil(speakers ÷ 8)") && v32.includes("Nobody is placed automatically"),
+  "v3.2 states the automatic room count and manual placement");
+assert(v32.includes("draft_allocation"), "v3.2 names the server-held allocator draft");
+assert(/LIVE<\/span>/.test(v32), "v3.2 marks the LiveView pages");
+assert(v32.includes("Privacy&amp;Policy") && v32.includes("ВМГО «Федерація Дебатів України»"), "v3.2 footer labels as built");
+assert(!/unlock/i.test(v32pages), "v3.2 page columns never say unlock");
+const golds32 = [...v32pages.matchAll(/<div class="page"[\s\S]*?(?=<div class="page"|<\/div>\n<div class="col|$)/g)]
+  .filter((m) => (m[0].match(/class="go"/g) ?? []).length > 1).length;
+assert(golds32 === 0, `v3.2 pages carry at most one gold action (offenders: ${golds32})`);
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

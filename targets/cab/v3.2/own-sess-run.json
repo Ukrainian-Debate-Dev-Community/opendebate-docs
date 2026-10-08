@@ -1,0 +1,94 @@
+{
+  "id": "own-sess-run",
+  "title": "session @ running — every room's ballot",
+  "column": "owner",
+  "order": 12,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "petro · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › club › Thursday practice — running",
+    "segs": [
+      {
+        "label": "Delete rooms",
+        "kind": "quiet"
+      },
+      {
+        "label": "Reopen registration"
+      },
+      {
+        "label": "Finish session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Judge",
+        "Ballot",
+        ""
+      ],
+      "rows": [
+        [
+          "rk::<a href=\"#\">R41</a>",
+          "sd og::Team Anna",
+          "sd oo::Team Daryna",
+          "sd cg::Team Hlib",
+          "sd co::Taras (iron)",
+          "Petro",
+          "st::ballot in",
+          "<a href=\"#\">edit ballot</a>"
+        ],
+        [
+          "rk::<a href=\"#\">R42</a>",
+          "sd og::Team Olesia",
+          "sd oo::Team Marko",
+          "sd cg::—",
+          "sd co::—",
+          "Iryna",
+          "st::debating — waiting for the ballot",
+          "<a href=\"#\">ballot</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Motions"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Each room's motion is set on its page — open a room (R#) in the table above."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Delete rooms and Reopen registration show only while no ballot is in. <b>edit ballot</b> is the one verb for a submitted or confirmed ballot — lock handling is internal. Finish records the winner on the session row."
+    }
+  ],
+  "api": [
+    "PUT events/:id on Finish",
+    "DEL rooms/:id"
+  ]
+}
