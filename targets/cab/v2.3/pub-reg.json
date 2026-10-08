@@ -1,0 +1,59 @@
+{
+  "id": "pub-reg",
+  "title": "/r/:sess registration (constant)",
+  "column": "public",
+  "order": 40,
+  "path": "GET/POST /r/:sess",
+  "api": [
+    "POST users (shadow) + participants"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Register",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "Thursday practice — register",
+    "segs": [
+      {
+        "label": "Log in to prefill",
+        "kind": "quiet"
+      },
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "your name · speaker|judge pills → <b>Register</b>",
+        "signed-in users get the form prefilled"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "registration is PER-SESSION: sign up in any number of clubs — each signup is its own row, one per session (speaker or judge). Registering never makes you a member; membership is a separate request. Guests via /l/:code are scoped to this one session."
+    },
+    {
+      "type": "banner",
+      "kind": "gold",
+      "html": "after: personal link <span class=\"cpy\">/l/Vq8…c2M</span> shown AND emailed to you from noreply@uadebate.com <span class=\"m8b\">M9 mailer</span>"
+    },
+    {
+      "type": "note",
+      "text": "constant page — reachable from the club page any time; closed registration shows when the next one opens"
+    }
+  ]
+}

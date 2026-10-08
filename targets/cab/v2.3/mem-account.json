@@ -1,0 +1,42 @@
+{
+  "id": "mem-account",
+  "title": "/account — profile",
+  "column": "member",
+  "order": 50,
+  "path": "GET /account · POST /account",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "account",
+    "segs": [
+      {
+        "label": "Save",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "display name · avatar (from provider) · email",
+        "Signed in with GitHub. Google can be linked when it ships. Claim codes (guest history) land here later."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "data requests / deletion: contact support@uadebate.com."
+    }
+  ]
+}

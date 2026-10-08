@@ -37,20 +37,22 @@ const v1 = boardChunk("v1");
 const v2 = boardChunk("v2");
 const v21 = boardChunk("v2.1");
 const v22 = boardChunk("v2.2");
+const v23 = boardChunk("v2.3");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
 assert(v22.length > 0, "v2.2 board present");
+assert(v23.length > 0, "v2.3 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed = 8 for every version */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.length === 4 && counts.every((c) => c === "8"), `header prints computed column count 8 for all four versions (got: ${counts.join(", ")})`);
+assert(counts.length === 5 && counts.every((c) => c === "8"), `header prints computed column count 8 for all five versions (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -100,6 +102,23 @@ assert(!/unconfirm/i.test(v22cab.replace(/cab unconfirms as head first \(interna
 const colOrder = [...v22.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
 assert(colOrder.join(",") === "public,participant,judge,member,owner,admin,phoenix-api,engine-api",
   `v2.2 columns follow the ladder (got: ${colOrder.join(",")})`);
+
+/* v2.3: the notes round — pages re-homed, my page split out, honest navs */
+for (const id of ["pub-join", "mem-my-page", "mem-account"]) {
+  assert(v23.includes(`data-id="${id}"`), `v2.3 contains ${id}`);
+}
+for (const id of ["mem-join", "adm-account"]) {
+  assert(!v23.includes(`data-id="${id}"`), `v2.3 no longer contains ${id}`);
+}
+const chlog23 = html.match(/<div class="chlog"><b>v2.3<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
+for (const id of ["pub-join", "mem-my-page", "mem-account"]) {
+  assert(new RegExp(`added in v2.3:</span>[^·<]*${id}`).test(chlog23), `v2.3 changelog adds ${id}`);
+}
+for (const id of ["mem-join", "adm-account"]) {
+  assert(new RegExp(`removed in v2.3:</span>[^·<]*${id}`).test(chlog23), `v2.3 changelog removes ${id}`);
+}
+assert(v23.includes("Register") && v23.includes("My page"), "v2.3 navs carry Register and My page");
+assert(v23.includes("GDPR concerns → support@uadebate.com"), "v2.3 front page renders the footer example");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

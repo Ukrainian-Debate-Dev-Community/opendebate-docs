@@ -1,0 +1,34 @@
+{
+  "public": {
+    "title": "1 · Public (anonymous)",
+    "cond": "<b>Ladder base.</b> Reads + session registration. Auth walls → /signin. Guests via /l/:code see the SAME session page (scoped) — no special guest views. FOOTER (every page, all roles): beta notice + \"GDPR concerns → support@uadebate.com\"."
+  },
+  "participant": {
+    "title": "2 · Participant (registered speaker)",
+    "cond": "<b>All public pages +</b> own signup on the session page (cancel, my room row tinted). Session-scoped identity, not a club role: member or guest — same page."
+  },
+  "judge": {
+    "title": "2 · Judge (chairs a room)",
+    "cond": "<b>All public + participant pages +</b> the room panel: draw, set/publish motion, fill ballot. Powers come from the CHAIR of a room; judge before rooms exist = spectator."
+  },
+  "member": {
+    "title": "3 · Member",
+    "cond": "<b>All public pages + participant/judge by registering +</b> member tree: cabinet, members, sessions archive, MY PAGE (global stats). Member of several clubs — fine."
+  },
+  "owner": {
+    "title": "4 · Owner (club head)",
+    "cond": "<b>All member pages (and every room's judge powers) +</b> the owner tree. FULL CONTROL: set/publish motions, fill/<b>edit</b>/confirm ballots on EVERY room — editing a confirmed ballot is one \"edit ballot\" action (lock handling is internal, never a page verb). Lifecycle: Start session → Reopen registration | Finish session."
+  },
+  "admin": {
+    "title": "5 · Admin (platform)",
+    "cond": "<b>Every club's owner tree + all below +</b> /admin: club creation, user ops. is_admin, 404 for everyone else."
+  },
+  "phoenix-api": {
+    "title": "6 · Phoenix API — /api/v1 (cab)",
+    "cond": "<b>Every page verb above is one of these REST calls</b> — same ClubScope ladder enforces role coverage. Session cookie today; keyed public API = pillar 3. Green = the engine call behind the write."
+  },
+  "engine-api": {
+    "title": "7 · Engine API — node :3100 (internal only)",
+    "cond": "<b>Everything cab persists lives here;</b> only cab calls it. Auth: HS256 JWT {id, isAdmin} minted per request by cab. Guards: <b>admin</b> · <b>org</b> = owner/organiser · <b>chair</b> = room judge (falls through to org). Never public."
+  }
+}

@@ -20,6 +20,9 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v2.3/*.json   version 2.3 (the v2.2 notes round: honest full navs, my page
+                      split from the cabinet, join/account re-homed, rooms = draw,
+                      footer demo on the front page)
     cab/v2.2/*.json   version 2.2 (edit ballot only — lock is internal; role ladder
                       public → participant/judge → member → owner → admin → cab api
                       → engine api, every step inherits the pages below it)

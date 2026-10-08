@@ -1,0 +1,54 @@
+{
+  "id": "par-room",
+  "title": "room view — published = visible",
+  "column": "participant",
+  "order": 10,
+  "path": "<span class=\"m8b\">M9</span> GET /c/:club/participant/r/:room (today: session page)",
+  "api": [
+    "GET rooms (draw, motion)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice · you: R2, OG"
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "gold",
+      "html": "R2 motion: <b>THW let judges pick the motions.</b> infoslide shown · prep until 18:57"
+    },
+    {
+      "type": "table",
+      "rowClass": {
+        "0": "me"
+      },
+      "rows": [
+        [
+          "rk::R2",
+          "sd og::<b>Anna</b> &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Iryna &amp; Sofia",
+          "mut::Nadia"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "before publish: draw only, no motion. Once the judge/owner PUBLISHES — motion + infoslide + keyword appear with the prep clock. No actions."
+    }
+  ]
+}
