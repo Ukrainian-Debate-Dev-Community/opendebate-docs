@@ -10,8 +10,11 @@ const ROOT = new URL(".", import.meta.url).pathname;
 const TARGETS_DIR = join(ROOT, "targets");
 const DIST = join(ROOT, "dist");
 
+// the role ladder, weakest first: every successor inherits all
+// predecessor pages and adds its own (the two APIs sit above admin —
+// cab api serves every page verb, engine api is cab's internal store)
 const COLUMN_ORDER = [
-  "engine-api", "phoenix-api", "admin", "public", "owner", "member", "participant", "judge",
+  "public", "participant", "judge", "member", "owner", "admin", "phoenix-api", "engine-api",
 ];
 const COLUMN_CLASS: Record<string, string> = {
   "engine-api": "c-api", "phoenix-api": "c-api", admin: "c-adm", public: "c-pub",
@@ -153,7 +156,7 @@ function renderColumn(name: string, v: Version): string {
   const pages = v.pages.filter((p) => p.column === name);
   const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p))).join("\n\n");
   const intro = pages.find((p) => p.intro)?.intro;
-  return `<div class="col ${COLUMN_CLASS[name] ?? ""}"><h3>${meta.title}</h3>\n` +
+  return `<div class="col ${COLUMN_CLASS[name] ?? ""}" data-col="${name}"><h3>${meta.title}</h3>\n` +
          `<p class="cond">${meta.cond}</p>${intro ? `\n<p class="cond">${intro}</p>` : ""}\n${body}\n</div>`;
 }
 

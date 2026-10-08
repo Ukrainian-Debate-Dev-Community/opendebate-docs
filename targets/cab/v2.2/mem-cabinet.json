@@ -1,0 +1,56 @@
+{
+  "id": "mem-cabinet",
+  "title": "cabinet + My page",
+  "column": "member",
+  "order": 10,
+  "path": "GET / · GET /me <span class=\"m8b\">M9</span>",
+  "api": [
+    "GET …/stats/speakers (per event, M9a)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "My page",
+    "profile": "anna · /account · sign out"
+  },
+  "chrome": {
+    "crumb": "my page"
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "<b>Anna Kovalenko</b> · 22 games · total 1702.5 · avg 77.4",
+        "positions played: OG 8 · OO 5 · CG 6 · CO 3"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Status",
+        "Games"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "mut::member",
+          "18"
+        ],
+        [
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "mut::owner",
+          "4"
+        ]
+      ]
+    }
+  ]
+}

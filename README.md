@@ -20,6 +20,9 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v2.2/*.json   version 2.2 (edit ballot only — lock is internal; role ladder
+                      public → participant/judge → member → owner → admin → cab api
+                      → engine api, every step inherits the pages below it)
     dfu/              empty scaffold, ready for specs
     uadebate/         empty scaffold, ready for specs
   dist/               build output (gitignored)

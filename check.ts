@@ -36,19 +36,21 @@ function boardChunk(version: string): string {
 const v1 = boardChunk("v1");
 const v2 = boardChunk("v2");
 const v21 = boardChunk("v2.1");
+const v22 = boardChunk("v2.2");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
+assert(v22.length > 0, "v2.2 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed = 8 for every version */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.length === 3 && counts.every((c) => c === "8"), `header prints computed column count 8 for all three versions (got: ${counts.join(", ")})`);
+assert(counts.length === 4 && counts.every((c) => c === "8"), `header prints computed column count 8 for all four versions (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -79,6 +81,25 @@ const scrubbed = v21
   .replace(/reopens public registration/g, "")
   .replace(/no reopen:/g, "");
 assert(!/reopen/i.test(scrubbed), "v2.1 has no ballot reopen left");
+
+/* v2.2: edit ballot is the only user-facing verb — lock/unlock never
+   appears outside the engine-api column (internal) */
+const chlog22 = html.match(/<div class="chlog"><b>v2.2<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
+const changed22 = chlog22.match(/changed in v2.2:<\/span>([^·<]*)/)?.[1] ?? "";
+for (const id of ["own-sess-run", "jud-ballot", "phoenix-api"]) {
+  assert(changed22.includes(id), `v2.2 changelog lists ${id} as changed`);
+}
+assert(/column conditions changed/.test(chlog22), "v2.2 changelog flags the ladder column conditions");
+assert(v22.includes("edit ballot"), "v2.2 shows the edit ballot verb");
+assert(!/unlock/i.test(v22), "v2.2 never says unlock");
+const v22cab = v22.split('data-col="engine-api"')[0];
+assert(!/unconfirm/i.test(v22cab.replace(/cab unconfirms as head first \(internal, never a page verb\)/g, "")),
+  "v2.2 keeps unconfirm out of the page columns (internal note aside)");
+
+/* the columns render in ladder order, weakest first */
+const colOrder = [...v22.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(colOrder.join(",") === "public,participant,judge,member,owner,admin,phoenix-api,engine-api",
+  `v2.2 columns follow the ladder (got: ${colOrder.join(",")})`);
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");
