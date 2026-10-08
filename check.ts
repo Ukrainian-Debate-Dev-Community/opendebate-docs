@@ -35,18 +35,20 @@ function boardChunk(version: string): string {
 
 const v1 = boardChunk("v1");
 const v2 = boardChunk("v2");
+const v21 = boardChunk("v2.1");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
+assert(v21.length > 0, "v2.1 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
-/* column count is computed and printed = 8 for both versions */
+/* column count is computed and printed = 8 for every version */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.length === 2 && counts.every((c) => c === "8"), `header prints computed column count 8 for both versions (got: ${counts.join(", ")})`);
+assert(counts.length === 3 && counts.every((c) => c === "8"), `header prints computed column count 8 for all three versions (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -61,6 +63,22 @@ for (const id of ["own-compose", "own-sessions", "mem-lists", "par-guest", "par-
   assert(removed.includes(id), `v2 changelog lists ${id} as removed`);
 }
 assert(/added in v2:<\/span>[^·<]*mem-members/.test(chlog), "v2 changelog lists mem-members as added");
+
+/* v2.1: ballot correction = unlock + resubmit, reopen gone everywhere */
+const chlog21 = html.match(/<div class="chlog"><b>v2.1<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
+const changed21 = chlog21.match(/changed in v2.1:<\/span>([^·<]*)/)?.[1] ?? "";
+for (const id of ["own-sess-run", "jud-ballot", "engine-api", "phoenix-api"]) {
+  assert(changed21.includes(id), `v2.1 changelog lists ${id} as changed`);
+}
+assert(v21.includes("/rooms/:id/unlock"), "v2.1 documents the unlock route");
+/* the only reopen left is sign-up registration and the "no reopen" explainer */
+const scrubbed = v21
+  .replace(/api-reopen-reg/g, "")
+  .replace(/reopen-registration/g, "")
+  .replace(/Reopen registration/g, "")
+  .replace(/reopens public registration/g, "")
+  .replace(/no reopen:/g, "");
+assert(!/reopen/i.test(scrubbed), "v2.1 has no ballot reopen left");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

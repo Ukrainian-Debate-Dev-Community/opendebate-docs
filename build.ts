@@ -261,9 +261,14 @@ function main() {
   let built = 0;
   for (const target of targets) {
     const tdir = join(TARGETS_DIR, target);
+    // versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
+    const vnum = (d: string): [number, number] => {
+      const [maj, min] = d.slice(1).split(".");
+      return [Number(maj), Number(min ?? 0)];
+    };
     const vdirs = readdirSync(tdir)
-      .filter((d) => /^v\d+$/.test(d) && statSync(join(tdir, d)).isDirectory())
-      .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+      .filter((d) => /^v\d+(\.\d+)?$/.test(d) && statSync(join(tdir, d)).isDirectory())
+      .sort((a, b) => vnum(a)[0] - vnum(b)[0] || vnum(a)[1] - vnum(b)[1]);
     if (!vdirs.length) { console.log(`- ${target}: no versions, skipped`); continue; }
     const versions = vdirs.map((d) => loadVersion(join(tdir, d), d));
     const html = buildTarget(target, versions);

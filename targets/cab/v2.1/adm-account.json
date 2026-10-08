@@ -1,0 +1,37 @@
+{
+  "id": "adm-account",
+  "title": "/account — profile",
+  "column": "admin",
+  "order": 20,
+  "path": "GET /account · POST /account",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "profile": "anna · sign out"
+  },
+  "chrome": {
+    "crumb": "account",
+    "segs": [
+      {
+        "label": "Save",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "display name · avatar (from provider) · email",
+        "Signed in with GitHub. Google can be linked when it ships. Claim codes (guest history) land here later."
+      ]
+    }
+  ]
+}

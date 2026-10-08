@@ -1,0 +1,73 @@
+{
+  "id": "pub-session",
+  "title": "session page (public)",
+  "column": "public",
+  "order": 30,
+  "path": "GET /c/:club/s/:sess",
+  "api": [
+    "GET event + rooms + participants"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "Thursday practice",
+    "segs": [
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>R1</b> — judge Petro · motion published <a href=\"#\">open draw</a>",
+        "<b>R2</b> — judge Nadia · motion pending <a href=\"#\">open draw</a>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Draw"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Taras &amp; Yuri",
+          "sd oo::Lera &amp; Ira",
+          "sd cg::Max &amp; Oles",
+          "sd co::Nina, iron",
+          "mut::Petro"
+        ],
+        [
+          "rk::R2",
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Iryna &amp; Sofia",
+          "mut::Nadia"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "minimal: no status notes; before rooms exist — \"no active rooms yet\"; Register on top while registration is open"
+    }
+  ]
+}

@@ -19,6 +19,7 @@ webdesign/
   targets/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
+    cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
     dfu/              empty scaffold, ready for specs
     uadebate/         empty scaffold, ready for specs
   dist/               build output (gitignored)
