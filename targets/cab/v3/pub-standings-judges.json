@@ -1,0 +1,61 @@
+{
+  "id": "pub-standings-judges",
+  "title": "/standings/judges — ENGINE-NEW stats",
+  "column": "public",
+  "order": 52,
+  "path": "GET /standings/judges",
+  "api": [
+    "GET …/stats/judges (M9a)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Judges"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Judge",
+        "Rooms judged",
+        "Avg feedback"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Petro Demchuk",
+          "14",
+          "4.6"
+        ],
+        [
+          "rk::2",
+          "Nadia Hon",
+          "11",
+          "4.4"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "<span class=\"m8b\">ENGINE-NEW</span> (M9a): per judge rooms judged + AVG FEEDBACK score (engine feedback tables, first real use) — cab displays verbatim."
+    }
+  ]
+}

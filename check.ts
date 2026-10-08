@@ -38,21 +38,23 @@ const v2 = boardChunk("v2");
 const v21 = boardChunk("v2.1");
 const v22 = boardChunk("v2.2");
 const v23 = boardChunk("v2.3");
+const v3 = boardChunk("v3");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
 assert(v22.length > 0, "v2.2 board present");
 assert(v23.length > 0, "v2.3 board present");
+assert(v3.length > 0, "v3 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed = 8 for every version */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.length === 5 && counts.every((c) => c === "8"), `header prints computed column count 8 for all five versions (got: ${counts.join(", ")})`);
+assert(counts.length === 6 && counts.every((c) => c === "8"), `header prints computed column count 8 for all six versions (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -119,6 +121,19 @@ for (const id of ["mem-join", "adm-account"]) {
 }
 assert(v23.includes("Register") && v23.includes("My page"), "v2.3 navs carry Register and My page");
 assert(v23.includes("GDPR concerns → support@uadebate.com"), "v2.3 front page renders the footer example");
+
+/* v3: two trees — no per-role route spellings anywhere in the page columns */
+const v3pages = v3.split('data-col="phoenix-api"')[0];
+for (const bad of ["/member/", "/participant/", "/judge/r", "/owner/rooms/"]) {
+  assert(!v3pages.includes(bad), `v3 pages carry no ${bad} route`);
+}
+assert(v3.includes("/c/:club/s/:sess/rooms/:id"), "v3 has the one room URL");
+assert(v3.includes("PREFILLED"), "v3 states the prefilled ballot edit");
+assert(v3.includes("QR of /r/:sess"), "v3 puts the registration QR on the session page");
+const v3navItems = [...v3pages.matchAll(/<nav class="nav">[\s\S]*?<\/nav>/g)].join("");
+assert(!/href="#">Sessions</.test(v3navItems), "v3 navs dropped the Sessions item (club page is the archive)");
+assert(v3.includes("no-store") && v3.includes("cached hard"), "v3 states the cache rule");
+assert(v3.includes("engine_round_id"), "v3 notes the stored round id + concurrent reads");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

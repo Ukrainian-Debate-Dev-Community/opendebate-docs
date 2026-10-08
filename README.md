@@ -20,6 +20,10 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3/*.json     version 3 (two trees only: one URL per view, identity gates
+                      actions; one room URL, one registration URL /r/:sess with QR;
+                      prefilled ballot edit; one gold action per page; cache rule —
+                      finished sessions cached hard, live page no-store)
     cab/v2.3/*.json   version 2.3 (the v2.2 notes round: honest full navs, my page
                       split from the cabinet, join/account re-homed, rooms = draw,
                       footer demo on the front page)

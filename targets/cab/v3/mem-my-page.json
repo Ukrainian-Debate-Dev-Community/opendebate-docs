@@ -1,0 +1,88 @@
+{
+  "id": "mem-my-page",
+  "title": "My page — personal stats",
+  "column": "member",
+  "order": 15,
+  "path": "GET /me <span class=\"m8b\">M9</span>",
+  "api": [
+    "GET users/:id/stats"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "My page",
+    "profile": "anna · /account · sign out"
+  },
+  "chrome": {
+    "crumb": "my page"
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "<b>Anna Kovalenko</b> · 22 games · total 1702.5 · avg 77.4",
+        "positions played: OG 8 · OO 5 · CG 6 · CO 3"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Stats"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Ballots",
+        "Avg",
+        "Highest",
+        "Lowest",
+        "1st places",
+        "Win rate"
+      ],
+      "rows": [
+        [
+          "22",
+          "77.4",
+          "84.5",
+          "71.0",
+          "6",
+          "27.3%"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "History"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "Club",
+        "As",
+        "Result"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Thursday practice</a>",
+          "Kyiv DC",
+          "mut::speaker",
+          "2nd · 77.5"
+        ],
+        [
+          "<a href=\"#\">Open night</a>",
+          "Kyiv DC",
+          "mut::judge",
+          "mut::chaired R1"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "engine statistics only — GET /users/:id/stats verbatim plus plain counts; cab never derives its own numbers."
+    }
+  ]
+}
