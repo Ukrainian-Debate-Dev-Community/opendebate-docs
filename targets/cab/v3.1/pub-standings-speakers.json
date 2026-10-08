@@ -1,0 +1,64 @@
+{
+  "id": "pub-standings-speakers",
+  "title": "/standings/speakers — ENGINE-NEW stats",
+  "column": "public",
+  "order": 50,
+  "path": "GET /standings/speakers",
+  "api": [
+    "GET …/stats/speakers (M9a)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Speakers"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Speaker",
+        "Total",
+        "Avg",
+        "Std"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Anna Kovalenko",
+          "1702.5",
+          "77.4",
+          "2.1"
+        ],
+        [
+          "rk::2",
+          "Bohdan Shevchenko",
+          "1461.1",
+          "76.9",
+          "2.8"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "<span class=\"m8b\">ENGINE-NEW</span> (M9a): per speaker TOTAL, AVG, STD of speaker points — engine-computed, cab displays verbatim."
+    }
+  ]
+}

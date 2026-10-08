@@ -1,0 +1,38 @@
+{
+  "public": {
+    "title": "1 · Public (anonymous)",
+    "cond": "<b>Ladder base. TWO TREES ONLY:</b> pages live in the public tree — the URL names the view, identity gates the actions; only owner and admin keep their own trees. <b>ONE GOLD ACTION per page</b>; every empty state says what happens next. Guests via /l/:code see the SAME pages (scoped). Auth walls → /signin. FOOTER everywhere: beta notice + \"GDPR concerns → support@uadebate.com\"."
+  },
+  "participant": {
+    "title": "3 · Participant (registered speaker)",
+    "cond": "<b>All public pages (+ user pages when signed in) +</b> own signup on the session page, their room row tinted + jump chip. Session-scoped identity, not a club role: a guest via /l/:code rides on public, an account rides on user — same pages."
+  },
+  "judge": {
+    "title": "3 · Judge (chairs a room)",
+    "cond": "<b>All participant pages +</b> the room panel at the same room URL: allocator, set/publish motion, fill ballot. Powers come from the CHAIR of a room; judge before rooms exist = spectator."
+  },
+  "member": {
+    "title": "4 · Member",
+    "cond": "<b>All user pages + participant/judge by registering +</b> the club roster (/c/:club/members) and being on it; the club appears in the cabinet. Member of several clubs — fine."
+  },
+  "owner": {
+    "title": "5 · Owner (club head)",
+    "cond": "<b>All member pages (and every room's judge powers) +</b> the owner tree. FULL CONTROL: set/publish motions, fill/<b>edit</b>/confirm ballots on EVERY room — editing a confirmed ballot is one \"edit ballot\" action (lock handling is internal, never a page verb). Lifecycle: Start session → Reopen registration | Finish session."
+  },
+  "admin": {
+    "title": "6 · Admin (platform)",
+    "cond": "<b>Every club's owner tree + all below +</b> /admin: club creation, user ops. is_admin, 404 for everyone else."
+  },
+  "phoenix-api": {
+    "title": "7 · Phoenix API — /api/v1 (cab)",
+    "cond": "<b>Every page verb above is one of these REST calls</b> — same ClubScope ladder enforces role coverage. CACHE: a finished session is immutable — cached hard, forever; the live session page is no-store. Session cookie today; keyed public API = pillar 3. Green = the engine call behind the write."
+  },
+  "engine-api": {
+    "title": "8 · Engine API — node :3100 (internal only)",
+    "cond": "<b>Everything cab persists lives here;</b> only cab calls it. cab stores engine_round_id at session creation and fans the 4 state reads out concurrently — one state read per request. Auth: HS256 JWT {id, isAdmin} minted per request by cab. Guards: <b>admin</b> · <b>org</b> = owner/organiser · <b>chair</b> = room judge (falls through to org). Never public."
+  },
+  "user": {
+    "title": "2 · User (signed in)",
+    "cond": "<b>All public pages +</b> an identity: cabinet (home), My page, /account, join requests, prefilled registration. No club ties needed — a user with zero memberships still has all of this."
+  }
+}

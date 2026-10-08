@@ -1,0 +1,68 @@
+{
+  "id": "pub-standings-clubs",
+  "title": "/standings/clubs — ENGINE-NEW stats",
+  "column": "public",
+  "order": 53,
+  "path": "GET /standings/clubs",
+  "api": [
+    "GET organisations/:id/stats (M9a)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Club",
+        "Sessions",
+        "Avg winner speaks",
+        "Avg 4th-place speaks"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "38",
+          "158.2",
+          "147.9"
+        ],
+        [
+          "rk::2",
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "21",
+          "155.4",
+          "146.1"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "<span class=\"m8b\">ENGINE-NEW</span> (M9a): club strength — total sessions, avg WINNER speaker points, avg 4TH-PLACE speaker points. Engine-computed, cab displays verbatim."
+    },
+    {
+      "type": "note",
+      "text": "global scope only — a club page's standings show teams · speakers · judges, defaulting to that club's latest finished session (the global default stays platform-wide latest)."
+    }
+  ]
+}

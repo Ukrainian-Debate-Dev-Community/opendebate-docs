@@ -1,0 +1,74 @@
+{
+  "id": "pub-club-standings",
+  "title": "club standings",
+  "column": "public",
+  "order": 45,
+  "path": "GET /c/:club/standings/:tab",
+  "api": [
+    "GET events/:id/standings/calculated/teams",
+    "GET events/:id/standings/calculated/speakers",
+    "GET events/:id/stats/judges"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges"
+      ],
+      "active": "Speakers"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice · 2 Oct</b> (latest finished) · <a href=\"#\">earlier sessions</a>"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Speaker",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Lera",
+          "162.8"
+        ],
+        [
+          "rk::2",
+          "Taras",
+          "159.1"
+        ],
+        [
+          "rk::3",
+          "Nina",
+          "155.0"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "defaults to THIS club's latest finished session; a selector walks earlier ones. Three tabs — no Clubs tab here (that one is global-only). Engine output verbatim, rule 0."
+    }
+  ]
+}

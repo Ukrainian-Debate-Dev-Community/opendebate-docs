@@ -24,7 +24,7 @@ header b { color:var(--ink); }
 .c-api  h3 { color:#6F6478; } .c-adm h3 { color:var(--warn); }
 .c-pub  h3 { color:#9C6DB4; } .c-own h3 { color:#B9862A; }
 .c-mem  h3 { color:#3E6FA3; } .c-par h3 { color:var(--brand); }
-.c-jud  h3 { color:var(--ok); }
+.c-jud  h3 { color:var(--ok); } .c-usr h3 { color:#4E8F8C; }
 
 /* page unit: caption (path + engine) + mini frame */
 .page { margin-bottom:16px; cursor:pointer; position:relative; }

@@ -39,22 +39,24 @@ const v21 = boardChunk("v2.1");
 const v22 = boardChunk("v2.2");
 const v23 = boardChunk("v2.3");
 const v3 = boardChunk("v3");
+const v31 = boardChunk("v3.1");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
 assert(v22.length > 0, "v2.2 board present");
 assert(v23.length > 0, "v2.3 board present");
 assert(v3.length > 0, "v3 board present");
+assert(v31.length > 0, "v3.1 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
-/* column count is computed and printed = 8 for every version */
+/* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.length === 6 && counts.every((c) => c === "8"), `header prints computed column count 8 for all six versions (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -134,6 +136,17 @@ const v3navItems = [...v3pages.matchAll(/<nav class="nav">[\s\S]*?<\/nav>/g)].jo
 assert(!/href="#">Sessions</.test(v3navItems), "v3 navs dropped the Sessions item (club page is the archive)");
 assert(v3.includes("no-store") && v3.includes("cached hard"), "v3 states the cache rule");
 assert(v3.includes("engine_round_id"), "v3 notes the stored round id + concurrent reads");
+
+/* v3.1: the user step separates anonymous from signed-in; club standings get a page */
+const colOrder31 = [...v31.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(colOrder31.join(",") === "public,user,participant,judge,member,owner,admin,phoenix-api,engine-api",
+  `v3.1 columns follow the 9-step ladder (got: ${colOrder31.join(",")})`);
+for (const id of ["pub-club-standings", "user-join", "user-cabinet", "user-my-page", "user-account", "user-session"]) {
+  assert(v31.includes(`data-id="${id}"`), `v3.1 contains ${id}`);
+}
+for (const id of ["pub-join", "mem-cabinet", "mem-my-page", "mem-account", "mem-session"]) {
+  assert(!v31.includes(`data-id="${id}"`), `v3.1 no longer contains ${id}`);
+}
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");
