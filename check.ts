@@ -41,6 +41,7 @@ const v23 = boardChunk("v2.3");
 const v3 = boardChunk("v3");
 const v31 = boardChunk("v3.1");
 const v32 = boardChunk("v3.2");
+const v33 = boardChunk("v3.3");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
@@ -49,16 +50,17 @@ assert(v23.length > 0, "v2.3 board present");
 assert(v3.length > 0, "v3 board present");
 assert(v31.length > 0, "v3.1 board present");
 assert(v32.length > 0, "v3.2 board present");
+assert(v33.length > 0, "v3.3 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -170,6 +172,19 @@ assert(!/unlock/i.test(v32pages), "v3.2 page columns never say unlock");
 const golds32 = [...v32pages.matchAll(/<div class="page"[\s\S]*?(?=<div class="page"|<\/div>\n<div class="col|$)/g)]
   .filter((m) => (m[0].match(/class="go"/g) ?? []).length > 1).length;
 assert(golds32 === 0, `v3.2 pages carry at most one gold action (offenders: ${golds32})`);
+
+/* v3.3: role-less registration, one remove verb, public rosters, no middle dots */
+const v33pages = v33.split('data-col="phoenix-api"')[0];
+assert(!v33.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.3 carries no middle dots");
+assert(v33.includes('data-id="pub-members"') && !v33.includes('data-id="mem-members"'), "v3.3 moves the roster to the public column");
+assert(v33.includes("ceil(people ÷ 9)"), "v3.3 states the seat-based room count");
+assert(!/I am tonight|Signed up as|Signs up to/.test(v33pages), "v3.3 pages ask no role at registration");
+assert(v33pages.includes("Add a person") && v33pages.includes("People (14 people)"), "v3.3 owner page has one add form and one people table");
+assert(!/revoke/i.test(v33pages), "v3.3 pages never say revoke");
+assert(/SPK/.test(v33pages) && /ADJ/.test(v33pages), "v3.3 allocator tags placed chips SPK and ADJ");
+assert(!v33.includes('data-id="api-link-del"'), "v3.3 drops the link delete endpoint");
+const golds33 = v33pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
+assert(golds33 === 0, `v3.3 pages carry at most one gold action (offenders: ${golds33})`);
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

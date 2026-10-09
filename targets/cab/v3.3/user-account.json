@@ -1,0 +1,54 @@
+{
+  "id": "user-account",
+  "title": "/account — profile",
+  "column": "user",
+  "order": 3,
+  "path": "GET/POST /account",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": null,
+    "profile": "anna, sign out"
+  },
+  "chrome": {
+    "crumb": "account",
+    "segs": [
+      {
+        "label": "Save",
+        "kind": "gold"
+      },
+      {
+        "label": "Sign out",
+        "kind": "quiet"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Display name <span class=\"mut\">— shown instead of your username on rosters and draws</span>",
+        "Username: <b>anna</b>, anna@example.com"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Sign-in methods"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Signed in with github.",
+        "Google can be linked when it ships. Claim codes (guest history) land here later.",
+        "Data requests or deletion: support@uadebate.com."
+      ]
+    }
+  ]
+}

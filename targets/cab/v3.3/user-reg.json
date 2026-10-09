@@ -1,0 +1,40 @@
+{
+  "id": "user-reg",
+  "title": "/r/:sess — prefilled registration",
+  "column": "user",
+  "order": 5,
+  "path": "GET/POST /r/:sess",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Register",
+    "profile": "anna, sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › register — sign-ups open",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Registration"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Register for Thursday practice</b>",
+        "<p class=\"mut\">Registering as Anna Kovalenko — one registration per session.</p>",
+        "<b>Register</b>"
+      ]
+    }
+  ],
+  "api": [
+    "POST events/:id/participants"
+  ]
+}

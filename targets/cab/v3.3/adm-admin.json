@@ -1,0 +1,79 @@
+{
+  "id": "adm-admin",
+  "title": "/admin — clubs + heads",
+  "column": "admin",
+  "order": 1,
+  "path": "GET /admin, POST /admin/clubs, /admin/head, /admin/clubs/:uuid/archive",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page",
+      "Admin"
+    ],
+    "active": "Admin",
+    "profile": "root, sign out"
+  },
+  "chrome": {
+    "crumb": "admin",
+    "segs": [
+      {
+        "label": "Create club",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Head",
+        "State",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Kyiv Debate Club <span class=\"mut\">Kyiv, 14 members</span>",
+          "petro",
+          "live",
+          "<a href=\"#\">open</a>",
+          "<a href=\"#\">archive</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Create a club"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Club name, City, Head → Create club (chrome)"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Change a club's head"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Club, New head → <b>Change head</b> <span class=\"mut\">— the old head stays a member</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "is_admin only; archived clubs vanish everywhere else (404) and stay here."
+    }
+  ],
+  "api": [
+    "POST organisations",
+    "POST organisations/:id/owners"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "user-cabinet",
+  "title": "/ — my cab (signed in)",
+  "column": "user",
+  "order": 1,
+  "path": "GET /",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "Clubs",
+    "profile": "anna, sign out"
+  },
+  "chrome": {
+    "crumb": "my cab",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Kyiv Debate Club: a session is open. <a href=\"#\">Open →</a>"
+    },
+    {
+      "type": "section",
+      "title": "My clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Next session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a> <span class=\"mut\">member, Kyiv</span>",
+          "st::9 Oct 18:30"
+        ],
+        [
+          "<a href=\"#\">Lviv Debaters</a> <span class=\"mut\">request pending, Lviv</span>",
+          "st::—"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My schedule"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a> <span class=\"mut\">9 Oct 18:30</span>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My sessions"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Past sessions and personal stats live on <a href=\"#\">My page</a>."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "My schedule = engine <code>users/schedule</code> (one call); everything else is cab's records."
+    }
+  ],
+  "api": [
+    "GET users/schedule"
+  ]
+}
