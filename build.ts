@@ -67,7 +67,7 @@ function loadVersion(dir: string, name: string): Version {
   return { name, columns, pages };
 }
 
-/* ---------- block renderers (mirror design/pages-board.html markup) ---------- */
+/* ---------- block renderers (mirror legacy/design/pages-board.html markup) ---------- */
 function cell(raw: string): string {
   const i = raw.indexOf("::");
   if (i > 0) {

@@ -1,11 +1,11 @@
 # webdesign
 
 Declarative, versioned design workbench. Page boards (the mini-frame grids from
-`design/pages-board.html`) are described as JSON specs per target and version;
+`legacy/design/pages-board.html`) are described as JSON specs per target and version;
 the build renders a single self-contained HTML board per target with a version
 switcher, a computed changelog strip and the usual comment modal + note export.
 
-`design/` stays the read-only reference; this directory is the tracked,
+`legacy/design/` stays the read-only reference; this directory is the tracked,
 reproducible source of truth for page setups.
 
 ## Layout
@@ -14,7 +14,7 @@ reproducible source of truth for page setups.
 webdesign/
   build.ts            spec reader + renderer → dist/<target>.html
   check.ts            assertions over the built board (run after build)
-  shared/frame.css    page-window chrome, ported verbatim from design/pages-board.html
+  shared/frame.css    page-window chrome, ported verbatim from legacy/design/pages-board.html
   shared/board.js     comment modal, per-version localStorage notes, export, version switch
   targets/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
@@ -114,5 +114,5 @@ up automatically and emits `dist/<name>.html`.
 ## Rules
 
 - Do not alter design content when porting — extraction must be faithful.
-- `design/` is read-only reference; never edit it from here.
+- `legacy/design/` is read-only reference; never edit it from here.
 - `dist/` is generated; never hand-edit, never commit.

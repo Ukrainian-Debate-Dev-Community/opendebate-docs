@@ -1,4 +1,4 @@
-/* ported from design/pages-board.html <script> — comment modal + localStorage notes + export.
+/* ported from legacy/design/pages-board.html <script> — comment modal + localStorage notes + export.
    Adapted for the versioned workbench: note keys are "<target>:<version>:<page id>",
    export downloads <target>-pages-notes-<version>.json for the version on screen. */
 (function () {
