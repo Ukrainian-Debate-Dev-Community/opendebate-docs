@@ -42,6 +42,7 @@ const v3 = boardChunk("v3");
 const v31 = boardChunk("v3.1");
 const v32 = boardChunk("v3.2");
 const v33 = boardChunk("v3.3");
+const v34 = boardChunk("v3.4");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
@@ -51,16 +52,17 @@ assert(v3.length > 0, "v3 board present");
 assert(v31.length > 0, "v3.1 board present");
 assert(v32.length > 0, "v3.2 board present");
 assert(v33.length > 0, "v3.3 board present");
+assert(v34.length > 0, "v3.4 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33], ["v3.4", v34]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -185,6 +187,24 @@ assert(/SPK/.test(v33pages) && /ADJ/.test(v33pages), "v3.3 allocator tags placed
 assert(!v33.includes('data-id="api-link-del"'), "v3.3 drops the link delete endpoint");
 const golds33 = v33pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
 assert(golds33 === 0, `v3.3 pages carry at most one gold action (offenders: ${golds33})`);
+
+/* v3.4: the launch-prep round, rebuilt from the code */
+const v34pages = v34.split('data-col="phoenix-api"')[0];
+assert(!v34.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.4 carries no middle dots");
+for (const id of ["user-home", "user-merge", "user-claim", "pub-policy", "pub-terms", "pub-signin-existing", "own-add-person", "pub-standings-adjudicators"]) {
+  assert(v34.includes(`data-id="${id}"`), `v3.4 contains ${id}`);
+}
+for (const id of ["user-cabinet", "pub-privacy"]) {
+  assert(!v34.includes(`data-id="${id}"`), `v3.4 no longer contains ${id}`);
+}
+assert(!/my cab/i.test(v34pages), "v3.4 has no separate signed-in cabinet");
+assert(!/\bJudge\b/.test(v34pages), "v3.4 pages say Adjudicator, never Judge");
+assert(v34pages.includes("Prep ends at") && v34pages.includes("Motions"), "v3.4 shows the motion form's prep end and the Motions table");
+assert(v34pages.includes("will accept on My page") && v34pages.includes("Add as a guest"), "v3.4 shows the add field's outcomes");
+assert(v34.includes("is_iron") && v34.includes("stats/adjudicators"), "v3.4 records iron speeches and adjudicator stats");
+assert(!/stats\/judges/.test(v34), "v3.4 no longer calls stats/judges");
+const golds34 = v34pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
+assert(golds34 === 0, `v3.4 pages carry at most one gold action (offenders: ${golds34})`);
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

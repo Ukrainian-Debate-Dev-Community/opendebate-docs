@@ -1,0 +1,36 @@
+{
+  "id": "own-sess-done",
+  "title": "session @ finished",
+  "column": "owner",
+  "order": 14,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Club › Thursday practice — finished",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "This session is finished — results live on the <a href=\"#\">session page</a>.",
+        "Previous sessions live on the <a href=\"#\">club page</a>."
+      ]
+    }
+  ]
+}

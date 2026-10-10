@@ -20,6 +20,14 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3.4/*.json   version 3.4 (rebuilt from the code after the launch-prep round:
+                      the directory for everyone, My page holds my clubs and
+                      invitations, Google sign-in with link and merge, guests
+                      claimed by the engine's token, Policy and Terms as
+                      documents, the add field's four outcomes, room rows that
+                      open the room, a Motions table, one motion form with Prep
+                      ends at, ballots after the motion, speaker points and iron
+                      speeches, the API without engine ids, all text in gettext)
     cab/v3.3/*.json   version 3.3 (role-less registration with seat-based room count,
                       SPK/ADJ seat tags, one remove verb that keeps no personal
                       data, one people table + add form, public rosters, no

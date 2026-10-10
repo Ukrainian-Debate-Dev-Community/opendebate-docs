@@ -1,0 +1,155 @@
+{
+  "id": "user-my-page",
+  "title": "/me — invitations, my clubs, stats, history",
+  "column": "user",
+  "order": 2,
+  "path": "GET /me",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "My page",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "My page",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Anna Kovalenko</b> (anna)"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Invitations"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "Added by",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Open round</a> <span class=\"mut\">Lviv Debaters</span>",
+          "Iryna",
+          "<a href=\"#\">accept</a>",
+          "<a href=\"#\">decline</a>"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">A club head added you to these sessions. Accept to see them on My page under your name; decline to have your name removed.</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Next session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a> <span class=\"mut\">member, Kyiv</span>",
+          "st::registration open, Thu 18:30"
+        ],
+        [
+          "<a href=\"#\">Kharkiv Club</a> <span class=\"mut\">request pending, Kharkiv</span>",
+          "st::—"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My schedule"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a> <span class=\"mut\">Thu 9 Oct, 18:30</span>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Stats"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Ballots",
+        "Ranked debates",
+        "Avg score",
+        "Highest",
+        "Lowest",
+        "1st places",
+        "Win rate"
+      ],
+      "rows": [
+        [
+          "22",
+          "22",
+          "77",
+          "84",
+          "70",
+          "8",
+          "36%"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "History"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "As",
+        "Result"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">2 Oct 2026</a> <span class=\"mut\">Kyiv Debate Club</span>",
+          "speaker",
+          "st::<b>won</b>"
+        ],
+        [
+          "<a href=\"#\">25 Sep 2026</a> <span class=\"mut\">Kyiv Debate Club</span>",
+          "adjudicator",
+          "st::adjudicated"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Engine reads: <code>users/:id/stats</code> (verbatim; an iron's second speech never counts), ONE <code>users/history</code>, ONE <code>users/schedule</code>. Invitations and My clubs are cab's records; accept claims the seat with the engine's claim token. No stats yet: \"No logged debates yet — stats appear after your first scored round.\""
+    }
+  ],
+  "api": [
+    "GET users/:id/stats",
+    "GET users/history",
+    "GET users/schedule"
+  ]
+}
