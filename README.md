@@ -20,6 +20,9 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3.6/*.json   version 3.6 (one command, one place: a form whose command sits
+                      in the top bar has no button of its own — feedback form, room
+                      motion form; join requests and members carry no account kind)
     cab/v3.5/*.json   version 3.5 (club-night feedback: one per team after the ballot,
                       accuracy + reasoning 1-10 and a discussion, the team sees its own,
                       the adjudicator sees theirs anonymous after finish, the head sees

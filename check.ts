@@ -44,6 +44,7 @@ const v32 = boardChunk("v3.2");
 const v33 = boardChunk("v3.3");
 const v34 = boardChunk("v3.4");
 const v35 = boardChunk("v3.5");
+const v36 = boardChunk("v3.6");
 assert(v1.length > 0, "v1 board present");
 assert(v2.length > 0, "v2 board present");
 assert(v21.length > 0, "v2.1 board present");
@@ -55,16 +56,17 @@ assert(v32.length > 0, "v3.2 board present");
 assert(v33.length > 0, "v3.3 board present");
 assert(v34.length > 0, "v3.4 board present");
 assert(v35.length > 0, "v3.5 board present");
+assert(v36.length > 0, "v3.6 board present");
 
 /* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33], ["v3.4", v34], ["v3.5", v35]] as const) {
+for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33], ["v3.4", v34], ["v3.5", v35], ["v3.6", v36]] as const) {
   const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
   assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
 }
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
 const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -224,6 +226,34 @@ assert(jud35.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/
 assert(v35pages.includes("Your team already sent feedback.") && v35pages.includes("Give feedback"), "v3.5 shows giving and already-sent feedback");
 const golds35 = v35pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
 assert(golds35 === 0, `v3.5 pages carry at most one gold action (offenders: ${golds35})`);
+
+/* v3.6: one command, one place */
+const v36pages = v36.split('data-col="phoenix-api"')[0];
+assert(!v36.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.6 carries no middle dots");
+assert(!/\bJudge\b/.test(v36pages), "v3.6 pages say Adjudicator, never Judge");
+const golds36 = v36pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
+assert(golds36 === 0, `v3.6 pages carry at most one gold action (offenders: ${golds36})`);
+const form36 = v36pages.split('data-id="par-feedback-form"')[1]?.split('<div class="page"')[0] ?? "";
+assert(form36.includes("How accurate was the adjudicator's call?") && form36.includes("How was the adjudicator's reasoning?") && form36.includes("Discussion"),
+  "v3.6 feedback form asks accuracy, reasoning and discussion");
+const jud36 = v36pages.split('data-id="jud-feedback"')[1]?.split('<div class="page"')[0] ?? "";
+assert(jud36.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/td>|Daryna &amp; Olesia<\/td>/.test(jud36.split("Feedback on your adjudication")[1] ?? ""),
+  "v3.6 adjudicator feedback names no team");
+assert(v36pages.includes("Your team already sent feedback.") && v36pages.includes("Give feedback"), "v3.6 shows giving and already-sent feedback");
+/* no double action: a page whose top bar carries commands draws no in-page button repeating one */
+const doubled36: string[] = [];
+for (const f of readdirSync(join(ROOT, "targets", "cab", "v3.6"))) {
+  if (!f.endsWith(".json") || f.startsWith("_")) continue;
+  const spec = JSON.parse(readFileSync(join(ROOT, "targets", "cab", "v3.6", f), "utf8"));
+  if (spec.kind === "swagger") continue;
+  // notes describe the page; only drawn blocks can hold a button
+  const body = JSON.stringify((spec.blocks ?? []).filter((b: { type: string }) => b.type !== "note"));
+  const segs: string[] = (spec.chrome?.segs ?? []).map((s: { label: string }) => s.label.replace(/<[^>]+>/g, ""));
+  if (/\((plain )?button\)/.test(body) || segs.some((label) => body.includes(`<b>${label}</b> (`))) doubled36.push(spec.id);
+}
+assert(doubled36.length === 0, `v3.6 forms leave their command to the top bar${doubled36.length ? " — doubled: " + doubled36.join(", ") : ""}`);
+const members36 = v36pages.split('data-id="own-members"')[1]?.split('<div class="page"')[0] ?? "";
+assert(members36.length > 0 && !members36.includes("signed-in user"), "v3.6 join requests and members carry no account kind");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

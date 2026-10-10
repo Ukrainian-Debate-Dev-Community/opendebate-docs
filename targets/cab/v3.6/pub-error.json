@@ -1,0 +1,18 @@
+{
+  "id": "pub-error",
+  "title": "404 / 403 — branded error page",
+  "column": "public",
+  "order": 9,
+  "path": "any unknown or forbidden URL",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div style=\"padding:26px 22px;text-align:center;\"><div style=\"font-family:'Cedarville Cursive',cursive;font-size:1.8rem;color:var(--brand);\">cab</div><h2 style=\"margin:8px 0 4px;\">Not found</h2><p class=\"mut\">There is nothing at this address.</p><a href=\"#\" style=\"color:var(--brand);font-weight:700;\">Back to the clubs</a></div>"
+    },
+    {
+      "type": "note",
+      "text": "One template (<code>error_html/error.html.heex</code>) for 403 (\"Not allowed — This page is not open to your account.\"), 404 and 500 (\"Something went wrong — The error is logged — try again in a moment.\"). The JSON API keeps plain <code>{error}</code> bodies. A signed-out visitor hitting a members wall is sent to /signin instead."
+    }
+  ]
+}

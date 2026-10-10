@@ -1,0 +1,57 @@
+{
+  "id": "par-feedback-form",
+  "title": "room feedback — the team's form",
+  "column": "participant",
+  "order": 3,
+  "path": "GET /c/:club/s/:sess/rooms/:id/feedback",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice › Room R1 › Feedback",
+    "segs": [
+      {
+        "label": "Send feedback",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Your team: <b>Anna &amp; Bohdan</b> (OG). One feedback per team; the first one sent stays."
+    },
+    {
+      "type": "section",
+      "title": "Feedback on the adjudicator"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Adjudicator: <b>Petro</b>",
+        "How accurate was the adjudicator's call? <span class=\"mut\">— a whole number from 1 to 10</span> <code>8</code>",
+        "How was the adjudicator's reasoning? <span class=\"mut\">— a whole number from 1 to 10</span> <code>7</code>",
+        "Discussion <span class=\"mut\">— explain your feedback</span>",
+        "<p class=\"mut\">The call was right; the reasoning skipped the comparison between closing teams.</p>",
+        "<span class=\"mut\">Your team sees it now; Petro sees it, without your team's name, once the session is finished.</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Open to any member of a team in this room (a guest through their personal link) once the room's ballot is in, until the club head finishes the session. All three fields are required; the feedback's score is the average of the first two (8 and 7 make 7.5). Feedback is kept by cab; the engine is not involved. Anyone else at this address: the room page."
+    }
+  ],
+  "api": [
+    "POST /api/v1/rooms/:id/feedback"
+  ]
+}
