@@ -1,0 +1,71 @@
+{
+  "id": "pub-standings-adjudicators",
+  "title": "/standings/adjudicators — rooms adjudicated",
+  "column": "public",
+  "order": 21,
+  "path": "GET /standings/adjudicators",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Adjudicators",
+        "Clubs"
+      ],
+      "active": "Adjudicators"
+    },
+    {
+      "type": "section",
+      "title": "Adjudicators"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice</b>, Thu 2 Oct, Kyiv Debate Club"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Adjudicator",
+        "Rooms adjudicated",
+        "Avg feedback"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Petro",
+          "num::1",
+          "num::7.0"
+        ],
+        [
+          "rk::2",
+          "Iryna",
+          "num::1",
+          "num::7.0"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Rooms adjudicated: engine <code>stats/adjudicators</code> verbatim. Avg feedback is cab's own: every adjudicator starts with one vote of 5 and each team's feedback score (the average of accuracy and reasoning) adds a vote — (5 + sum) ÷ (count + 1); with no feedback it reads 5. Public; the forms themselves are not."
+    }
+  ],
+  "api": [
+    "GET events/:id/stats/adjudicators"
+  ]
+}

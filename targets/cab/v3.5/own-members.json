@@ -1,0 +1,86 @@
+{
+  "id": "own-members",
+  "title": "/c/:club/owner/members — requests + roster",
+  "column": "owner",
+  "order": 2,
+  "path": "GET /c/:club/owner/members",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Members",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Members",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Join requests (2)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Who",
+        "About them",
+        "Requested",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "nazar-petrenko <span class=\"mut\">signed-in user (Nazar Petrenko)</span>",
+          "First-year student, saw the club at the university fair and want to try BP. <span class=\"mut\">contact: @nazar-petrenko</span>",
+          "9 Oct 2026",
+          "<a href=\"#\">approve</a>",
+          "<a href=\"#\">decline</a>"
+        ],
+        [
+          "valeriia-zinchenko <span class=\"mut\">signed-in user (Valeriia Zinchenko)</span>",
+          "Debated in school for two years, moving to Kyiv this autumn. <span class=\"mut\">contact: @valeriia-zinchenko</span>",
+          "9 Oct 2026",
+          "<a href=\"#\">approve</a>",
+          "<a href=\"#\">decline</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Members (11)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Role",
+        "Since",
+        ""
+      ],
+      "rows": [
+        [
+          "oleksii-stroganov <span class=\"mut\">Oleksii Stroganov</span>",
+          "head",
+          "9 Oct 2026",
+          ""
+        ],
+        [
+          "andrii-kravets <span class=\"mut\">Andrii Kravets</span>",
+          "member",
+          "9 Oct 2026",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Empty states: \"No pending requests.\", \"No members yet.\" Flash on remove: \"Member removed.\" A declined request is deleted."
+    }
+  ]
+}

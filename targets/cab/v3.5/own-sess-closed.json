@@ -1,0 +1,81 @@
+{
+  "id": "own-sess-closed",
+  "title": "session @ registration closed",
+  "column": "owner",
+  "order": 12,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Club › Thursday practice — registration closed",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      },
+      {
+        "label": "Reopen registration"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "People (14 people)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Seat",
+        "Personal link",
+        ""
+      ],
+      "rows": [
+        [
+          "Anna <span class=\"mut\">member</span>",
+          "R1 OG",
+          "—",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Oleksii Stroganov <span class=\"mut\">member</span>",
+          "R1 adjudicator",
+          "—",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Allocation — 2 room(s), count automatic"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "14 people checked in → 2 rooms. <b>Nobody is placed automatically</b> — drag people from the tray into the slots."
+      ]
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><div style=\"border:1px dashed var(--line);border-radius:8px;padding:6px;margin-bottom:6px;font-size:11px;\"><b>Waiting (2)</b> &nbsp; <span class=\"cpy\">Marko</span> <span class=\"cpy\">Iryna</span></div><table class=\"t\" style=\"table-layout:fixed\"><tr><th style=\"width:30px\"></th><th>OG</th><th>OO</th><th>CG</th><th>CO</th><th>Adjudicator</th><th style=\"width:70px\"></th></tr><tr><td class=\"rk\">R1</td><td class=\"sd og\">Anna <b>SPK</b><br>Bohdan <b>SPK</b></td><td class=\"sd oo\">Daryna <b>SPK</b><br>Olesia <b>SPK</b></td><td class=\"sd cg\">Hlib <b>SPK</b><br>▢</td><td class=\"sd co\">Taras <b>SPK</b><br>▢</td><td>Oleksii Stroganov <b>ADJ</b></td><td class=\"st\">incomplete</td></tr><tr><td class=\"rk\">R2</td><td class=\"sd og\">▢ ▢</td><td class=\"sd oo\">▢ ▢</td><td class=\"sd cg\">▢ ▢</td><td class=\"sd co\">▢ ▢</td><td>▢</td><td class=\"st\">empty</td></tr></table><p class=\"mut\">Drag chips into slots; drop on a taken slot to swap; drag a placed chip out of the table to unassign. A team with one speaker becomes an iron.</p></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Reached only when registration was closed through the API; same allocator, same server draft, the same gold Start session."
+    }
+  ],
+  "api": [
+    "POST rounds/:id/rooms"
+  ]
+}

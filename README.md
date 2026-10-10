@@ -20,6 +20,10 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3.5/*.json   version 3.5 (club-night feedback: one per team after the ballot,
+                      accuracy + reasoning 1-10 and a discussion, the team sees its own,
+                      the adjudicator sees theirs anonymous after finish, the head sees
+                      all with progress; public average with a base vote of 5)
     cab/v3.4/*.json   version 3.4 (rebuilt from the code after the launch-prep round:
                       the directory for everyone, My page holds my clubs and
                       invitations, Google sign-in with link and merge, guests
