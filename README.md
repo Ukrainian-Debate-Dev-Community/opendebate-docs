@@ -20,6 +20,11 @@ webdesign/
     cab/v1/*.json     one spec per page (plus _columns.json) — version 1
     cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
     cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
+    cab/v3.7/*.json   version 3.7 (feedback lives in the engine: each session's form
+                      as engine feedback questions, answers and the computed score
+                      there, the adjudicator average with a base vote from
+                      stats/adjudicators?base=5; feedback pages match the built app;
+                      room prep end time specced for the engine)
     cab/v3.6/*.json   version 3.6 (one command, one place: a form whose command sits
                       in the top bar has no button of its own — feedback form, room
                       motion form; join requests and members carry no account kind)

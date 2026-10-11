@@ -1,0 +1,80 @@
+{
+  "id": "pub-front",
+  "title": "/ — the clubs directory (everyone)",
+  "column": "public",
+  "order": 1,
+  "path": "GET /",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Clubs",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Debate clubs of Ukraine",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "<b>Welcome to cab</b>",
+        "The home of Ukrainian debate clubs: find a club, register for a session, debate — and follow standings and your own results in one place. Free for every Ukrainian club, run by the Debate Federation of Ukraine.",
+        "<p class=\"mut\">Registering for a session needs no account — the club shares one link. <a href=\"#\">Sign in</a> to keep your history, schedule and personal stats.</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "City",
+        "Members",
+        "Next session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "num::11",
+          "st::Thu 18:30 — <a href=\"#\">register</a>"
+        ],
+        [
+          "<a href=\"#\">Lviv Debaters</a>",
+          "Lviv",
+          "num::9",
+          "st::running — <a href=\"#\">watch rooms</a>"
+        ],
+        [
+          "<a href=\"#\">Kharkiv Club</a>",
+          "Kharkiv",
+          "num::7",
+          "st::registration closed"
+        ],
+        [
+          "<a href=\"#\">Odesa Club</a>",
+          "Odesa",
+          "num::6",
+          "st::not planned yet"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "One page for everyone: signed out it opens with the welcome; signed in the welcome goes and only banners are added (see the user column). Read from cab's own records only (club rows, member counts, each club's current session) — no engine call. Next session in words: <i>time — register</i> (or <i>registration open</i> without a time), <i>registration closed</i>, <i>running — watch rooms</i>, <i>not planned yet</i>."
+    },
+    {
+      "type": "raw",
+      "html": "<div style=\"margin-top:14px;padding:10px 0 15px;border-top:1px solid var(--line);font-size:11px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;\"><div><b>Find your club</b><p class=\"mut\">Clubs across Ukraine run weekly practice rounds — pick one and come debate. Free for every Ukrainian club.</p><a style=\"color:var(--brand);font-weight:700\" href=\"#\">Main page</a></div><div><b>Our organisation</b><p class=\"mut\">Run by the NGO Debate Federation of Ukraine (ВМГО «Федерація Дебатів України»).</p><a style=\"color:var(--brand);font-weight:700\" href=\"#\">DFU</a> &nbsp; <a style=\"color:var(--brand);font-weight:700\" href=\"#\">Contact us</a></div><div><b>Data &amp; privacy</b><p class=\"mut\">cab is in beta testing.</p><a style=\"color:var(--brand);font-weight:700\" href=\"#\">Policy</a> &nbsp; <a style=\"color:var(--brand);font-weight:700\" href=\"#\">Terms</a> &nbsp; <a style=\"color:var(--brand);font-weight:700\" href=\"#\">Support</a></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "the footer renders on EVERY shell page, all roles — shown once here. The sidebar's profile block carries the theme button (◐ cycles light, auto, dark) and the language menu (EN / UA)."
+    }
+  ]
+}
