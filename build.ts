@@ -15,7 +15,7 @@ const CAB_FONT = join(ROOT, "..", "platform", "apps", "cab", "priv", "static", "
 // predecessor pages and adds its own (the two APIs sit above admin —
 // cab api serves every page verb, engine api is cab's internal store)
 const COLUMN_ORDER = [
-  "public", "user", "participant", "judge", "member", "owner", "admin", "phoenix-api", "engine-api",
+  "public", "user", "participant", "judge", "member", "content-manager", "owner", "admin", "phoenix-api", "engine-api",
 ];
 const COLUMN_CLASS: Record<string, string> = {
   "engine-api": "c-api", "phoenix-api": "c-api", admin: "c-adm", public: "c-pub",
@@ -44,7 +44,7 @@ type PageSpec = {
 };
 type SwagRow = { id: string; method: string; path: string; desc: string; api?: string; apiNone?: boolean; t?: string };
 type Columns = Record<string, { title: string; cond: string }>;
-type Version = { name: string; columns: Columns; pages: PageSpec[] };
+type Version = { name: string; columns: Columns; pages: PageSpec[]; lang?: string };
 // targets/<platform>/platform.json — all fields optional
 type Platform = { id: string; label: string; order: number; lang: string; frameWidth: number; versions: Version[] };
 
@@ -86,14 +86,16 @@ function scrub(html: string): string {
 function loadVersion(dir: string, name: string): Version {
   const files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
   let columns: Columns = {};
+  let lang: string | undefined;
   const pages: PageSpec[] = [];
   for (const f of files) {
     const data = dropPlanning(JSON.parse(readFileSync(join(dir, f), "utf8")));
     if (f === "_columns.json") columns = data;
+    else if (f === "_version.json") lang = data.lang; // a version may speak another language than its platform
     else if (!f.startsWith("_")) pages.push(data);
   }
   pages.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.id.localeCompare(b.id));
-  return { name, columns, pages };
+  return { name, columns, pages, lang };
 }
 
 // versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
@@ -282,7 +284,7 @@ function buildIndex(platforms: Platform[]): string {
       const board = `<div class="board">\n` +
         cols.map((c) => `<!-- ${pf.id} ${v.name}: ${c} -->\n${scrub(renderColumn(c, v, pf))}`).join("\n\n") +
         `\n</div>`;
-      return `<section class="version pf-${pf.id}" data-platform="${pf.id}" data-version="${v.name}" lang="${pf.lang}" hidden>\n${head}\n${board}\n</section>`;
+      return `<section class="version pf-${pf.id}" data-platform="${pf.id}" data-version="${v.name}" lang="${v.lang ?? pf.lang}" hidden>\n${head}\n${board}\n</section>`;
     }),
   ).join("\n\n");
 

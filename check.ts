@@ -51,7 +51,7 @@ assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platf
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
 assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
 assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
-for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -339,6 +339,79 @@ assert(u2.includes("2. Content manager") && u2col("content-manager").includes("n
 for (const text of ["Дебатна спільнота України — <em>турніри, рейтинги, розвиток</em>", "Федерації дебатів України 10 років!", "Кубок Фенікса", "Онлайн, БПФ"]) {
   assert(u2text.includes(text), `uadebate v2 keeps «${text.replace(/<[^>]+>/g, "")}»`);
 }
+
+/* ---------- main (uadebate.com) v3: English, one column per scope as in cab ---------- */
+const u3 = chunk("uadebate", "v3");
+const u3col = (name: string) => u3.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u3pages = u3.split('<div class="page"').slice(1);
+const u3text = u3.replace(/<!--[\s\S]*?-->/g, "");
+assert(/lang="en"/.test(u3.slice(0, 300)), "uadebate v3 board is marked English");
+assert(chlogOf(u3).includes("Compared with v2"), "uadebate v3 changelog compares with v2");
+const v3cols = [...u3.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(v3cols.join(",") === "public,user,content-manager,admin,phoenix-api",
+  `uadebate v3 columns follow the scope ladder (got: ${v3cols.join(",")})`);
+const v3conds = ["1. Public (anonymous)", "2. User (signed in)", "3. Content manager", "4. Admin", "5. Phoenix API"];
+assert(v3conds.every((t) => u3.includes(`<h3>${t}`)), "uadebate v3 columns are numbered as in cab");
+for (const [col, prev] of [["user", "public"], ["content-manager", "user"], ["admin", "content-manager"]]) {
+  assert(u3col(col).includes(`<b>All ${prev} pages +</b>`), `uadebate v3: ${col} inherits all ${prev} pages`);
+}
+const v3scope: Record<string, string[]> = {
+  public: ["main-front", "main-news", "main-news-article", "main-calendar", "main-clubs", "main-club", "main-about", "main-signin"],
+  user: ["user-front"],
+  "content-manager": ["cm-dash", "cm-news-edit", "cm-calendar", "cm-event-edit", "cm-clubs", "cm-club-edit"],
+  admin: ["adm-roles"],
+};
+const misplaced3 = Object.entries(v3scope).flatMap(([col, ids]) => ids.filter((id) => !u3col(col).includes(`data-id="${id}"`)));
+assert(misplaced3.length === 0, `uadebate v3: every page sits in its scope${misplaced3.length ? " (missing: " + misplaced3.join(", ") + ")" : ""}`);
+assert(u3pages.length === Object.values(v3scope).flat().length, `uadebate v3 has exactly the scoped pages (${u3pages.length})`);
+for (const id of ["main-tournaments", "main-ratings", "main-history"]) {
+  assert(!u3.includes(`data-id="${id}"`), `uadebate v3 has no ${id} page`);
+}
+assert(u3col("phoenix-api").includes('class="swag"') && ["/news", "/events", "/calendar.ics", "/clubs", "/roles/content-managers"]
+  .every((p) => u3col("phoenix-api").includes(`<span class="p">${p}</span>`)), "uadebate v3: the Phoenix API column lists the site's endpoints");
+const nav3 = ["Home", "News", "Calendar", "Clubs", "About"];
+const badNav3 = u3pages.filter((pg) => {
+  const bar = pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "";
+  const items = [...(bar.match(/<nav class="ua-nav">([\s\S]*?)<\/nav>/)?.[1] ?? "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]);
+  return !/class="ua-brand wordmark"[^>]*>UAdebates</.test(bar) || items.join(",") !== nav3.join(",") || !bar.includes(">Cabinet</a>");
+}).length;
+assert(badNav3 === 0, `uadebate v3: every header has the wordmark, exactly Home, News, Calendar, Clubs, About, and Cabinet (${badNav3} off)`);
+assert(u3col("public").split('<div class="page"').slice(1).every((pg) => pg.includes(">Sign in</a>")) &&
+  !/>Sign in<\/a>/.test(u3col("user") + u3col("content-manager") + u3col("admin")), "uadebate v3: Sign in shows only to anonymous visitors");
+assert(!/>(Tournaments|Ratings|History)<\/a>/.test(u3text.replace(/<a class="on" href="#">All<\/a><a href="#">Tournaments<\/a>/g, "")),
+  "uadebate v3 links to no dropped page (Tournaments, Ratings, History)");
+const foot3 = u3pages.map((pg) => pg.match(/<footer class="ua-foot">[\s\S]*?<\/footer>/)?.[0] ?? "");
+const mails3 = [...new Set(foot3.flatMap((f) => f.match(/[\w.+-]+@[\w.-]+/g) ?? []))].sort();
+assert(foot3.every((f) => f.length > 0) && mails3.join(",") === "ngo.dfu@uadebate.com,support@uadebate.com",
+  `uadebate v3: every footer carries exactly ngo.dfu@ and support@ (got: ${mails3.join(", ")})`);
+assert(!/info@|dfu\.ngo@|noreply@|admin@uadebate/.test(u3text), "uadebate v3 shows no invented or internal address");
+assert(foot3.every((f) => f.includes("t.me/fdu_ua")), "uadebate v3: every footer links Telegram");
+const about3 = pageChunk(u3, "main-about");
+for (const t of ["07/05/2011", "06/2012", "09-11/05/2013", "03/2015", "12/2015", "Mission", "Goal", "Means", "Federation Cup in Vinnytsia"]) {
+  assert(about3.includes(t), `uadebate v3 About carries the Wix history: ${t}`);
+}
+assert(["2011", "2012", "2013", "2015"].every((y) => about3.includes(`<div class="ua-tl-year"><span>${y}</span>`)), "uadebate v3 About has the four year markers");
+assert((about3.match(/class="ua-branch"/g) ?? []).length === 16, "uadebate v3 About maps the sixteen branches");
+const cyr3 = u3text.replace(/<[^>]+>/g, " ").match(/[Ѐ-ӿ]+/g) ?? [];
+assert(cyr3.length === 0, `uadebate v3 is English only${cyr3.length ? " (found: " + cyr3.slice(0, 5).join(" ") + ")" : ""}`);
+const goldy3 = u3pages.filter((pg) => (pg.match(/ua-btn--gold|class="go"/g) ?? []).length > 1).length;
+assert(goldy3 === 0, `uadebate v3: at most one gold action per page (${goldy3} pages with more)`);
+assert(!u3text.includes("·"), "uadebate v3 carries no middle dots");
+const arrows3 = [...new Set(u3text.match(/[←-⇿⬀-⯿›❯]/g) ?? [])];
+assert(arrows3.length === 0, `uadebate v3 carries no arrows${arrows3.length ? " (found: " + arrows3.join(" ") + ")" : ""}`);
+assert(!/[“”]/.test(u3text), "uadebate v3 English text uses plain quotes");
+const private3 = ["DFU board meeting", "Closed adjudicator selection for the Championship"];
+const outsideCm3 = u3col("public") + u3col("user");
+assert(private3.every((t) => !outsideCm3.includes(t)) && !/ua-ev--priv|ua-chip--priv|class="ua-vis"/.test(outsideCm3),
+  "uadebate v3: private events and the visibility switch stay out of the public and user columns");
+const cmCal3 = pageChunk(u3, "cm-calendar");
+assert(private3.every((t) => cmCal3.includes(t)) &&
+  (cmCal3.match(/class="ua-vis"/g) ?? []).length === (cmCal3.match(/class="ua-ev[ "]/g) ?? []).length,
+  "uadebate v3: the content manager's calendar shows the private events, each with the Public / Private switch");
+assert(pageChunk(u3, "cm-event-edit").includes("Private: only content managers see it"), "uadebate v3: the event form offers private visibility");
+assert(pageChunk(u3, "main-club").includes("Open in cab"), "uadebate v3: the club page opens the club in cab");
+assert(u3col("content-manager").includes("not a cab admin") && pageChunk(u3, "adm-roles").includes("Grant the role"),
+  "uadebate v3: content managers are not cab admins, and admins grant the role");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");
