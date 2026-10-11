@@ -50,12 +50,12 @@ const pfSwitch = visible.match(/<div class="wb-seg" id="platform"[\s\S]*?<\/div>
 assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platform="uadebate"'), "platform switch offers cab and uadebate");
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
 assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
-assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
+assert(pfSwitch.includes('data-platform="dfu"') && pfSwitch.includes(">dfu (dfu.uadebate.com)</button>"), "platform switch offers dfu, labelled dfu (dfu.uadebate.com)");
 for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
-const versionsOnDisk = ["cab", "uadebate"].flatMap((pf) => versionsOf(pf).map((v) => `${pf}/${v}`));
+const versionsOnDisk = ["cab", "uadebate", "dfu"].flatMap((pf) => versionsOf(pf).map((v) => `${pf}/${v}`));
 assert(versionsOnDisk.every((v) => versionsInPage.includes(v)) && versionsInPage.length === versionsOnDisk.length,
   `every platform+version on disk has exactly one board (${versionsInPage.length})`);
 
@@ -66,7 +66,7 @@ const chromeText = visible.replace(/<section[\s\S]*?<\/section>/g, "");
 assert(!chromeText.includes("·"), "the workbench chrome carries no middle dots");
 
 /* every spec id is rendered, and ids are unique within a platform+version */
-for (const pf of ["cab", "uadebate"]) {
+for (const pf of ["cab", "uadebate", "dfu"]) {
   for (const ver of versionsOf(pf)) {
     const c = chunk(pf, ver);
     const missing = specIds(pf, ver).filter((id) => !c.includes(`data-id="${id}"`));
@@ -412,6 +412,58 @@ assert(pageChunk(u3, "cm-event-edit").includes("Private: only content managers s
 assert(pageChunk(u3, "main-club").includes("Open in cab"), "uadebate v3: the club page opens the club in cab");
 assert(u3col("content-manager").includes("not a cab admin") && pageChunk(u3, "adm-roles").includes("Grant the role"),
   "uadebate v3: content managers are not cab admins, and admins grant the role");
+
+/* ---------- dfu v1: the NGO cabinet, one column per scope like cab ---------- */
+const d1 = chunk("dfu", "v1");
+const d1col = (col: string) => d1.split(`data-col="${col}"`)[1]?.split('<div class="col ')[0] ?? "";
+const d1pages = pagesOf(d1).split('<div class="page"').slice(1);
+const d1text = d1.replace(/<[^>]+>/g, " ");
+const d1cols = [...d1.matchAll(/data-col="([a-z-]+)"[^>]*><h3>([^<]+)<\/h3>/g)].map((m) => `${m[1]}=${m[2]}`);
+assert(d1cols.join("|") === "member=1. Member|branch-head=2. Branch head|board=3. Board|admin=4. Secretariat (admin)|phoenix-api=5. Phoenix API, /api/v1 (dfu)",
+  `dfu v1 columns: member, branch head, board, secretariat, Phoenix API (got: ${d1cols.join(", ")})`);
+const d1conds = [...d1.matchAll(/<p class="cond">([\s\S]*?)<\/p>/g)].map((m) => m[1]);
+assert(["All member pages +", "All branch-head pages +", "All board pages +"].every((t, i) => d1conds[i + 1]?.startsWith(`<b>${t}`)),
+  "dfu v1: each scope caption starts with All <previous> pages +");
+assert(d1conds[0]?.includes("gets 404 on every dfu page") && d1col("phoenix-api").includes("every call is 404"),
+  "dfu v1 states the 404 for anyone without a dfu role, pages and API");
+const d1scope: Record<string, string[]> = {
+  member: ["m-inbox", "m-doc", "m-cases", "m-case", "m-votes", "m-vote", "m-ann", "m-documents", "m-members", "m-branches", "m-leadership", "m-adjudicators"],
+  "branch-head": ["bh-branch", "bh-submit"],
+  board: ["b-cases", "b-case", "b-vote-new", "b-vote", "b-ann-new"],
+  admin: ["s-journal", "s-register", "s-doc", "s-roles"],
+};
+const misplacedD1 = Object.entries(d1scope).flatMap(([col, ids]) => ids.filter((id) => !d1col(col).includes(`data-id="${id}"`)));
+assert(misplacedD1.length === 0, `dfu v1: every page sits in its scope${misplacedD1.length ? " (missing: " + misplacedD1.join(", ") + ")" : ""}`);
+assert(d1pages.length === Object.values(d1scope).flat().length, `dfu v1 has exactly the scoped pages (${d1pages.length})`);
+assert(d1pages.every((pg) => /<nav class="nav"><div class="cp">dfu<\/div>/.test(pg) && pg.includes('<div class="sc">Records</div>') &&
+  pg.includes('<div class="sc">Organisation</div>')), "dfu v1: every page has the sidenav with the dfu wordmark, Records and Organisation");
+assert(!/<div class="sc">Secretariat<\/div>/.test(d1col("member") + d1col("branch-head") + d1col("board")) &&
+  d1col("admin").includes('<div class="sc">Secretariat</div>'), "dfu v1: the Secretariat section shows only to the secretariat");
+const goldyD1 = d1pages.filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
+assert(goldyD1 === 0, `dfu v1: at most one gold action per page (${goldyD1} pages with more)`);
+assert(!d1.includes("·"), "dfu v1 carries no middle dots");
+const arrowsD1 = [...new Set(d1.match(/[←-⇿⬀-⯿›❯◐]/g) ?? [])];
+assert(arrowsD1.length === 0, `dfu v1 carries no arrows or symbols${arrowsD1.length ? " (found: " + arrowsD1.join(" ") + ")" : ""}`);
+assert(!/[“”«»]/.test(d1text), "dfu v1 English text uses plain quotes");
+const cyrD1 = d1text.match(/[Ѐ-ӿ]+/g) ?? [];
+assert(cyrD1.length === 0, `dfu v1 is English only${cyrD1.length ? " (found: " + cyrD1.slice(0, 5).join(" ") + ")" : ""}`);
+const cabLinks = d1pages.flatMap((pg) => [...pg.matchAll(/>([^<]*)<\/a>/g)].map((m) => m[1]))
+  .filter((t) => /\bcab\b|\/c\/|Club|Standings|Rooms/.test(t));
+assert(cabLinks.length === 0 && d1pages.every((pg) => pg.includes('<a href="#">Cabinet</a>')),
+  `dfu v1 links to cab only through the Cabinet link${cabLinks.length ? " (found: " + cabLinks.join(", ") + ")" : ""}`);
+assert(/\/c\/|owner/.test(pagesOf(d1)) === false, "dfu v1 carries no cab routes");
+for (const t of ["IN-2026-041", "C-2026-07", "D-2026-12", "V-2026-14"]) assert(d1.includes(t), `dfu v1 uses journal numbers: ${t}`);
+assert(pageChunk(d1, "m-vote").includes('<a class="go" href="#">Sign vote</a>') && pageChunk(d1, "m-vote").includes("41 of 96"),
+  "dfu v1: a vote counts once signed, quorum shown");
+for (const [id, names] of [["m-leadership", ["Karyna Kuznietsova", "Polina Sorokolit", "Ihor Bobryshev", "Kyrylo Kozhemiakin"]],
+  ["m-branches", ["Kateryna Omelian", "Dmytro Sefer", "Yuliia Serhiienko"]], ["m-adjudicators", ["53 certified", "Kyrylo Kozhemiakin"]]] as const) {
+  assert(names.every((n) => pageChunk(d1, id).includes(n)), `dfu v1 ${id} carries the Wix data (${names.join(", ")})`);
+}
+assert((pageChunk(d1, "m-branches").match(/<tr>/g) ?? []).length === 17, "dfu v1 lists the sixteen branches");
+assert(pageChunk(d1, "s-doc").includes("Public") && d1col("phoenix-api").includes("/api/documents?public=1"),
+  "dfu v1: the secretariat publishes documents, uadebate.com reads the public ones");
+assert(d1col("phoenix-api").includes('class="swag"') && ["/inbox", "/cases", "/votes/:no/signatures", "/journal", "/people"]
+  .every((p) => d1col("phoenix-api").includes(`<span class="p">${p}</span>`)), "dfu v1: the Phoenix API column lists dfu's endpoints");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

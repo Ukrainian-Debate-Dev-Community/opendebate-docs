@@ -1,0 +1,46 @@
+{
+  "id": "m-case",
+  "title": "/cases/:no, one case",
+  "column": "member",
+  "order": 4,
+  "path": "GET /cases/:no",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Cases",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Cases / C-2026-07",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><span class=\"jnr\">C-2026-07</span> <span class=\"chip open\">Open</span><h4 style=\"font-size:.9rem;margin:5px 0 8px\">Admission of the club Chernivtsi Debaty to the DFU</h4><dl class=\"kv\"><dt>Responsible</dt><dd>Anton Yevtushok</dd><dt>Opened</dt><dd>28 September 2026</dd><dt>Vote</dt><dd>none yet</dd></dl></div></div>"
+    },
+    {
+      "type": "section",
+      "title": "Documents in order"
+    },
+    {
+      "type": "raw",
+      "html": "<ul class=\"tl\"><li><span class=\"jnr\">IN-2026-038</span> Membership application<span class=\"sub\">Membership form, 28 September</span></li><li><span class=\"jnr\">IN-2026-042</span> Opinion of the Chernivtsi branch head<span class=\"sub\">Anastasiia Zabielina, 3 October</span></li><li><span class=\"jnr\">OUT-2026-017</span> Request for the club statute<span class=\"sub\">Secretariat, 4 October</span></li></ul>"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

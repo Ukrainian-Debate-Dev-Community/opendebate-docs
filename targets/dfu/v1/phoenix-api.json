@@ -1,0 +1,248 @@
+{
+  "id": "phoenix-api",
+  "kind": "swagger",
+  "column": "phoenix-api",
+  "order": 100,
+  "groups": [
+    {
+      "title": "session",
+      "rows": [
+        {
+          "id": "api-me",
+          "t": "GET /me",
+          "method": "GET",
+          "path": "/me",
+          "desc": "the person, their dfu role, branch and scopes; 404 without a role",
+          "api": "cab sign-in session"
+        }
+      ]
+    },
+    {
+      "title": "records",
+      "rows": [
+        {
+          "id": "api-inbox",
+          "t": "GET /inbox",
+          "method": "GET",
+          "path": "/inbox",
+          "desc": "member, documents addressed to them, their branch or everyone; ?q by number or subject"
+        },
+        {
+          "id": "api-doc",
+          "t": "GET /documents/:jnr",
+          "method": "GET",
+          "path": "/documents/:jnr",
+          "desc": "member, one document if addressed to them; the opening is logged"
+        },
+        {
+          "id": "api-docs",
+          "t": "GET /documents",
+          "method": "GET",
+          "path": "/documents",
+          "desc": "member, the organisation's documents; ?kind"
+        },
+        {
+          "id": "api-doc-submit",
+          "t": "POST /documents",
+          "method": "POST",
+          "path": "/documents",
+          "desc": "branch head, a submitted document waiting for registration"
+        },
+        {
+          "id": "api-journal",
+          "t": "GET /journal",
+          "method": "GET",
+          "path": "/journal",
+          "desc": "secretariat, every entry; ?direction"
+        },
+        {
+          "id": "api-journal-post",
+          "t": "POST /journal",
+          "method": "POST",
+          "path": "/journal",
+          "desc": "secretariat, register a document and give it its number"
+        },
+        {
+          "id": "api-doc-access",
+          "t": "PATCH /documents/:jnr",
+          "method": "PATCH",
+          "path": "/documents/:jnr",
+          "desc": "secretariat, {access: internal | public}"
+        }
+      ]
+    },
+    {
+      "title": "cases",
+      "rows": [
+        {
+          "id": "api-cases",
+          "t": "GET /cases",
+          "method": "GET",
+          "path": "/cases",
+          "desc": "member, theirs; board, all; ?status"
+        },
+        {
+          "id": "api-case",
+          "t": "GET /cases/:no",
+          "method": "GET",
+          "path": "/cases/:no",
+          "desc": "the case and its documents in order"
+        },
+        {
+          "id": "api-case-post",
+          "t": "POST /cases",
+          "method": "POST",
+          "path": "/cases",
+          "desc": "board, open a case"
+        },
+        {
+          "id": "api-case-patch",
+          "t": "PATCH /cases/:no",
+          "method": "PATCH",
+          "path": "/cases/:no",
+          "desc": "board, {status, responsible}; closing needs a note"
+        },
+        {
+          "id": "api-case-doc",
+          "t": "POST /cases/:no/documents",
+          "method": "POST",
+          "path": "/cases/:no/documents",
+          "desc": "board, attach a registered document"
+        }
+      ]
+    },
+    {
+      "title": "votes",
+      "rows": [
+        {
+          "id": "api-votes",
+          "t": "GET /votes",
+          "method": "GET",
+          "path": "/votes",
+          "desc": "member, votes whose scope includes them"
+        },
+        {
+          "id": "api-vote",
+          "t": "GET /votes/:no",
+          "method": "GET",
+          "path": "/votes/:no",
+          "desc": "the vote, quorum and who signed; choices once closed (named ballots)"
+        },
+        {
+          "id": "api-vote-post",
+          "t": "POST /votes",
+          "method": "POST",
+          "path": "/votes",
+          "desc": "board, {question, scope, quorum, until, ballot, case}"
+        },
+        {
+          "id": "api-vote-sign",
+          "t": "POST /votes/:no/signatures",
+          "method": "POST",
+          "path": "/votes/:no/signatures",
+          "desc": "a person in the scope, {choice}; once only, never changed"
+        },
+        {
+          "id": "api-vote-del",
+          "t": "DEL /votes/:no",
+          "method": "DEL",
+          "path": "/votes/:no",
+          "desc": "board, withdraw with a reason, which is kept"
+        }
+      ]
+    },
+    {
+      "title": "announcements and organisation",
+      "rows": [
+        {
+          "id": "api-ann",
+          "t": "GET /announcements",
+          "method": "GET",
+          "path": "/announcements",
+          "desc": "member, those for them"
+        },
+        {
+          "id": "api-ann-post",
+          "t": "POST /announcements",
+          "method": "POST",
+          "path": "/announcements",
+          "desc": "board, {title, text, for}"
+        },
+        {
+          "id": "api-members",
+          "t": "GET /members",
+          "method": "GET",
+          "path": "/members",
+          "desc": "member, names, branches, status; contacts for the branch head and secretariat"
+        },
+        {
+          "id": "api-branches",
+          "t": "GET /branches",
+          "method": "GET",
+          "path": "/branches",
+          "desc": "member, branches and heads"
+        },
+        {
+          "id": "api-leadership",
+          "t": "GET /leadership",
+          "method": "GET",
+          "path": "/leadership",
+          "desc": "member, the leadership and the supervisory board"
+        },
+        {
+          "id": "api-adj",
+          "t": "GET /adjudicators",
+          "method": "GET",
+          "path": "/adjudicators",
+          "desc": "member, the AKS register"
+        }
+      ]
+    },
+    {
+      "title": "roles",
+      "rows": [
+        {
+          "id": "api-roles",
+          "t": "GET /people",
+          "method": "GET",
+          "path": "/people",
+          "desc": "secretariat, everyone with a dfu role"
+        },
+        {
+          "id": "api-roles-post",
+          "t": "POST /people",
+          "method": "POST",
+          "path": "/people",
+          "desc": "secretariat, {account, role, branch, scopes}",
+          "api": "cab account lookup by username or e-mail (service token)"
+        },
+        {
+          "id": "api-roles-del",
+          "t": "DEL /people/:account",
+          "method": "DEL",
+          "path": "/people/:account",
+          "desc": "secretariat, remove the role; the person then gets 404"
+        }
+      ]
+    },
+    {
+      "title": "for uadebate.com (service token)",
+      "rows": [
+        {
+          "id": "api-pub-docs",
+          "t": "GET /api/documents?public=1",
+          "method": "GET",
+          "path": "/api/documents?public=1",
+          "desc": "the public documents only"
+        },
+        {
+          "id": "api-structure",
+          "t": "GET /api/structure",
+          "method": "GET",
+          "path": "/api/structure",
+          "desc": "leadership, supervisory board and branches, for About"
+        }
+      ]
+    }
+  ]
+}

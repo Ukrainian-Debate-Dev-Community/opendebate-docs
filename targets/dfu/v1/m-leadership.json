@@ -1,0 +1,79 @@
+{
+  "id": "m-leadership",
+  "title": "/leadership, board and supervisory board",
+  "column": "member",
+  "order": 11,
+  "path": "GET /leadership",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Leadership",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Leadership",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Leadership"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Position"
+      ],
+      "rows": [
+        [
+          "Karyna Kuznietsova",
+          "President"
+        ],
+        [
+          "Tetiana Soboleva",
+          "Vice-president"
+        ],
+        [
+          "Olha Polishchuk",
+          "Vice-president for English-language debate"
+        ],
+        [
+          "Anton Yevtushok",
+          "Vice-president for regional development"
+        ],
+        [
+          "Polina Sorokolit",
+          "Head of the Secretariat"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Supervisory board"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\">The body that oversees the work of the Federation, its branches and the accounting of its assets.<p>Ihor Bobryshev, Oleksandr Kupriienko, Kyrylo Kozhemiakin</p></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "From the old Wix pages Kerivni posady and Nahliadova rada; it may be out of date. uadebate.com reads this structure from dfu for its About page."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

@@ -15,12 +15,12 @@ const CAB_FONT = join(ROOT, "..", "platform", "apps", "cab", "priv", "static", "
 // predecessor pages and adds its own (the two APIs sit above admin —
 // cab api serves every page verb, engine api is cab's internal store)
 const COLUMN_ORDER = [
-  "public", "user", "participant", "judge", "member", "content-manager", "owner", "admin", "phoenix-api", "engine-api",
+  "public", "user", "participant", "judge", "member", "branch-head", "board", "content-manager", "owner", "admin", "phoenix-api", "engine-api",
 ];
 const COLUMN_CLASS: Record<string, string> = {
   "engine-api": "c-api", "phoenix-api": "c-api", admin: "c-adm", public: "c-pub",
   user: "c-usr", owner: "c-own", member: "c-mem", participant: "c-par", judge: "c-jud",
-  "content-manager": "c-own",
+  "content-manager": "c-own", "branch-head": "c-jud", board: "c-own",
 };
 const METHOD_CLASS: Record<string, string> = {
   GET: "get", POST: "post", PUT: "put", PATCH: "patch", DEL: "del", DELETE: "del",
@@ -175,7 +175,9 @@ function renderPage(p: PageSpec, brand: string): string {
     const nav = p.nav
       ? `<nav class="nav"><div class="cp">${brand}</div>` +
         (p.nav.context ? `<div class="sc">${p.nav.context}</div>` : "") +
-        p.nav.items.map((it) => `<a${it === p.nav!.active ? ` class="on"` : ""} href="#">${it}</a>`).join("") +
+        // an item starting "# " is a section heading of the sidenav, not a link
+        p.nav.items.map((it) => it.startsWith("# ") ? `<div class="sc">${it.slice(2)}</div>`
+          : `<a${it === p.nav!.active ? ` class="on"` : ""} href="#">${it}</a>`).join("") +
         `<div class="pf">${p.nav.profile ?? ""}</div></nav>`
       : "";
     const segs = p.chrome?.segs?.length

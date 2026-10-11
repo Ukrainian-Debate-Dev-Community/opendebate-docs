@@ -1,0 +1,46 @@
+{
+  "id": "s-register",
+  "title": "/journal/new, register a document",
+  "column": "admin",
+  "order": 21,
+  "path": "GET /journal/new",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators",
+      "# Secretariat",
+      "Journal",
+      "People and roles"
+    ],
+    "active": "Journal",
+    "profile": "<span class=\"who\">Polina Sorokolit</span>Head of the Secretariat<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Journal / Register",
+    "segs": [
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"form\"><div class=\"fld\"><span>Direction</span><div class=\"pick\"><b class=\"on\">Incoming</b><b>Outgoing</b></div><small>the number it will get: IN-2026-045</small></div><label class=\"fld\"><span>Subject</span><i>Report on the Kyiv branch season opening</i></label><div class=\"two\"><label class=\"fld\"><span>From</span><i>Kyiv branch (submitted by Kateryna Omelian)</i></label><label class=\"fld\"><span>Received</span><i>11.10.2026</i></label></div><label class=\"fld\"><span>File</span><i>kyiv-season-opening.pdf</i></label><label class=\"fld\"><span>Case</span><i class=\"ph\">none</i></label><div class=\"fld\"><span>Addressed to</span><div class=\"pick\"><b>All members</b><b class=\"on\">Board</b><b>A branch</b><b>One person</b></div></div><div class=\"fld\"><span>Access</span><div class=\"pick\"><b class=\"on\">Internal</b><b>Public</b></div><small>Public also lists it on uadebate.com</small></div></div>"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

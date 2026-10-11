@@ -1,0 +1,99 @@
+{
+  "id": "s-roles",
+  "title": "/people, people and roles",
+  "column": "admin",
+  "order": 23,
+  "path": "GET /people",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators",
+      "# Secretariat",
+      "Journal",
+      "People and roles"
+    ],
+    "active": "People and roles",
+    "profile": "<span class=\"who\">Polina Sorokolit</span>Head of the Secretariat<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "People and roles",
+    "segs": [
+      {
+        "label": "Grant role",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"form\"><div class=\"two\"><label class=\"fld\"><span>Find a cab account</span><i class=\"ph\">username or e-mail</i></label><div class=\"fld\"><span>Role</span><div class=\"pick\"><b class=\"on\">Member</b><b>Branch head</b><b>Board</b><b>Secretariat</b></div></div></div><div class=\"fld\"><span>Also in</span><div class=\"pick\"><b>Supervisory board</b><b>AKS</b></div><small>scopes for votes and cases, not roles of their own</small></div></div>"
+    },
+    {
+      "type": "section",
+      "title": "People with a dfu role"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Person",
+        "cab account",
+        "Role",
+        "Branch",
+        "Scopes",
+        ""
+      ],
+      "rows": [
+        [
+          "Karyna Kuznietsova",
+          "code::karyna-k",
+          "Board",
+          "Kyiv",
+          "",
+          "<a href=\"#\">change</a>"
+        ],
+        [
+          "Kateryna Omelian",
+          "code::kateryna-omelian",
+          "Branch head",
+          "Kyiv",
+          "",
+          "<a href=\"#\">change</a>"
+        ],
+        [
+          "Kyrylo Kozhemiakin",
+          "code::kyrylo-k",
+          "Member",
+          "Dnipro",
+          "Supervisory board, AKS",
+          "<a href=\"#\">change</a>"
+        ],
+        [
+          "Taras Melnyk",
+          "code::taras-melnyk",
+          "Member",
+          "Kyiv",
+          "",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "dfu keeps its own roles keyed by the cab account id; cab knows nothing about them. Without a dfu role a person gets 404 on every dfu page. Granting a role to someone who never opened dfu finds their cab account by username or e-mail. Usernames are illustrative."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

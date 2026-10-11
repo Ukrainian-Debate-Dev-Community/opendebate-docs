@@ -1,0 +1,82 @@
+{
+  "id": "m-documents",
+  "title": "/documents, the organisation's documents",
+  "column": "member",
+  "order": 8,
+  "path": "GET /documents",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Documents",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Documents",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Organisation",
+        "Minutes",
+        "Reports"
+      ],
+      "active": "Organisation"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Document",
+        "Number",
+        "Adopted",
+        "Access"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Statute of the NGO Debate Federation of Ukraine</a>",
+          "code::OUT-2021-003",
+          "2021",
+          "<span class=\"chip pub\">Public</span>"
+        ],
+        [
+          "<a href=\"#\">Adjudicator certification regulations</a>",
+          "code::OUT-2024-011",
+          "2024",
+          "<span class=\"chip pub\">Public</span>"
+        ],
+        [
+          "<a href=\"#\">All-Ukrainian tournament regulations</a>",
+          "code::OUT-2025-006",
+          "2025",
+          "<span class=\"chip pub\">Public</span>"
+        ],
+        [
+          "<a href=\"#\">Rules of procedure of the board</a>",
+          "code::OUT-2023-009",
+          "2023",
+          "<span class=\"chip int\">Internal</span>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Public documents are also listed on uadebate.com, which reads them from dfu; internal ones stay here. The kinds (statute, regulations, minutes) come from the legacy spec; the Wix documents page had no list to port, so titles, numbers and years are illustrative."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}
