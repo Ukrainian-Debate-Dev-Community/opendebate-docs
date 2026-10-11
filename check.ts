@@ -51,7 +51,7 @@ assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platf
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
 assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
 assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
-for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -473,6 +473,86 @@ assert(cyr4.length === 0, `uadebate v4 is English only${cyr4.length ? " (found: 
 assert(private3.every((t) => !u4col("public").includes(t)) && !/ua-ev--priv|ua-chip--priv|class="ua-vis"/.test(u4col("public")),
   "uadebate v4: private events and the visibility switch stay out of the public column");
 assert(private3.every((t) => pageChunk(u4, "cm-calendar").includes(t)), "uadebate v4: the content manager's calendar shows the private events");
+
+/* ---------- main (uadebate.com) v5: public pages never show a signed-in state ---------- */
+const u5 = chunk("uadebate", "v5");
+const u5col = (name: string) => u5.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u5pages = u5.split('<div class="page"').slice(1);
+const u5text = u5.replace(/<!--[\s\S]*?-->/g, "");
+assert(/lang="en"/.test(u5.slice(0, 300)), "uadebate v5 board is marked English");
+assert(chlogOf(u5).includes("Compared with v4"), "uadebate v5 changelog compares with v4");
+const v5cols = [...u5.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(v5cols.join(",") === "public,content-manager,admin,phoenix-api",
+  `uadebate v5 columns are Public, Content manager, Admin, Phoenix API (got: ${v5cols.join(",")})`);
+assert(["1. Public (anonymous)", "2. Content manager", "3. Admin", "4. Phoenix API"].every((t) => u5.includes(`<h3>${t}`)),
+  "uadebate v5 columns are numbered as in cab");
+for (const [col, prev] of [["content-manager", "public"], ["admin", "content-manager"]]) {
+  assert(u5col(col).includes(`<b>All ${prev} pages +</b>`), `uadebate v5: ${col} inherits all ${prev} pages`);
+}
+const v5scope: Record<string, string[]> = {
+  public: ["main-front", "main-news", "main-news-article", "main-calendar", "main-clubs", "main-club", "main-about"],
+  "content-manager": ["cm-dash", "cm-news-edit", "cm-calendar", "cm-event-edit", "cm-clubs", "cm-club-edit"],
+  admin: ["adm-people"],
+};
+const misplaced5 = Object.entries(v5scope).flatMap(([col, ids]) => ids.filter((id) => !u5col(col).includes(`data-id="${id}"`)));
+assert(misplaced5.length === 0, `uadebate v5: every page sits in its scope${misplaced5.length ? " (missing: " + misplaced5.join(", ") + ")" : ""}`);
+assert(u5pages.length === Object.values(v5scope).flat().length, `uadebate v5 has exactly the scoped pages (${u5pages.length})`);
+const pub5 = u5col("public").split('<div class="page"').slice(1);
+assert(pub5.length === v5scope.public.length, `uadebate v5: the public column holds its ${v5scope.public.length} pages (${pub5.length})`);
+const people5 = ["Olena Koval", "Mariia Bondar", "class=\"ua-av\"", "class=\"ua-who\""];
+assert(pub5.every((pg) => people5.every((t) => !pg.includes(t))), "uadebate v5: no public page shows a person's name or avatar");
+assert(pub5.every((pg) => !/Edit site|class="ua-edit"/.test(pg)), "uadebate v5: no public page shows Edit site");
+assert(pub5.every((pg) => !pg.includes('class="ua-cmbar"')), "uadebate v5: no public page carries the ribbon");
+assert(pub5.every((pg) => !/Private/.test(pg) && !/ua-ev--priv|ua-chip--priv|class="ua-vis"/.test(pg)), "uadebate v5: no public page shows a private event or the switch");
+const manageIds5 = [...v5scope["content-manager"], ...v5scope.admin];
+const routeOf5 = (id: string) => pageChunk(u5, id).match(/GET (\/[^<"\s]*)/)?.[1] ?? "";
+const offManage5 = manageIds5.filter((id) => !routeOf5(id).startsWith("/manage"));
+assert(offManage5.length === 0, `uadebate v5: every content-manager and admin page lives under /manage${offManage5.length ? " (off: " + offManage5.join(", ") + ")" : ""}`);
+assert(routeOf5("cm-calendar") === "/manage/calendar", `uadebate v5: the content manager's calendar is /manage/calendar (got ${routeOf5("cm-calendar")})`);
+assert(routeOf5("main-calendar") === "/calendar", "uadebate v5: /calendar is the public calendar");
+const manage5 = manageIds5.map((id) => pageChunk(u5, id));
+assert(manage5.every((pg) => {
+  const bar = pg.match(/<div class="ua-cmbar">[\s\S]*?<\/div>/)?.[0] ?? "";
+  return bar.includes('class="ua-cmrole"') && bar.includes(">View site</a>") && bar.includes(">Sign out</a>") && bar.includes('class="ua-av"');
+}), "uadebate v5: every /manage page has the ribbon with the role, the person, View site and Sign out");
+const header5 = (pg: string) => (pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "").replace(/ class="on"/g, "");
+const headers5 = [...new Set(u5pages.map(header5))];
+assert(headers5.length === 1 && headers5[0].length > 0, `uadebate v5: the site header is the same on public and /manage pages, apart from the active item (${headers5.length} variants)`);
+assert(!/Edit site|class="ua-edit"|class="ua-who"/.test(u5text), "uadebate v5: no Edit site pill or signed-in header anywhere");
+assert(u5col("public").includes("never read the session") && u5col("public").includes("cacheable"),
+  "uadebate v5: the public caption says public pages never read the session and are cacheable");
+assert(u5col("phoenix-api").includes("never read the session") && u5col("content-manager").includes("only under /manage"),
+  "uadebate v5: the API and content-manager captions keep the signed-in state under /manage");
+assert(!/Sign in|\/signin/.test(u5text), "uadebate v5 has no Sign in text and no /signin route");
+assert(pageChunk(u5, "adm-people").includes("Grant the role") && u5col("admin").includes("GET /manage/people"),
+  "uadebate v5: the admin column has /manage/people, where the role is granted");
+assert(u5col("content-manager").includes("404") && u5col("content-manager").includes("uadebate.com/manage") &&
+  u5col("content-manager").includes("nothing in cab links here"), "uadebate v5 states the link entry, the 404 and that cab never links here");
+assert(pageChunk(u5, "cm-dash").includes("You reached this through the link you were given"), "uadebate v5 overview notes the given link");
+assert(u5col("phoenix-api").includes("mix uadebate.grant") && !u5col("phoenix-api").includes("<span class=\"p\">/me</span>"),
+  "uadebate v5 API: bootstrap grant named, no session endpoint");
+assert(["/news", "/events", "/calendar.ics", "/clubs", "/manage/events", "/manage/people"]
+  .every((p) => u5col("phoenix-api").includes(`<span class="p">${p}</span>`)), "uadebate v5: the Phoenix API column lists the site's endpoints");
+const badNav5 = u5pages.filter((pg) => {
+  const bar = pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "";
+  const items = [...(bar.match(/<nav class="ua-nav">([\s\S]*?)<\/nav>/)?.[1] ?? "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]);
+  return !/class="ua-brand wordmark"[^>]*>UAdebates</.test(bar) || items.join(",") !== nav3.join(",") || !bar.includes(">Cabinet</a>");
+}).length;
+assert(badNav5 === 0, `uadebate v5: every header has the wordmark, exactly Home, News, Calendar, Clubs, About, and Cabinet (${badNav5} off)`);
+const foot5 = u5pages.map((pg) => pg.match(/<footer class="ua-foot">[\s\S]*?<\/footer>/)?.[0] ?? "");
+const mails5 = [...new Set(foot5.flatMap((f) => f.match(/[\w.+-]+@[\w.-]+/g) ?? []))].sort();
+assert(foot5.every((f) => f.length > 0 && f.includes("t.me/fdu_ua")) && mails5.join(",") === "ngo.dfu@uadebate.com,support@uadebate.com",
+  `uadebate v5: every footer carries exactly ngo.dfu@, support@ and Telegram (got: ${mails5.join(", ")})`);
+assert(!/info@|dfu\.ngo@|noreply@|admin@uadebate/.test(u5text), "uadebate v5 shows no invented or internal address");
+const goldy5 = u5pages.filter((pg) => (pg.match(/ua-btn--gold|class="go"/g) ?? []).length > 1).length;
+assert(goldy5 === 0, `uadebate v5: at most one gold action per page (${goldy5} pages with more)`);
+assert(!u5text.includes("\u00b7"), "uadebate v5 carries no middle dots");
+const arrows5 = [...new Set(u5text.match(/[\u2190-\u21ff\u2b00-\u2bff\u203a\u276f]/g) ?? [])];
+assert(arrows5.length === 0, `uadebate v5 carries no arrows${arrows5.length ? " (found: " + arrows5.join(" ") + ")" : ""}`);
+const cyr5 = u5text.replace(/<[^>]+>/g, " ").match(/[\u0400-\u04ff]+/g) ?? [];
+assert(cyr5.length === 0, `uadebate v5 is English only${cyr5.length ? " (found: " + cyr5.slice(0, 5).join(" ") + ")" : ""}`);
+assert(private3.every((t) => !u5col("public").includes(t)), "uadebate v5: private events stay out of the public column");
+assert(private3.every((t) => pageChunk(u5, "cm-calendar").includes(t)), "uadebate v5: the content manager's calendar shows the private events");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

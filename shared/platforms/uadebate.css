@@ -481,3 +481,21 @@
 .pf-uadebate[data-version="v4"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
   text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
 .pf-uadebate[data-version="v4"] .anno b { color:var(--ink); }
+
+/* v5: v4 where public pages never show a signed-in state; the ribbon under /manage is
+   the one place with the role and the person. Frame rules repeated for v5, plus the
+   ribbon's person, View site and Sign out. */
+.pf-uadebate[data-version="v5"] .frame {
+  --ink:inherit; --muted:inherit; --line:inherit; --bg:inherit; --surface:inherit; --gold:inherit;
+  --ok:inherit; --ok-bg:inherit; --warn:inherit; --warn-bg:inherit; --radius:var(--r);
+  color-scheme:inherit; font-family:inherit; background:var(--bg);
+                                          color:var(--ink); font-size:14px; line-height:1.5; }
+.pf-uadebate[data-version="v5"] .frame a { color:var(--brand); }
+.pf-uadebate[data-version="v5"] .anno { font-size:.72rem; color:var(--muted); line-height:1.5; padding:8px 12px 9px;
+  margin:10px; border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-uadebate[data-version="v5"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+  text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-uadebate[data-version="v5"] .anno b { color:var(--ink); }
+.ua-cmme { margin-left:auto; display:flex; align-items:center; gap:8px; font-size:.78rem; font-weight:650; color:var(--ink); }
+.ua-cmme .ua-av { width:24px; height:24px; font-size:.62rem; }
+.ua-cmbar a.ua-cmlink { font-size:.76rem; font-weight:600; color:var(--co-ink) !important; }
