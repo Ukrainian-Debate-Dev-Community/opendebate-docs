@@ -49,6 +49,7 @@ webdesign/
     uadebate/v3/            the site in English, one column per scope as in cab (_version.json sets lang en)
     uadebate/v4/            v3 with no sign-in on the site; editors arrive by a given link to /manage
     uadebate/v5/            v4 where public pages look the same to everyone; signed-in state only in the /manage ribbon
+    uadebate/v6/            v5 where clubs are cab's: the directory reads cab, no club editor under /manage
     dfu/platform.json       label "dfu (dfu.uadebate.com)", English
     dfu/v1/                 the NGO cabinet, one column per scope as in cab
   dist/                     build output (gitignored)
@@ -77,6 +78,7 @@ The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.w
 | v3.6 | one command, one place: a form whose command sits in the top bar has no button of its own |
 | v3.7 | feedback lives in the engine: questions, answers and the score there, the adjudicator average from stats/adjudicators?base=5 |
 | v3.8 | the engine keeps each room's prep end (PATCH /api/rooms/:id/prep, prep_ends_at on the motion call), shown as built; a club rename renames its engine organisation first; no planning markers |
+| v3.9 | the club profile gains format, language and audience, kept by the club head; GET /clubs lists every club's public profile for other services |
 
 ### main (uadebate.com)
 
@@ -87,6 +89,7 @@ The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.w
 | v3 | in English (Ukrainian later), one column per scope as in cab: public, user, content manager, admin, Phoenix API; pages cut to Home, News, Calendar (mostly tournaments, private events for content managers only), Clubs and About, which carries the history ported from the Wix About page (Mission, Goal, Means, the 2011 to 2015 year line, the 16 branches); Sign in hands off to cab; the footer shows only the real addresses ngo.dfu@ and support@uadebate.com and Telegram; admins grant the content-manager role |
 | v4 | v3 with no sign-in on uadebate.com: no Sign in item or page and no user column, since a signed-in person without a role sees the public site; editors get the link uadebate.com/manage from the admin and sign in on cab; every /manage address is 404 without the role; the admin is a cab admin (cab's is_admin read downward) on /manage/people; columns Public, Content manager, Admin, Phoenix API; the content-manager ribbon stays |
 | v5 | public pages look the same to everyone, content managers and admins included: they never read the session, so no name, avatar, Edit link, ribbon or private event shows outside /manage; the site header is the same under /manage, and the ribbon there is the one place with the role, the person, View site and Sign out; the content manager's calendar moves to /manage/calendar |
+| v6 | clubs are cab's: the directory and club page read cab's public club API (format, language, audience kept by the club head in cab) and cache it; map points come from a fixed city table; no club editor or club writes under /manage, the ribbon is Overview, News, Calendar |
 
 ### dfu (dfu.uadebate.com)
 

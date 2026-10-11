@@ -499,3 +499,17 @@
 .ua-cmme { margin-left:auto; display:flex; align-items:center; gap:8px; font-size:.78rem; font-weight:650; color:var(--ink); }
 .ua-cmme .ua-av { width:24px; height:24px; font-size:.62rem; }
 .ua-cmbar a.ua-cmlink { font-size:.76rem; font-weight:600; color:var(--co-ink) !important; }
+
+/* v6: v5 where clubs are cab's; the same pages and classes, so only the frame rules
+   are repeated for v6. */
+.pf-uadebate[data-version="v6"] .frame {
+  --ink:inherit; --muted:inherit; --line:inherit; --bg:inherit; --surface:inherit; --gold:inherit;
+  --ok:inherit; --ok-bg:inherit; --warn:inherit; --warn-bg:inherit; --radius:var(--r);
+  color-scheme:inherit; font-family:inherit; background:var(--bg);
+                                          color:var(--ink); font-size:14px; line-height:1.5; }
+.pf-uadebate[data-version="v6"] .frame a { color:var(--brand); }
+.pf-uadebate[data-version="v6"] .anno { font-size:.72rem; color:var(--muted); line-height:1.5; padding:8px 12px 9px;
+  margin:10px; border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-uadebate[data-version="v6"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+  text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-uadebate[data-version="v6"] .anno b { color:var(--ink); }

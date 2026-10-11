@@ -1,0 +1,88 @@
+{
+  "id": "par-session",
+  "title": "session — running, my room tinted, feedback once the ballot is in",
+  "column": "participant",
+  "order": 2,
+  "path": "GET /c/:club/s/:sess <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice — running",
+    "segs": [
+      {
+        "label": "Give feedback — R1",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "good",
+      "html": "You are registered for this session."
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Registration is closed for this session."
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Room R1 motion: <b>This House would ban homework</b>"
+    },
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Adjudicator",
+        "Status"
+      ],
+      "rows": [
+        [
+          "rk::<a href=\"#\">R1</a>",
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Taras (iron)",
+          "Petro",
+          "st::ballot confirmed"
+        ],
+        [
+          "rk::<a href=\"#\">R2</a>",
+          "sd og::Kateryna &amp; Maksym",
+          "sd oo::Sofiia &amp; Yurii",
+          "sd cg::—",
+          "sd co::—",
+          "Iryna",
+          "st::motion pending, waiting to start"
+        ]
+      ],
+      "rowClass": {
+        "0": "me"
+      }
+    },
+    {
+      "type": "note",
+      "text": "My room's row is tinted and its motion appears in a banner the moment the adjudicator publishes. Once my room's ballot is in and my team has not sent feedback, <b>Give feedback — R#</b> is the page's one action (the same on the room page); it disappears when the team has sent it or the head finishes the session. LiveView: re-renders the moment anything in the session changes (PubSub topic <code>session:&lt;uuid&gt;</code>) — no refresh, no polling."
+    }
+  ]
+}

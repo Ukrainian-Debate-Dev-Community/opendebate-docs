@@ -1,0 +1,18 @@
+{
+  "id": "adm-people",
+  "title": "/manage/people (content managers)",
+  "column": "admin",
+  "order": 1,
+  "path": "GET /manage/people",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates</a><nav class=\"ua-nav\"><a href=\"#\">Home</a><a href=\"#\">News</a><a href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></nav><div class=\"ua-right\"><span class=\"ua-lang\"><b>EN</b> | <a href=\"#\">UA</a></span><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Cabinet</a></div></header><div class=\"ua-cmbar\"><span class=\"ua-cmrole\">Admin</span><a href=\"#\">Overview</a><a href=\"#\">News</a><a href=\"#\">Calendar</a><a class=\"on\" href=\"#\">People</a><span class=\"ua-cmme\"><span class=\"ua-av\">MB</span>Mariia Bondar</span><a class=\"ua-cmlink\" href=\"#\">View site</a><a class=\"ua-cmlink\" href=\"#\">Sign out</a></div><main class=\"ua-main\"><div class=\"ua-cmd\"><div class=\"cr\">People / Content managers</div><div class=\"seg\"><a class=\"go\" href=\"#\">Grant the role</a></div></div><div class=\"form ua-card\"><div class=\"f-head\"><h3>Grant the content-manager role</h3><p>To a person who has signed in to cab at least once</p></div><div class=\"f-block\"><label class=\"q\">Person <span class=\"req\">*</span></label><input type=\"text\" value=\"Iryna Savchuk\"><div class=\"hint\">Search cab accounts by name, username or e-mail</div></div></div><div class=\"ua-sec\">Content managers</div><div class=\"ua-card\"><table class=\"ua-t\"><thead><tr><th>Person</th><th>Since</th><th>Granted by</th><th></th></tr></thead><tbody><tr><td><b>Olena Koval</b><div class=\"ua-meta\">olena.koval</div></td><td>3 September 2026</td><td>Mariia Bondar</td><td class=\"r\"><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Revoke</a></td></tr><tr><td><b>Andrii Kravets</b><div class=\"ua-meta\">andrii-kravets</div></td><td>20 September 2026</td><td>Mariia Bondar</td><td class=\"r\"><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Revoke</a></td></tr></tbody></table></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in ua-foot-in--3\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Debate Federation of Ukraine</p><p>A debate community since 2011</p></div><div><b>Site</b><a href=\"#\">News</a><a href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></div><div><b>Platform</b><a href=\"#\">Cabinet (cab)</a><a href=\"#\">Privacy policy</a><a href=\"#\">Terms of use</a></div><div><b>Contact</b><a href=\"#\">ngo.dfu@uadebate.com</a><a href=\"#\">support@uadebate.com</a><a href=\"#\">t.me/fdu_ua</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "The role lives in uadebate's own table, keyed by the cab account id; granting or revoking it never changes cab. Give the person the link uadebate.com/manage; revoking takes effect on their next request."
+    }
+  ]
+}

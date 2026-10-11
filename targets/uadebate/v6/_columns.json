@@ -1,0 +1,18 @@
+{
+  "public": {
+    "title": "1. Public (anonymous)",
+    "cond": "<b>uadebate.com, the federation's site, in English for now, in cab's look, with no sign-in of its own.</b> These pages are the same for everyone: anonymous visitors, people signed in on cab, content managers and admins. The public pages never read the session (only the /manage pipeline does), so they are identical and cacheable for everyone, and nothing on them reveals that anyone is signed in or that editing exists: no name, no avatar, no Edit link, no ribbon, no private event. One header on every page, the same under /manage: the UAdebates wordmark in Cedarville Cursive, Home, News, Calendar, Clubs, About, the language slot and Cabinet, a plain link to cab. One footer: the site pages, cab with its Policy and Terms, and the federation's real addresses (ngo.dfu@ and support@uadebate.com, Telegram). cab's tokens light and dark; at most one gold action per page; no middle dots, no arrows. The calendar is mostly tournaments and shows public events only. Clubs and the club page show cab's clubs as their heads keep them in cab. About carries the history ported from the Wix About page."
+  },
+  "content-manager": {
+    "title": "2. Content manager",
+    "cond": "<b>All public pages +</b> the pages under /manage, behind the content-manager ribbon: news and the calendar. Clubs are not edited here: the club head keeps each club's profile in cab. The signed-in state, the ribbon (role, editor nav, the person's name, View site, Sign out) and private events exist only under /manage; the site header stays the public one, and on public pages a content manager sees exactly what everyone sees. Entry is by a link the admin gives, uadebate.com/manage; the person signs in on cab (cab's sign-in, the session shared across *.uadebate.com by deploy config). Every /manage address answers 404 to anyone without the role, signed out included, so the public never learns editing exists, and nothing in cab links here. The role lives in uadebate's own table, keyed by the cab account id; cab roles do not grant it and it is not a cab admin. The content manager's calendar is /manage/calendar: private events too, each with a Public / Private switch. Forms follow cab's: the command sits in the bar, one gold action. Sign out signs out of cab."
+  },
+  "admin": {
+    "title": "3. Admin",
+    "cond": "<b>All content-manager pages +</b> People: grant and revoke the content-manager role for cab accounts. An admin here is a cab admin: uadebate reads cab's is_admin downward and never writes to cab. Nothing in cab knows about this page. Like the content manager, the admin's signed-in state shows only in the ribbon under /manage."
+  },
+  "phoenix-api": {
+    "title": "4. Phoenix API, /api/v1 (uadebate.com)",
+    "cond": "<b>Every page verb above maps to one of these</b>, with the same ladder. Public reads never read the session, so they answer the same to everyone and can be cached; /events and /calendar.ics carry public events only. Everything under /manage reads the session and answers 404 without the role, signed out included; the content manager's event list is /manage/events. No sign-in endpoints: identity comes from cab's shared session. The site keeps its own content (news, events, the role table); people and clubs stay cab's: /clubs and /clubs/:slug read cab's public club API and cache it, and nothing here writes a club. Before any admin exists, mix uadebate.grant gives the first role from the server. Green = the cab call behind it."
+  }
+}

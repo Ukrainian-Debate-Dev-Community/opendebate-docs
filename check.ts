@@ -49,9 +49,9 @@ assert(!existsSync(join(ROOT, "dist", "cab.html")), "one page: dist/cab.html is 
 const pfSwitch = visible.match(/<div class="wb-seg" id="platform"[\s\S]*?<\/div>/)?.[0] ?? "";
 assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platform="uadebate"'), "platform switch offers cab and uadebate");
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
-assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
+assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.9"[^>]*selected/.test(visible), "version switch present, cab v3.9 selected by default");
 assert(pfSwitch.includes('data-platform="dfu"') && pfSwitch.includes(">dfu (dfu.uadebate.com)</button>"), "platform switch offers dfu, labelled dfu (dfu.uadebate.com)");
-for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["dfu", "v1"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["cab", "v3.9"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["uadebate", "v6"], ["dfu", "v1"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -79,13 +79,13 @@ for (const pf of ["cab", "uadebate", "dfu"]) {
 
 /* ---------- cab history ---------- */
 const v = (ver: string) => chunk("cab", ver);
-const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38] =
-  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8"].map(v);
+const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38, v39] =
+  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9"].map(v);
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
-const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8"]
+const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9"]
   .map((ver) => v(ver).match(/<p class="vsub">(\d+) columns?/)?.[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2; the v2 changelog compares with v1 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -220,7 +220,7 @@ function houseRules(ver: string, c: string) {
   assert(!/\bJudge\b/.test(pages), `${ver} pages say Adjudicator, never Judge`);
   assert(goldOffenders(pages) === 0, `${ver} pages carry at most one gold action (offenders: ${goldOffenders(pages)})`);
 }
-for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) houseRules(ver, c);
+for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) houseRules(ver, c);
 
 /* feedback, as built from v3.5 on */
 function feedbackPages(ver: string, c: string) {
@@ -233,7 +233,7 @@ function feedbackPages(ver: string, c: string) {
     `${ver} adjudicator feedback names no team`);
   assert(pages.includes("Your team already sent feedback.") && pages.includes("Give feedback"), `${ver} shows giving and already-sent feedback`);
 }
-for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) feedbackPages(ver, c);
+for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) feedbackPages(ver, c);
 
 /* one command, one place (from v3.6): a page whose top bar carries commands draws no in-page button repeating one */
 function noDoubleActions(ver: string, c: string) {
@@ -249,10 +249,10 @@ function noDoubleActions(ver: string, c: string) {
   const members = pageChunk(pagesOf(c), "own-members");
   assert(members.length > 0 && !members.includes("signed-in user"), `${ver} join requests and members carry no account kind`);
 }
-for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) noDoubleActions(ver, c);
+for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) noDoubleActions(ver, c);
 
 /* feedback lives in the engine (from v3.7) */
-for (const [ver, c] of [["v3.7", v37], ["v3.8", v38]] as const) {
+for (const [ver, c] of [["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) {
   assert(!/kept by cab|engine is not involved|Avg feedback is cab's own/i.test(c), `${ver} never says feedback is kept by cab`);
   assert(c.includes("/api/events/:eventId/feedback-questions"), `${ver} engine column lists the feedback questions`);
   assert(c.includes("stats/adjudicators?base=5"), `${ver} reads the adjudicator average with the base vote from the engine`);
@@ -272,6 +272,26 @@ assert(pageChunk(pagesOf(v38), "own-club").includes("Renaming the club renames i
   "v3.8 own club page says a rename renames the engine organisation");
 assert(v38.includes("PUT</span> /:id") && v38.includes("a new name renames the engine organisation first"),
   "v3.8 API columns carry the organisation rename");
+
+/* v3.9: the club head keeps format, language and audience in the club profile */
+assert(chlogOf(v39).includes("Compared with v3.8"), "v3.9 changelog compares with v3.8");
+const ownClub39 = pageChunk(pagesOf(v39), "own-club");
+assert(["Format: BP | APF | other", "Language: Ukrainian | English | other", "Audience: school students | university students | open to all"]
+  .every((t) => ownClub39.includes(t)), "v3.9 club edit page offers format, language and audience");
+const pubClub39 = pageChunk(pagesOf(v39), "pub-club");
+assert(pubClub39.includes("Format: BP") && pubClub39.includes("Language: Ukrainian, English") && pubClub39.includes("Audience:"),
+  "v3.9 public club page shows format, language and audience");
+assert(pageChunk(pagesOf(v39), "pub-front").includes("<th>Format</th>") || pageChunk(pagesOf(v39), "pub-front").includes(">Format<"),
+  "v3.9 clubs directory shows each club's format");
+const api39 = v39.split('data-col="phoenix-api"')[1] ?? "";
+assert(api39.includes('data-id="api-clubs-list"') && api39.includes("format, languages, audience"),
+  "v3.9 API lists GET /clubs and carries format, languages and audience");
+const added39 = ownClub39 + pubClub39 + api39;
+assert(!/uadebate|\bDFU\b|Federation/.test(ownClub39.split("Club profile")[1]?.split("Club Sessions")[0] ?? "") && !/uadebate/.test(api39),
+  "v3.9 club profile fields carry no uadebate or DFU wording (cab stays portable)");
+assert(v39.includes("is the club head's, kept here in cab"), "v3.9 owner caption says the club profile is the club head's");
+const new39 = (ownClub39.split("Club profile")[1]?.split("Club Sessions")[0] ?? "") + (pubClub39.split("About")[1]?.split("Club Sessions")[0] ?? "");
+assert(!/[\u2190-\u21ff\u00b7]/.test(new39), "v3.9 club profile fields carry no arrows or middle dots");
 
 /* ---------- main (uadebate.com) v1: the legacy front page, ported as is ---------- */
 const u1 = chunk("uadebate", "v1");
@@ -553,6 +573,103 @@ const cyr5 = u5text.replace(/<[^>]+>/g, " ").match(/[\u0400-\u04ff]+/g) ?? [];
 assert(cyr5.length === 0, `uadebate v5 is English only${cyr5.length ? " (found: " + cyr5.slice(0, 5).join(" ") + ")" : ""}`);
 assert(private3.every((t) => !u5col("public").includes(t)), "uadebate v5: private events stay out of the public column");
 assert(private3.every((t) => pageChunk(u5, "cm-calendar").includes(t)), "uadebate v5: the content manager's calendar shows the private events");
+
+/* ---------- main (uadebate.com) v6: clubs are cab's, no club editor under /manage ---------- */
+const u6 = chunk("uadebate", "v6");
+const u6col = (name: string) => u6.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u6pages = u6.split('<div class="page"').slice(1);
+const u6text = u6.replace(/<!--[\s\S]*?-->/g, "");
+assert(/lang="en"/.test(u6.slice(0, 300)), "uadebate v6 board is marked English");
+assert(chlogOf(u6).includes("Compared with v5"), "uadebate v6 changelog compares with v5");
+const v6cols = [...u6.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(v6cols.join(",") === "public,content-manager,admin,phoenix-api",
+  `uadebate v6 columns are Public, Content manager, Admin, Phoenix API (got: ${v6cols.join(",")})`);
+assert(["1. Public (anonymous)", "2. Content manager", "3. Admin", "4. Phoenix API"].every((t) => u6.includes(`<h3>${t}`)),
+  "uadebate v6 columns are numbered as in cab");
+for (const [col, prev] of [["content-manager", "public"], ["admin", "content-manager"]]) {
+  assert(u6col(col).includes(`<b>All ${prev} pages +</b>`), `uadebate v6: ${col} inherits all ${prev} pages`);
+}
+const v6scope: Record<string, string[]> = {
+  public: ["main-front", "main-news", "main-news-article", "main-calendar", "main-clubs", "main-club", "main-about"],
+  "content-manager": ["cm-dash", "cm-news-edit", "cm-calendar", "cm-event-edit"],
+  admin: ["adm-people"],
+};
+const misplaced6 = Object.entries(v6scope).flatMap(([col, ids]) => ids.filter((id) => !u6col(col).includes(`data-id="${id}"`)));
+assert(misplaced6.length === 0, `uadebate v6: every page sits in its scope${misplaced6.length ? " (missing: " + misplaced6.join(", ") + ")" : ""}`);
+assert(u6pages.length === Object.values(v6scope).flat().length, `uadebate v6 has exactly the scoped pages (${u6pages.length})`);
+const pub6 = u6col("public").split('<div class="page"').slice(1);
+assert(pub6.length === v6scope.public.length, `uadebate v6: the public column holds its ${v6scope.public.length} pages (${pub6.length})`);
+const people6 = ["Olena Koval", "Mariia Bondar", "class=\"ua-av\"", "class=\"ua-who\""];
+assert(pub6.every((pg) => people6.every((t) => !pg.includes(t))), "uadebate v6: no public page shows a person's name or avatar");
+assert(pub6.every((pg) => !/Edit site|class="ua-edit"/.test(pg)), "uadebate v6: no public page shows Edit site");
+assert(pub6.every((pg) => !pg.includes('class="ua-cmbar"')), "uadebate v6: no public page carries the ribbon");
+assert(pub6.every((pg) => !/Private/.test(pg) && !/ua-ev--priv|ua-chip--priv|class="ua-vis"/.test(pg)), "uadebate v6: no public page shows a private event or the switch");
+const manageIds6 = [...v6scope["content-manager"], ...v6scope.admin];
+const routeOf6 = (id: string) => pageChunk(u6, id).match(/GET (\/[^<"\s]*)/)?.[1] ?? "";
+const offManage6 = manageIds6.filter((id) => !routeOf6(id).startsWith("/manage"));
+assert(offManage6.length === 0, `uadebate v6: every content-manager and admin page lives under /manage${offManage6.length ? " (off: " + offManage6.join(", ") + ")" : ""}`);
+assert(routeOf6("cm-calendar") === "/manage/calendar", `uadebate v6: the content manager's calendar is /manage/calendar (got ${routeOf6("cm-calendar")})`);
+assert(routeOf6("main-calendar") === "/calendar", "uadebate v6: /calendar is the public calendar");
+const manage6 = manageIds6.map((id) => pageChunk(u6, id));
+assert(manage6.every((pg) => {
+  const bar = pg.match(/<div class="ua-cmbar">[\s\S]*?<\/div>/)?.[0] ?? "";
+  return bar.includes('class="ua-cmrole"') && bar.includes(">View site</a>") && bar.includes(">Sign out</a>") && bar.includes('class="ua-av"');
+}), "uadebate v6: every /manage page has the ribbon with the role, the person, View site and Sign out");
+const header6 = (pg: string) => (pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "").replace(/ class="on"/g, "");
+const headers6 = [...new Set(u6pages.map(header6))];
+assert(headers6.length === 1 && headers6[0].length > 0, `uadebate v6: the site header is the same on public and /manage pages, apart from the active item (${headers6.length} variants)`);
+assert(!/Edit site|class="ua-edit"|class="ua-who"/.test(u6text), "uadebate v6: no Edit site pill or signed-in header anywhere");
+assert(u6col("public").includes("never read the session") && u6col("public").includes("cacheable"),
+  "uadebate v6: the public caption says public pages never read the session and are cacheable");
+assert(u6col("phoenix-api").includes("never read the session") && u6col("content-manager").includes("only under /manage"),
+  "uadebate v6: the API and content-manager captions keep the signed-in state under /manage");
+assert(!/Sign in|\/signin/.test(u6text), "uadebate v6 has no Sign in text and no /signin route");
+assert(pageChunk(u6, "adm-people").includes("Grant the role") && u6col("admin").includes("GET /manage/people"),
+  "uadebate v6: the admin column has /manage/people, where the role is granted");
+assert(u6col("content-manager").includes("404") && u6col("content-manager").includes("uadebate.com/manage") &&
+  u6col("content-manager").includes("nothing in cab links here"), "uadebate v6 states the link entry, the 404 and that cab never links here");
+assert(pageChunk(u6, "cm-dash").includes("You reached this through the link you were given"), "uadebate v6 overview notes the given link");
+assert(u6col("phoenix-api").includes("mix uadebate.grant") && !u6col("phoenix-api").includes("<span class=\"p\">/me</span>"),
+  "uadebate v6 API: bootstrap grant named, no session endpoint");
+assert(["/news", "/events", "/calendar.ics", "/clubs", "/manage/events", "/manage/people"]
+  .every((p) => u6col("phoenix-api").includes(`<span class="p">${p}</span>`)), "uadebate v6: the Phoenix API column lists the site's endpoints");
+const badNav6 = u6pages.filter((pg) => {
+  const bar = pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "";
+  const items = [...(bar.match(/<nav class="ua-nav">([\s\S]*?)<\/nav>/)?.[1] ?? "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]);
+  return !/class="ua-brand wordmark"[^>]*>UAdebates</.test(bar) || items.join(",") !== nav3.join(",") || !bar.includes(">Cabinet</a>");
+}).length;
+assert(badNav6 === 0, `uadebate v6: every header has the wordmark, exactly Home, News, Calendar, Clubs, About, and Cabinet (${badNav6} off)`);
+const foot6 = u6pages.map((pg) => pg.match(/<footer class="ua-foot">[\s\S]*?<\/footer>/)?.[0] ?? "");
+const mails6 = [...new Set(foot6.flatMap((f) => f.match(/[\w.+-]+@[\w.-]+/g) ?? []))].sort();
+assert(foot6.every((f) => f.length > 0 && f.includes("t.me/fdu_ua")) && mails6.join(",") === "ngo.dfu@uadebate.com,support@uadebate.com",
+  `uadebate v6: every footer carries exactly ngo.dfu@, support@ and Telegram (got: ${mails6.join(", ")})`);
+assert(!/info@|dfu\.ngo@|noreply@|admin@uadebate/.test(u6text), "uadebate v6 shows no invented or internal address");
+const goldy6 = u6pages.filter((pg) => (pg.match(/ua-btn--gold|class="go"/g) ?? []).length > 1).length;
+assert(goldy6 === 0, `uadebate v6: at most one gold action per page (${goldy6} pages with more)`);
+assert(!u6text.includes("\u00b7"), "uadebate v6 carries no middle dots");
+const arrows6 = [...new Set(u6text.match(/[\u2190-\u21ff\u2b00-\u2bff\u203a\u276f]/g) ?? [])];
+assert(arrows6.length === 0, `uadebate v6 carries no arrows${arrows6.length ? " (found: " + arrows6.join(" ") + ")" : ""}`);
+const cyr6 = u6text.replace(/<[^>]+>/g, " ").match(/[\u0400-\u04ff]+/g) ?? [];
+assert(cyr6.length === 0, `uadebate v6 is English only${cyr6.length ? " (found: " + cyr6.slice(0, 5).join(" ") + ")" : ""}`);
+assert(private3.every((t) => !u6col("public").includes(t)), "uadebate v6: private events stay out of the public column");
+assert(private3.every((t) => pageChunk(u6, "cm-calendar").includes(t)), "uadebate v6: the content manager's calendar shows the private events");
+
+assert(!u6text.includes("/manage/clubs") && !u6.includes('data-id="cm-clubs"') && !u6.includes('data-id="cm-club-edit"'),
+  "uadebate v6 has no club editor and no /manage/clubs anywhere");
+const ribbons6 = [...u6text.matchAll(/<div class="ua-cmbar">([\s\S]*?)<\/div>/g)].map((m) =>
+  [...m[1].matchAll(/<a(?: class="on")? href="#">([^<]+)<\/a>/g)].map((x) => x[1]).filter((t) => t !== "View site" && t !== "Sign out").join(","));
+assert(ribbons6.length > 0 && ribbons6.every((r) => r === "Overview,News,Calendar" || r === "Overview,News,Calendar,People"),
+  `uadebate v6: the ribbon is Overview, News, Calendar (+ People for admins) (got: ${[...new Set(ribbons6)].join(" / ")})`);
+assert(pageChunk(u6, "main-clubs").includes("every cab club that is not archived") && pageChunk(u6, "main-clubs").includes("city coordinates"),
+  "uadebate v6: the clubs caption says cab is the source and map positions are uadebate's own");
+assert(pageChunk(u6, "main-club").includes("Club details are kept by the club in cab") && pageChunk(u6, "main-club").includes("Open in cab"),
+  "uadebate v6: the club page says the club keeps its details in cab");
+const clubsRow6 = u6col("phoenix-api").split('data-id="api-clubs"')[1]?.split('data-id=')[0] ?? "";
+assert(clubsRow6.includes("cab GET /api/v1/clubs"), "uadebate v6: the API marks the cab call behind /clubs");
+assert(!/POST<\/span>\s*<span class="p">\/manage\/clubs|PATCH<\/span>\s*<span class="p">\/manage\/clubs/.test(u6col("phoenix-api")),
+  "uadebate v6: no club write endpoints");
+assert(pageChunk(u6, "main-clubs").includes(">APF<") && pageChunk(u6, "main-clubs").includes("University students"),
+  "uadebate v6 filters use cab's words for format and audience");
 
 /* ---------- dfu v1: the NGO cabinet, one column per scope like cab ---------- */
 const d1 = chunk("dfu", "v1");
