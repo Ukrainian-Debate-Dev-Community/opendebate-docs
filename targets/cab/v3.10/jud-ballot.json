@@ -1,0 +1,88 @@
+{
+  "id": "jud-ballot",
+  "title": "ballot — scores, live totals",
+  "column": "judge",
+  "order": 3,
+  "path": "GET/POST /c/:club/s/:sess/rooms/:id/ballot",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Session › Ballot R1",
+    "segs": [
+      {
+        "label": "Submit ballot",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Room R1 ballot"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Side",
+        "Speaker",
+        "Score",
+        "Total",
+        "Rank"
+      ],
+      "rows": [
+        [
+          "code::OG",
+          "PM Anna / DPM Bohdan",
+          "78 / 76",
+          "num::154",
+          "1st"
+        ],
+        [
+          "code::OO",
+          "LO Daryna / DLO Olesia",
+          "75 / 74",
+          "num::149",
+          "2nd"
+        ],
+        [
+          "code::CG",
+          "MG Hlib / GW Marko",
+          "72 / 73",
+          "num::145",
+          "3rd"
+        ],
+        [
+          "code::CO",
+          "MO Taras / OW Taras ☑ iron",
+          "74 / 70",
+          "num::144",
+          "4th"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Ready to submit."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Opens only after the room's motion is published (\"Publish the room's motion first.\"). Whole points 50 to 100; the BallotMath hook sums teams and derives ranks as you type; equal totals block submit (\"Two teams share a total. BP allows no ties, so adjust the scores.\"). Each speech has a speaker picker and an iron tick: an iron's second speech counts for the team only; picking a present teammate for an absent one's speech files it under who actually spoke (engine #89)."
+    }
+  ],
+  "api": [
+    "POST rooms/:id/scores (is_iron, participant_id)",
+    "PATCH rooms/:id/confirm"
+  ]
+}

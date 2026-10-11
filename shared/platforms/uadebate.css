@@ -513,3 +513,34 @@
 .pf-uadebate[data-version="v6"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
   text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
 .pf-uadebate[data-version="v6"] .anno b { color:var(--ink); }
+
+/* v7: v6 with the beta tag, the theme and language buttons, and the calendar's
+   private state; only new classes, plus the frame rules repeated for v7. */
+.pf-uadebate[data-version="v7"] .frame {
+  --ink:inherit; --muted:inherit; --line:inherit; --bg:inherit; --surface:inherit; --gold:inherit;
+  --ok:inherit; --ok-bg:inherit; --warn:inherit; --warn-bg:inherit; --radius:var(--r);
+  color-scheme:inherit; font-family:inherit; background:var(--bg);
+                                          color:var(--ink); font-size:14px; line-height:1.5; }
+.pf-uadebate[data-version="v7"] .frame a { color:var(--brand); }
+.pf-uadebate[data-version="v7"] .anno { font-size:.72rem; color:var(--muted); line-height:1.5; padding:8px 12px 9px;
+  margin:10px; border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-uadebate[data-version="v7"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+  text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-uadebate[data-version="v7"] .anno b { color:var(--ink); }
+.ua .beta-tag { display:inline-block; vertical-align:top; margin:.4em 0 0 .4em;
+  font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif; font-size:max(8px,.26em); font-weight:700;
+  line-height:1.3; letter-spacing:.08em; text-transform:uppercase; border:1px solid currentColor;
+  border-radius:4px; padding:0 .45em; }
+.ua-ctrls { display:inline-flex; gap:6px; }
+.ua-ic { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; padding:0;
+  border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--muted); cursor:pointer; }
+.ua-ic--txt { font-size:.66rem; font-weight:800; letter-spacing:.04em; }
+.ua-calm { text-align:center; padding:34px 20px; color:var(--muted); }
+.ua-calm b { display:block; color:var(--ink); font-size:1.05rem; margin-bottom:6px; }
+.ua-calm p { margin:0; }
+.ua-notice { margin:0 0 14px; padding:10px 14px; border-radius:var(--r); background:var(--warn-bg);
+  color:var(--warn); font-size:.82rem; font-weight:600; }
+.ua-switchbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 14px;
+  padding:12px 14px; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); }
+.ua-switchbar b { display:block; }
+.ua-switchbar .ua-meta { display:block; margin-top:2px; }

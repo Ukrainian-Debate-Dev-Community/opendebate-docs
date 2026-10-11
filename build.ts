@@ -44,7 +44,7 @@ type PageSpec = {
 };
 type SwagRow = { id: string; method: string; path: string; desc: string; api?: string; apiNone?: boolean; t?: string };
 type Columns = Record<string, { title: string; cond: string }>;
-type Version = { name: string; columns: Columns; pages: PageSpec[]; lang?: string };
+type Version = { name: string; columns: Columns; pages: PageSpec[]; lang?: string; brandTag?: string };
 // targets/<platform>/platform.json — all fields optional
 type Platform = { id: string; label: string; order: number; lang: string; frameWidth: number; versions: Version[] };
 
@@ -87,15 +87,19 @@ function loadVersion(dir: string, name: string): Version {
   const files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
   let columns: Columns = {};
   let lang: string | undefined;
+  let brandTag: string | undefined;
   const pages: PageSpec[] = [];
   for (const f of files) {
     const data = dropPlanning(JSON.parse(readFileSync(join(dir, f), "utf8")));
     if (f === "_columns.json") columns = data;
-    else if (f === "_version.json") lang = data.lang; // a version may speak another language than its platform
+    else if (f === "_version.json") {
+      lang = data.lang; // a version may speak another language than its platform
+      brandTag = data.brandTag; // a tag beside the wordmark, e.g. beta
+    }
     else if (!f.startsWith("_")) pages.push(data);
   }
   pages.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.id.localeCompare(b.id));
-  return { name, columns, pages, lang };
+  return { name, columns, pages, lang, brandTag };
 }
 
 // versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
@@ -212,7 +216,8 @@ function renderSwagger(p: PageSpec): string {
 function renderColumn(name: string, v: Version, pf: Platform): string {
   const meta = v.columns[name] ?? { title: name, cond: "" };
   const pages = v.pages.filter((p) => p.column === name);
-  const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p, pf.id))).join("\n\n");
+  const brand = pf.id + (v.brandTag ? `<span class="beta-tag">${v.brandTag}</span>` : "");
+  const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p, brand))).join("\n\n");
   const intro = pages.find((p) => p.intro)?.intro;
   return `<div class="col ${COLUMN_CLASS[name] ?? ""}" data-col="${name}" style="flex-basis:${pf.frameWidth}px"><h3>${meta.title}</h3>\n` +
          `<p class="cond">${meta.cond}</p>${intro ? `\n<p class="cond">${intro}</p>` : ""}\n${body}\n</div>`;

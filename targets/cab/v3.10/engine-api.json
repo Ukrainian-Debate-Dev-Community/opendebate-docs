@@ -1,0 +1,228 @@
+{
+  "id": "engine-api",
+  "column": "engine-api",
+  "kind": "swagger",
+  "order": 10,
+  "groups": [
+    {
+      "title": "users",
+      "rows": [
+        {
+          "id": "eng-register",
+          "t": "engine: register user",
+          "method": "POST",
+          "path": "/api/users/register",
+          "desc": "open — {username, password}; cab shadows every signed-in account (guests are participants with no account)"
+        }
+      ]
+    },
+    {
+      "title": "claims & merges",
+      "rows": [
+        {
+          "id": "eng-claim",
+          "t": "engine: claim a participant",
+          "method": "POST",
+          "path": "/api/users/claim-participant/:pid",
+          "desc": "the claiming account — {claim_token}; attaches a participant with no account (a guest's place, an accepted invitation); single use"
+        },
+        {
+          "id": "eng-merge",
+          "t": "engine: merge users",
+          "method": "POST",
+          "path": "/api/admins/merge",
+          "desc": "admin — {sourceUserId, targetUserId, displayName}; moves participations, anonymises the source; only for merging two real accounts"
+        }
+      ]
+    },
+    {
+      "title": "organisations (= clubs)",
+      "rows": [
+        {
+          "id": "eng-org",
+          "t": "engine: organisations",
+          "method": "POST",
+          "path": "/api/organisations, <span class=\"m put\" style=\"width:auto\">PUT</span> /:id, <span class=\"m post\" style=\"width:auto\">POST</span> /:id/owners, <span class=\"m del\" style=\"width:auto\">DEL</span> /:id/owners/:uid",
+          "desc": "admin create {name, owner_id}; a club rename renames the organisation first (PUT /:id as the head, a refusal keeps the old name in cab too); change-head adds the new owner and removes the old; a merge hands the folded account's clubs over first"
+        }
+      ]
+    },
+    {
+      "title": "events (= sessions)",
+      "rows": [
+        {
+          "id": "eng-event",
+          "t": "engine: events",
+          "method": "POST",
+          "path": "/api/events, <span class=\"m get\" style=\"width:auto\">GET</span>/<span class=\"m put\" style=\"width:auto\">PUT</span> /:id, <span class=\"m del\" style=\"width:auto\">DEL</span> /:id",
+          "desc": "org — create, read, status (completed on finish), soft archive"
+        },
+        {
+          "id": "eng-part",
+          "t": "engine: participants",
+          "method": "POST",
+          "path": "/api/events/:id/participants, <span class=\"m del\" style=\"width:auto\">DEL</span> /:pid",
+          "desc": "org — {user_id?, role}; without user_id the engine returns a one-time raw_claim_token (guests, invitations). DEL 409 once placed in a room. PUT /:pid renames (removal scrubs the name to \"removed\", a claim gives the account's name) and re-roles (chairs at Start)."
+        }
+      ]
+    },
+    {
+      "title": "rounds & rooms",
+      "rows": [
+        {
+          "id": "eng-rooms",
+          "t": "engine: rounds and rooms",
+          "method": "POST",
+          "path": "/api/events/:id/rounds, /api/rounds/:id/rooms, <span class=\"m del\" style=\"width:auto\">DEL</span> /api/rooms/:id",
+          "desc": "org — rooms take {adjudicators:[chair], teams:[{name, participant_ids(1-2), position}]} INLINE TEMP teams; 1 pid = iron (engine duplicates the speaker); DEL pending only → rebuild"
+        },
+        {
+          "id": "eng-rooms-get",
+          "t": "engine: list rooms",
+          "method": "GET",
+          "path": "/api/rounds/:id/rooms",
+          "desc": "read — rooms + teams + RoomSpeakers {rank, is_iron, Scores} + per-room Motion with created_at"
+        }
+      ]
+    },
+    {
+      "title": "room actions (play)",
+      "rows": [
+        {
+          "id": "eng-motion",
+          "t": "engine: per-room motion",
+          "method": "POST",
+          "path": "/api/rooms/:id/motion",
+          "desc": "chair — {motion_text, infoslide?} creates RELEASED motion + rooms.motion_id atomically; cab calls it on PUBLISH (draft+keyword live gateway-side)"
+        },
+        {
+          "id": "eng-prep",
+          "t": "engine: room prep end",
+          "method": "PATCH",
+          "path": "/api/rooms/:id/prep",
+          "desc": "chair or owner — {prep_ends_at}; rooms.prep_ends_at, also settable on POST /api/rooms/:id/motion (prep_ends_at); room reads carry it. cab sets it as the club head and keeps no prep time of its own"
+        },
+        {
+          "id": "eng-scores",
+          "t": "engine: scores",
+          "method": "POST",
+          "path": "/api/rooms/:id/scores",
+          "desc": "chair, or owner fall-through (guest chairs go through the head) — 8 speeches keyed per SLOT + teamRankings 1..4; a score may carry is_iron (one of an iron-person's two speeches; default the later) and participant_id (the team member who actually spoke)"
+        },
+        {
+          "id": "eng-confirm",
+          "t": "engine: confirm/unconfirm",
+          "method": "PATCH",
+          "path": "/api/rooms/:id/confirm, unconfirm",
+          "desc": "org (no chair fall-through on confirm — cab confirms as head after its judge gate); no reopen: completed accepts resubmission as atomic replace, a ballot is never wiped"
+        },
+        {
+          "id": "eng-feedback",
+          "t": "engine: team feedback",
+          "method": "POST",
+          "path": "/api/rooms/:id/feedback",
+          "desc": "a member of the issuing team (or anyone while the team has an unclaimed member) — {adjudicator_id, issuer_team_id, comment?, answers [{key, value}]}; checked against the event's questions; score = average of the counting answers (7 and 8 make 7.5); one per issuer per adjudicator (409)"
+        }
+      ]
+    },
+    {
+      "title": "standings — today (rule 0 source)",
+      "rows": [
+        {
+          "id": "eng-stand",
+          "t": "engine: standings",
+          "method": "GET",
+          "path": "/api/events/:id/standings[/calculated]/{teams|speakers}",
+          "desc": "read — raw room→rank; calculated: teams Σ(N−rank), speakers Σ(score×(1+(N−rank)×0.1)); an iron speech never counts for the speaker"
+        }
+      ]
+    },
+    {
+      "title": "stats + user reads (merged in the engine)",
+      "rows": [
+        {
+          "id": "eng-new-speakers",
+          "t": "engine speaker stats",
+          "method": "GET",
+          "path": "…/stats/speakers",
+          "desc": "per speaker: TOTAL, AVG, STD of speaker points (iron speeches left out) — not called by cab yet"
+        },
+        {
+          "id": "eng-new-teams",
+          "t": "engine team stats",
+          "method": "GET",
+          "path": "…/stats/teams",
+          "desc": "per team: total speaker points, counts of 1st and 4th places — not called by cab yet (standings use the calculated endpoints)"
+        },
+        {
+          "id": "eng-new-clubs",
+          "t": "engine club stats",
+          "method": "GET",
+          "path": "/api/organisations/:id/stats",
+          "desc": "club strength: total sessions, avg WINNER speaker points, avg 4TH-PLACE speaker points — not called by cab yet (standings use the calculated endpoints)"
+        },
+        {
+          "id": "eng-new-judges",
+          "t": "engine adjudicator stats",
+          "method": "GET",
+          "path": "…/stats/adjudicators?base=5",
+          "desc": "per adjudicator: rooms_adjudicated, avg_feedback — with base, the base counts as one vote: (base + sum) ÷ (count + 1); cab calls it for the Adjudicators standings tab and the adjudicator's own average"
+        },
+        {
+          "id": "eng-user-stats",
+          "t": "GET /api/users/:id/stats",
+          "method": "GET",
+          "path": "/api/users/:id/stats",
+          "desc": "read — My page Stats, shown verbatim (iron speeches left out)"
+        },
+        {
+          "id": "eng-user-history",
+          "t": "GET /api/users/history",
+          "method": "GET",
+          "path": "/api/users/history",
+          "desc": "read — My page History in ONE call"
+        },
+        {
+          "id": "eng-user-schedule",
+          "t": "GET /api/users/schedule",
+          "method": "GET",
+          "path": "/api/users/schedule",
+          "desc": "read — My page My schedule"
+        }
+      ]
+    },
+    {
+      "title": "feedback forms",
+      "rows": [
+        {
+          "id": "eng-fq-list",
+          "t": "engine: feedback questions",
+          "method": "GET",
+          "path": "/api/events/:eventId/feedback-questions",
+          "desc": "any signed-in caller — the event's form: key, label, type (integer | text | boolean | choice), range or choices, required, counts_in_score, position"
+        },
+        {
+          "id": "eng-fq-create",
+          "t": "engine: add a question",
+          "method": "POST",
+          "path": "/api/events/:eventId/feedback-questions",
+          "desc": "owner or organiser — cab adds accuracy and reasoning (integer 1–10, required, counting) when a session opens"
+        },
+        {
+          "id": "eng-fq-edit",
+          "t": "engine: change or remove a question",
+          "method": "PATCH",
+          "path": "/api/events/:eventId/feedback-questions/:questionId (and DELETE)",
+          "desc": "owner or organiser — refused (409) once the question has answers, so recorded feedback keeps its meaning"
+        },
+        {
+          "id": "eng-fb-list",
+          "t": "engine: event feedback",
+          "method": "GET",
+          "path": "/api/events/:eventId/feedback",
+          "desc": "owner or organiser — every feedback with its answers, computed score, issuer team and adjudicator; cab reads it as the club head"
+        }
+      ]
+    }
+  ]
+}

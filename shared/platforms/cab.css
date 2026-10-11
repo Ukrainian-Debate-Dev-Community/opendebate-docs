@@ -87,3 +87,9 @@
 .pf-cab .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
                         text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
 .pf-cab .anno b { color:var(--ink); }
+
+/* v3.10: the beta tag beside the wordmark, outlined in the wordmark's own colour */
+.pf-cab .beta-tag { display:inline-block; vertical-align:top; margin:.35em 0 0 .45em;
+                    font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif; font-size:max(8px,.2em);
+                    font-weight:700; line-height:1.3; letter-spacing:.08em; text-transform:uppercase;
+                    border:1px solid currentColor; border-radius:4px; padding:0 .45em; }
