@@ -9,7 +9,7 @@ import { join } from "path";
 const ROOT = new URL(".", import.meta.url).pathname;
 const TARGETS_DIR = join(ROOT, "targets");
 const DIST = join(ROOT, "dist");
-const CAB_FONT = join(ROOT, "..", "platform", "apps", "cab", "priv", "static", "fonts", "cedarville-cursive.woff2");
+const CAB_FONT = join(ROOT, "shared", "fonts", "cedarville-cursive.woff2");
 
 // the role ladder, weakest first: every successor inherits all
 // predecessor pages and adds its own (the two APIs sit above admin —

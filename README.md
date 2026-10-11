@@ -1,11 +1,11 @@
-# webdesign
+# opendebate-docs
 
 Declarative, versioned design workbench. Every page of every platform is a JSON
 spec under `targets/<platform>/<version>/`; the build renders them all into one
 self-contained page, `dist/index.html`, with a platform switch, a version switch,
 a changelog strip, and the note modal with Export notes.
 
-`legacy/design/` stays the read-only reference; this directory is the tracked,
+`legacy/design/` (in the local opendebate-legacy repo) stays the read-only reference; this directory is the tracked,
 reproducible source of truth for page setups.
 
 ## The workbench
@@ -24,7 +24,7 @@ reproducible source of truth for page setups.
   `<platform>-pages-notes-<version>.json` for the board on screen.
 - **Theme**: Auto follows the system; Light and Dark pin it, as in cab.
 - **Frames look like the product**: cab frames use cab's own tokens and component
-  rules (`platform/apps/cab/assets/css/app.css`) and its Cedarville Cursive
+  rules (`apps/cab/assets/css/app.css` in opendebate) and its Cedarville Cursive
   wordmark, light and dark; uadebate frames use the legacy uadebate design system
   (`legacy/design/spec.css`), which has no dark theme, in v1; from v2 they take
   cab's tokens and wordmark, light and dark.
@@ -55,7 +55,7 @@ webdesign/
   dist/                     build output (gitignored)
 ```
 
-The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.woff2`
+The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 (read only); without it the wordmark falls back to a cursive system face.
 
 ## Versions
