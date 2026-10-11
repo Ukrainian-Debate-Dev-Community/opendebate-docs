@@ -1,0 +1,89 @@
+{
+  "id": "pub-session-done",
+  "title": "/c/:club/s/:sess \u2014 finished: results",
+  "column": "public",
+  "order": 32,
+  "path": "GET /c/:club/s/:sess <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Thursday practice \u2014 finished",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Thursday practice</b>",
+        "Thu 2 Oct 2026, 18:30",
+        "Short link: <code>cab.uadebate.com/k7m2q9</code> <span class=\"cpy\">Copy</span>",
+        "Winners:",
+        "R1: <b>Anna &amp; Bohdan</b>",
+        "R2: <b>Sofiia &amp; Yurii</b>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Room R1"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Motion: <b>This House would ban homework</b>"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "Side",
+        "Team",
+        "Speakers",
+        "Result"
+      ],
+      "rows": [
+        [
+          "code::OG",
+          "Anna &amp; Bohdan",
+          "Anna &amp; Bohdan",
+          "st::<b>won</b>"
+        ],
+        [
+          "code::OO",
+          "Daryna &amp; Olesia",
+          "Daryna &amp; Olesia",
+          "st::2nd"
+        ],
+        [
+          "code::CG",
+          "Hlib &amp; Marko",
+          "Hlib &amp; Marko",
+          "st::3rd"
+        ],
+        [
+          "code::CO",
+          "Taras",
+          "Taras",
+          "st::4th"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "One winner reads \"Winner: X\"; several rooms list every room's winner. Results per room are engine ranks verbatim; a session without rooms says \"This session finished without rooms.\""
+    }
+  ]
+}

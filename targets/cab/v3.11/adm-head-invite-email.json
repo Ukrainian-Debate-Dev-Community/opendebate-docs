@@ -1,0 +1,18 @@
+{
+  "id": "adm-head-invite-email",
+  "title": "The head invitation e-mail",
+  "column": "admin",
+  "order": 2,
+  "path": "sent through Core.Mailer from noreply@",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div style=\"padding:16px 18px;font-size:.78rem;line-height:1.55;font-family:ui-monospace,Menlo,monospace;\"><div class=\"mut\">Subject: Lviv Debate Club: you are invited to be its head</div><br>Hello Olena Koval,<br><br>Oleksii Stroganov invites you to be the head of Lviv Debate Club in cab, where debate clubs run their sessions.<br><br>Open this link and sign in with GitHub or Google; you become the head as soon as you are signed in:<br><br><a href=\"#\" style=\"color:var(--brand)\">https://cab.uadebate.com/head-invitations/9fJ2...</a><br><br>The link works once and expires on 2026-10-26.</div>"
+    },
+    {
+      "type": "note",
+      "text": "Plain text, translated like every page. Only the hash of the token is stored."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "public": {
+    "title": "1. Public (anonymous)",
+    "cond": "<b>Ladder base. TWO TREES:</b> the public tree <code>/c/:club/\u2026</code> (the URL names the view, identity picks what the chrome offers) and the owner tree <code>/c/:club/owner/\u2026</code>; plus /admin. <b>ONE GOLD ACTION per page; a form whose command sits in the top bar has no button of its own.</b> The front page is the clubs directory for everyone. Lists read cab's own session records \u2014 no engine walk. Session, room and owner-session pages are LiveViews. Guests via /l/:code see the same pages. Every word goes through gettext (English, Ukrainian by the browser); the sidebar holds the theme button and the language menu; times show in the viewer's zone. Policy and Terms are documents. Footer on every shell page. Adjudicators' Avg feedback is public: a starting vote of 5 plus one vote per team feedback. <b>v3.10:</b> a small outlined BETA tag sits beside the cab wordmark wherever it shows (sidenav, sign-in panel and form, error page) until cab leaves beta."
+  },
+  "user": {
+    "title": "2. User (signed in)",
+    "cond": "<b>All public pages +</b> an identity: banners on the directory, My page (invitations, my clubs, schedule, stats, history), /account (display name, time zone, guest history, sign-in methods: link GitHub and Google, or merge two accounts), join requests, prefilled registration, claiming a guest history from its personal link."
+  },
+  "participant": {
+    "title": "3. Participant (registered speaker)",
+    "cond": "<b>All public (+ user) pages +</b> own registration on the session page (cancel = remove, until seated), own room row tinted with its motion in a banner. Session-scoped: a guest via /l/:code is recognised by the participant on their link, an account by its engine user. Once the room's ballot is in: <b>Give feedback</b> on the adjudicator, one per team (first sent stays, any member, guests too), until the head finishes the session; the team sees what it sent. The engine holds it; cab sends it there and reads it back."
+  },
+  "judge": {
+    "title": "3. Adjudicator (chairs a room)",
+    "cond": "<b>All participant pages +</b> at the same room URL: the motion form (Publish, then Update, with Prep ends at), then Fill ballot / Edit ballot \u2014 the ballot only after the motion. Powers come from chairing a room; a guest chair's actions are checked by cab and sent as the club head. Feedback on them stays hidden until the head finishes the session, then shows anonymous (no team) on the session page and My page."
+  },
+  "member": {
+    "title": "4. Member",
+    "cond": "<b>All user pages + participant/adjudicator by registering +</b> a private club's roster and full standings."
+  },
+  "owner": {
+    "title": "5. Owner (club head)",
+    "cond": "<b>All member pages and every room's adjudicator powers +</b> the owner tree. The live session page holds Add a person (every member listed before typing; registered users, guests, an address), one People table, the allocator (room count ceil(people \u00f7 9), people placed by hand only \u2014 the seat decides who adjudicates). Running: each room row opens the room, a Motions table, Fill ballot for a room the head chairs. Remove is the only exit and keeps no personal data. A confirmed ballot is edited by the head only \u2014 \"edit ballot\" is the one verb. Feedback: progress per room (teams sent / not) and every form with its team \u2014 the head's alone. The club profile (name, city, meeting time, description, contacts, format, language, audience) is the club head's, kept here in cab."
+  },
+  "admin": {
+    "title": "6. Admin (platform)",
+    "cond": "<b>Every club's owner tree + all below +</b> /admin: create clubs, change heads (the old head stops owning the engine organisation) - by account, or by e-mail invitation to someone without one (the link signs them in and hands the club over; pending invitations can be resent or cancelled), merge one person's two accounts, archive. is_admin; 404 for everyone else."
+  },
+  "phoenix-api": {
+    "title": "7. Phoenix API \u2014 /api/v1 (cab)",
+    "cond": "<b>Every page verb above maps to one of these</b> \u2014 same ClubScope ladder (401 signed out, 403 below the tree, 404 unknown). The API speaks cab: no engine records or ids, except the ids a caller's own actions need. Green = the engine call behind the write. Club profiles are public: GET /clubs and GET /clubs/:uuid are what other services read to list clubs."
+  },
+  "engine-api": {
+    "title": "8. Engine API \u2014 node :3100 (internal only)",
+    "cond": "<b>Everything a debate produces lives here;</b> only cab calls it. cab records lifecycle facts (name, started_at, rooms_count, finished_at, winners) on its own session row so lists never call the engine; detail pages read engine state once, four reads fanned out. Feedback too: each event's form (questions) and every team's answers live here, and the adjudicator average with a base vote. Each room's prep end lives here too. A club's name is its organisation's name; a rename reaches the engine first. Guests are participants with no account, claimed by the engine's one-time token. Auth: HS256 JWT {id, isAdmin} minted per request. Never public."
+  }
+}

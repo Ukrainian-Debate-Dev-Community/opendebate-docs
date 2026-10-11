@@ -81,6 +81,7 @@ The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 | v3.8 | the engine keeps each room's prep end (PATCH /api/rooms/:id/prep, prep_ends_at on the motion call), shown as built; a club rename renames its engine organisation first; no planning markers |
 | v3.9 | the club profile gains format, language and audience, kept by the club head; GET /clubs lists every club's public profile for other services |
 | v3.10 | a beta tag beside the cab wordmark (sidenav, sign-in panel and form, error page), set by `brandTag` in the version's `_version.json` |
+| v3.11 | an admin invites a club head by e-mail: the head field takes a username or an e-mail (with a name for the invitation), pending invitations with resend and cancel, the invitation e-mail, the sign-in page naming the club, and the page for a link that no longer works |
 
 ### main (uadebate.com)
 
@@ -161,7 +162,7 @@ default the directory name), `order` (switch position), `lang` (the board's
 
 ## Add a version
 
-1. Copy the latest version of the platform: `cp -r targets/cab/v3.10 targets/cab/v3.11`.
+1. Copy the latest version of the platform: `cp -r targets/cab/v3.11 targets/cab/v3.12`.
 2. Edit the specs (and `_columns.json`): only what actually changed.
 3. `bun run test`, and add the version's own checks to `check.ts`.
 

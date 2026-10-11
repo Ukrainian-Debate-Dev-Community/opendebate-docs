@@ -1,0 +1,69 @@
+{
+  "id": "par-feedback-sent",
+  "title": "room feedback \u2014 already sent by the team",
+  "column": "participant",
+  "order": 4,
+  "path": "GET /c/:club/s/:sess/rooms/:id/feedback",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Thursday practice \u203a Room R1 \u203a Feedback",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Your team: <b>Anna &amp; Bohdan</b> (OG). One feedback per team; the first one sent stays."
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Your team already sent feedback."
+    },
+    {
+      "type": "section",
+      "title": "Feedback on the adjudicator"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Accuracy",
+        "Reasoning",
+        "Average",
+        "Discussion"
+      ],
+      "rows": [
+        [
+          "num::8",
+          "num::7",
+          "num::7.5",
+          "The call was right; the reasoning skipped the comparison between closing teams."
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<span class=\"mut\">Petro sees it, without your team's name, once the session is finished.</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Shown to every member of the team that sent it, right away; a teammate who opens the form later lands here. It cannot be changed \u2014 the engine keeps the first one sent (a second gets 409). Read back from the engine as the club head and filtered to this team."
+    }
+  ],
+  "api": [
+    "GET events/:id/feedback (as the club head, filtered)"
+  ]
+}

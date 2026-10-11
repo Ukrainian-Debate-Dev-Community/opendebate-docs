@@ -1,0 +1,103 @@
+{
+  "id": "pub-room",
+  "title": "/c/:club/s/:sess/rooms/:id \u2014 the room, read-only",
+  "column": "public",
+  "order": 33,
+  "path": "GET /c/:club/s/:sess/rooms/:id <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Thursday practice \u203a Room R1 \u2014 ballot confirmed",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Draw"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Side",
+        "Team",
+        "Speakers",
+        "Points",
+        "Place"
+      ],
+      "rows": [
+        [
+          "code::OG",
+          "Anna &amp; Bohdan",
+          "Anna <b>78</b><br>Bohdan <b>76</b>",
+          "num::154",
+          "num::1st"
+        ],
+        [
+          "code::OO",
+          "Daryna &amp; Olesia",
+          "Daryna <b>75</b><br>Olesia <b>74</b>",
+          "num::149",
+          "num::2nd"
+        ],
+        [
+          "code::CG",
+          "Hlib &amp; Marko",
+          "Hlib <b>72</b><br>Marko <b>73</b>",
+          "num::145",
+          "num::3rd"
+        ],
+        [
+          "code::CO",
+          "Taras",
+          "Taras <b>74</b><br>Taras <span class=\"mut\">(iron)</span> <b>70</b>",
+          "num::144",
+          "num::4th"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Adjudicator: <b>Petro</b>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Motion"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>This House would ban homework</b>",
+        "Infoslide text, when given.",
+        "<p class=\"mut\">keyword: education</p>",
+        "<p class=\"mut\">prep: 11:42 left</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Share this room"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "[room card PNG: cab R1, session, MOTION, Prep until 18:47, DRAW with sides and speakers, Adjudicator, QR of <code>cab.uadebate.com/k7m2q9/1</code>]",
+        "<span class=\"cpy\">Copy image</span> <span class=\"cpy\">Save image</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Before the ballot the draw shows Speakers only (\"A &amp; B\"); once it is in, every speech with its points, the team's points and its place \u2014 an iron's second speech marked (iron). Before a motion: \"Not set yet \u2014 the adjudicator sets it when the room begins.\" The prep line is the PrepClock hook counting down to the room's prep end, read from the engine with the rooms. Same URL for every viewer \u2014 identity decides what the chrome offers. LiveView: re-renders the moment anything in the session changes (PubSub topic <code>session:&lt;uuid&gt;</code>) \u2014 no refresh, no polling. A member of a team in the room sees <b>Give feedback</b> (gold) once the ballot is in, until the session is finished; nobody else sees any feedback here."
+    }
+  ]
+}

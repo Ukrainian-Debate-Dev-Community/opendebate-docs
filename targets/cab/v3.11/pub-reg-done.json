@@ -1,0 +1,50 @@
+{
+  "id": "pub-reg-done",
+  "title": "/r/:sess \u2014 registered, personal link",
+  "column": "public",
+  "order": 41,
+  "path": "POST /r/:sess \u2192 registered",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Register",
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Registered",
+    "segs": [
+      {
+        "label": "Open my session page",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "good",
+      "html": "You are registered as Olena."
+    },
+    {
+      "type": "section",
+      "title": "Your personal link"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Personal link <span class=\"cpy\">cab.uadebate.com/l/x7k2\u2026</span> Copy",
+        "Keep this link \u2014 it IS your access: anyone with it acts as you. It opens your view of this session: your registration, the rooms, and (if you adjudicate) the ballot."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "<code>GET /l/:code</code> signs the browser in as the guest \u2014 only an anonymous browser or another guest identity adopts it; a signed-in account is offered the claim instead (user column). If Olena leaves or the head removes her, the link dies and her name is deleted."
+    }
+  ]
+}
