@@ -737,7 +737,9 @@ assert(pageChunk(v310, "pub-signin-existing").includes("beta-tag") && pageChunk(
 const u7 = chunk("uadebate", "v7");
 const u7col = (name: string) => u7.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
 const u7pages = pagesOf(u7).split('<div class="page"').slice(1);
-const u7text = u7.replace(/<!--[\s\S]*?-->/g, "");
+// strip comments until none are left, so a cut-open "<!--" cannot survive
+let u7text = u7;
+for (let prev = ""; prev !== u7text; ) { prev = u7text; u7text = u7text.replace(/<!--[\s\S]*?-->/g, ""); }
 assert(chlogOf(u7).includes("Compared with v6"), "uadebate v7 changelog compares with v6");
 assert([...u7.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]).join(",") === "public,content-manager,admin,phoenix-api",
   "uadebate v7 columns: public, content manager, admin, Phoenix API");
