@@ -1,0 +1,87 @@
+{
+  "id": "b-vote",
+  "title": "/votes/:no, a board vote in progress",
+  "column": "board",
+  "order": 18,
+  "path": "GET /votes/:no",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Votes <span class=\"n\">1</span>",
+    "profile": "<span class=\"who\">Karyna Kuznietsova</span>President<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Votes / D-2026-12",
+    "segs": [
+      {
+        "label": "Withdraw",
+        "kind": "quiet"
+      },
+      {
+        "label": "Sign vote",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"vote\"><span class=\"chip scope\">Board decision</span> <span class=\"jnr\">D-2026-12</span><h4>Accrediting the Phoenix Cup as a rating tournament</h4><p class=\"mut\">Inclusion in the official rating of the 2026/2027 season under the all-Ukrainian tournament regulations.</p><div class=\"warnline\">The vote is open until 18 October 2026, 23:59</div><div class=\"vopts\"><span class=\"vopt yes\">For</span><span class=\"vopt no\">Against</span><span class=\"vopt\">Abstain</span></div><div class=\"quorum\"><b>3 of 5</b> board members have signed; quorum, more than half, is reached</div><div class=\"meter\"><i style=\"width:60%\"></i></div></div>"
+    },
+    {
+      "type": "section",
+      "title": "Signatures"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Board member",
+        "Signed"
+      ],
+      "rows": [
+        [
+          "Tetiana Soboleva",
+          "12 Oct 09:14"
+        ],
+        [
+          "Olha Polishchuk",
+          "12 Oct 11:02"
+        ],
+        [
+          "Anton Yevtushok",
+          "12 Oct 18:30"
+        ],
+        [
+          "Polina Sorokolit",
+          "st::not yet"
+        ],
+        [
+          "Karyna Kuznietsova (you)",
+          "st::not yet"
+        ]
+      ],
+      "rowClass": {
+        "4": "me"
+      }
+    },
+    {
+      "type": "note",
+      "text": "Named ballot: who signed is visible during the vote, the choices only when it closes. The decision gets its number D-2026-12 in the journal when the vote closes."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

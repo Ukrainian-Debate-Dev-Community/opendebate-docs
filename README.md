@@ -11,8 +11,7 @@ reproducible source of truth for page setups.
 ## The workbench
 
 - **Platform switch** (top bar): one button per platform that has at least one
-  version. Today: `cab` and `main (uadebate.com)`. `dfu` has no versions yet, so
-  it is left out until it gets one.
+  version. Today: `cab`, `main (uadebate.com)` and `dfu (dfu.uadebate.com)`.
 - **Version switch**: the versions of the chosen platform, newest first. The
   choice is kept in the URL hash (`index.html#cab/v3.8`, `#uadebate/v1`), so a
   link opens the same board.
@@ -40,6 +39,7 @@ webdesign/
   shared/board.js           switches, note modal, per-version localStorage notes, export, theme
   shared/platforms/cab.css  cab pages inside their frames, after app.css
   shared/platforms/uadebate.css  uadebate.com pages inside their frames, after legacy spec.css
+  shared/platforms/dfu.css  dfu pages: cab.css under .pf-dfu plus journal numbers, chips, votes, forms
   targets/
     cab/platform.json       label and order in the platform switch
     cab/v*/                 cab versions (below)
@@ -49,7 +49,8 @@ webdesign/
     uadebate/v3/            the site in English, one column per scope as in cab (_version.json sets lang en)
     uadebate/v4/            v3 with no sign-in on the site; editors arrive by a given link to /manage
     uadebate/v5/            v4 where public pages look the same to everyone; signed-in state only in the /manage ribbon
-    dfu/                    empty, left out of the page until it has a version
+    dfu/platform.json       label "dfu (dfu.uadebate.com)", English
+    dfu/v1/                 the NGO cabinet, one column per scope as in cab
   dist/                     build output (gitignored)
 ```
 
@@ -86,6 +87,12 @@ The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.w
 | v3 | in English (Ukrainian later), one column per scope as in cab: public, user, content manager, admin, Phoenix API; pages cut to Home, News, Calendar (mostly tournaments, private events for content managers only), Clubs and About, which carries the history ported from the Wix About page (Mission, Goal, Means, the 2011 to 2015 year line, the 16 branches); Sign in hands off to cab; the footer shows only the real addresses ngo.dfu@ and support@uadebate.com and Telegram; admins grant the content-manager role |
 | v4 | v3 with no sign-in on uadebate.com: no Sign in item or page and no user column, since a signed-in person without a role sees the public site; editors get the link uadebate.com/manage from the admin and sign in on cab; every /manage address is 404 without the role; the admin is a cab admin (cab's is_admin read downward) on /manage/people; columns Public, Content manager, Admin, Phoenix API; the content-manager ribbon stays |
 | v5 | public pages look the same to everyone, content managers and admins included: they never read the session, so no name, avatar, Edit link, ribbon or private event shows outside /manage; the site header is the same under /manage, and the ribbon there is the one place with the role, the person, View site and Sign out; the content manager's calendar moves to /manage/calendar |
+
+### dfu (dfu.uadebate.com)
+
+| Version | What changed |
+|---|---|
+| v1 | the NGO cabinet in cab's look (sidenav with the dfu wordmark, the bar with one gold action), in English: the Danish model of legacy/design/dfu.html and the legacy spec (journal numbers IN/OUT, cases Open/Waiting/Closed, votes signed to count with quorum shown, announcements, documents Internal/Public), and the org structure from the Wix site (leadership, supervisory board, 16 branch heads, the AKS register); columns member, branch head, board, secretariat (admin), Phoenix API; 404 for anyone without a dfu role; roles keyed by the cab account id, cab never links to dfu |
 
 ## Run
 

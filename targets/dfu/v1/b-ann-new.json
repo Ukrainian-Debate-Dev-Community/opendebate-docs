@@ -1,0 +1,43 @@
+{
+  "id": "b-ann-new",
+  "title": "/announcements/new",
+  "column": "board",
+  "order": 19,
+  "path": "GET /announcements/new",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Announcements",
+    "profile": "<span class=\"who\">Karyna Kuznietsova</span>President<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Announcements / New",
+    "segs": [
+      {
+        "label": "Publish",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"form\"><label class=\"fld\"><span>Title</span><i>Annual general meeting with elections, 25 October, online</i></label><label class=\"fld\"><span>Text</span><i class=\"area\">The agenda is in case C-2026-08. Registration is required.</i></label><div class=\"fld\"><span>For</span><div class=\"pick\"><b class=\"on\">All members</b><b>Board</b><b>A branch</b></div></div></div>"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "s-doc",
+  "title": "/documents/:jnr, publish to uadebate.com",
+  "column": "admin",
+  "order": 22,
+  "path": "GET /documents/:jnr",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators",
+      "# Secretariat",
+      "Journal",
+      "People and roles"
+    ],
+    "active": "Documents",
+    "profile": "<span class=\"who\">Polina Sorokolit</span>Head of the Secretariat<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Documents / OUT-2025-006",
+    "segs": [
+      {
+        "label": "Save"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><span class=\"jnr\">OUT-2025-006</span> <span class=\"chip pub\">Public</span><h4 style=\"font-size:.9rem;margin:5px 0 8px\">All-Ukrainian tournament regulations</h4><dl class=\"kv\"><dt>Access</dt><dd><span class=\"pick\"><b>Internal</b><b class=\"on\">Public</b></span></dd><dt>On uadebate.com</dt><dd>listed under About, Documents, since 3 March 2025</dd><dt>File</dt><dd><a href=\"#\">tournament-regulations-2025.pdf</a></dd></dl></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Only the Secretariat changes access. uadebate.com reads the public documents from dfu (GET /api/documents?public=1) and keeps the last copy if dfu is down; an internal document never leaves dfu."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

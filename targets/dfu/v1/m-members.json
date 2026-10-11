@@ -1,0 +1,80 @@
+{
+  "id": "m-members",
+  "title": "/members, member registry",
+  "column": "member",
+  "order": 9,
+  "path": "GET /members",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Members",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Members",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "html": "96 members in 16 branches"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Branch",
+        "Member since",
+        "Status"
+      ],
+      "rows": [
+        [
+          "Taras Melnyk",
+          "Kyiv",
+          "2024",
+          "active"
+        ],
+        [
+          "Iryna Savchuk",
+          "Lviv",
+          "2022",
+          "active"
+        ],
+        [
+          "Bohdan Lysenko",
+          "Kharkiv",
+          "2019",
+          "active"
+        ],
+        [
+          "Sofiia Hnatiuk",
+          "Chernivtsi",
+          "2026",
+          "candidate"
+        ]
+      ],
+      "rowClass": {
+        "0": "me"
+      }
+    },
+    {
+      "type": "note",
+      "text": "A member sees names, branches and status; contacts show only to the person's branch head and the Secretariat. Rows and the count are illustrative."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

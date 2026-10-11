@@ -1,0 +1,47 @@
+{
+  "id": "b-vote-new",
+  "title": "/votes/new, start a vote",
+  "column": "board",
+  "order": 17,
+  "path": "GET /votes/new",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Votes <span class=\"n\">1</span>",
+    "profile": "<span class=\"who\">Karyna Kuznietsova</span>President<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Votes / New vote",
+    "segs": [
+      {
+        "label": "Start the vote",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"form\"><label class=\"fld\"><span>Question</span><i>Accrediting the Phoenix Cup as a rating tournament</i></label><label class=\"fld\"><span>Explanation</span><i class=\"area\">Inclusion in the official rating of the 2026/2027 season under the all-Ukrainian tournament regulations.</i></label><div class=\"fld\"><span>Scope</span><div class=\"pick\"><b class=\"on\">Board</b><b>Supervisory board</b><b>General assembly</b><b>AKS</b><b>Poll</b></div><small>who may sign: here the 5 members of the leadership</small></div><label class=\"fld\"><span>Case</span><i>C-2026-09 Phoenix Cup accreditation</i></label><div class=\"two\"><label class=\"fld\"><span>Open until</span><i>18.10.2026 23:59</i></label><label class=\"fld\"><span>Quorum</span><i>more than half, 3 of 5</i></label></div><div class=\"fld\"><span>Ballot</span><div class=\"pick\"><b class=\"on\">Named</b><b>Secret</b></div><small>board votes are named; general assembly votes are secret</small></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Once started a vote cannot be edited, only withdrawn with a reason, which is kept. Board decisions are taken by board vote; the supervisory board and the AKS vote in their own scopes."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

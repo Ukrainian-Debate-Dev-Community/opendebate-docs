@@ -1,0 +1,51 @@
+{
+  "id": "m-inbox",
+  "title": "/inbox, digital post",
+  "column": "member",
+  "order": 1,
+  "path": "GET /inbox",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Inbox <span class=\"n\">3</span>",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Inbox",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "html": "One vote waits for your signature: <span class=\"jnr\">V-2026-14</span> agenda of the annual general meeting, until 24 October 23:59. <a href=\"#\">Open the vote</a>",
+      "kind": "gold"
+    },
+    {
+      "type": "section",
+      "title": "Digital post (3 unread)"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"rows\"><div class=\"rw unread\"><span class=\"ico\">PDF</span><div class=\"bd\"><span class=\"jnr\">IN-2026-041</span> <span class=\"tt\">Minutes of the board meeting of 2 October 2026</span><span class=\"sub\">Secretariat, today 10:12</span></div><a href=\"#\">Open</a></div><div class=\"rw unread\"><span class=\"ico\">DOC</span><div class=\"bd\"><span class=\"jnr\">IN-2026-040</span> <span class=\"tt\">Request to accredit the Phoenix Cup tournament</span><span class=\"sub\">Kharkiv branch, yesterday 16:44</span></div><a href=\"#\">Open</a></div><div class=\"rw unread\"><span class=\"ico\">XLS</span><div class=\"bd\"><span class=\"jnr\">IN-2026-039</span> <span class=\"tt\">Financial report for September 2026</span><span class=\"sub\">Treasurer, 5 October</span></div><a href=\"#\">Open</a></div><div class=\"rw\"><span class=\"ico\">PDF</span><div class=\"bd\"><span class=\"jnr\">IN-2026-038</span> <span class=\"tt\">Membership application: debate club Chernivtsi Debaty</span><span class=\"sub\">Membership form, 28 September</span></div><a href=\"#\">Open</a></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Every document gets a journal number when it is registered and is kept for good. A member sees what is addressed to them, their branch or the whole organisation; the list is searchable by number or subject. The items are illustrative, translated from legacy/design/dfu.html."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

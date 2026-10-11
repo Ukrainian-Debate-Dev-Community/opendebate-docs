@@ -1,0 +1,42 @@
+{
+  "id": "m-ann",
+  "title": "/announcements",
+  "column": "member",
+  "order": 7,
+  "path": "GET /announcements",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Announcements",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Announcements",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ann\"><h4>Annual general meeting with elections, 25 October, online</h4><div class=\"when\">Secretariat, 1 October 2026</div><p>The agenda is in case <span class=\"jnr\">C-2026-08</span>. Registration is required.</p></div><div class=\"ann\"><h4>Applications for adjudicator certification are open</h4><div class=\"when\">AKS, 25 September 2026</div><p>The session takes place during Kyiv Open 2026. Deadline: 10 November.</p></div>"
+    },
+    {
+      "type": "note",
+      "text": "Internal announcements for members. Illustrative, translated from legacy/design/dfu.html, dates moved to this season."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

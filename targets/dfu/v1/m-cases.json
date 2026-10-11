@@ -1,0 +1,50 @@
+{
+  "id": "m-cases",
+  "title": "/cases, my cases",
+  "column": "member",
+  "order": 3,
+  "path": "GET /cases",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Cases",
+    "profile": "<span class=\"who\">Taras Melnyk</span>member, Kyiv<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Cases",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Mine",
+        "All I can see"
+      ],
+      "active": "Mine"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"rows\"><div class=\"rw\"><div class=\"bd\"><span class=\"tt\">Admission of the club Chernivtsi Debaty to the DFU</span><span class=\"sub\">Case <span class=\"jnr\">C-2026-07</span> opened 28.09.2026, responsible: Anton Yevtushok</span></div><span class=\"chip open\">Open</span></div><div class=\"rw\"><div class=\"bd\"><span class=\"tt\">Update of the adjudicator certification regulations</span><span class=\"sub\">Case <span class=\"jnr\">C-2026-05</span> waiting for the AKS opinion</span></div><span class=\"chip wait\">Waiting</span></div><div class=\"rw\"><div class=\"bd\"><span class=\"tt\">Annual report of the NGO for 2025</span><span class=\"sub\">Case <span class=\"jnr\">C-2026-01</span> closed 12.03.2026, 14 documents</span></div><span class=\"chip closed\">Closed</span></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "A case bundles the documents of one process. Its status is Open, Waiting (for someone outside the responsible person, named in the line) or Closed. A member sees the cases they take part in and those addressed to everyone."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}
