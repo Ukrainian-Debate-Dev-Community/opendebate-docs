@@ -1,0 +1,63 @@
+{
+  "id": "user-home",
+  "title": "/ — the directory, signed in",
+  "column": "user",
+  "order": 1,
+  "path": "GET /",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "Clubs",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Debate clubs of Ukraine",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Kyiv Debate Club: a session is open. <a href=\"#\">Open</a>"
+    },
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "A club head added you to a session. Accept or decline on My page. <a href=\"#\">My page →</a>"
+    },
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "City",
+        "Members",
+        "Next session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "num::11",
+          "st::Thu 18:30 — <a href=\"#\">register</a>"
+        ],
+        [
+          "<a href=\"#\">Lviv Debaters</a>",
+          "Lviv",
+          "num::9",
+          "st::running — <a href=\"#\">watch rooms</a>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The same directory as the public front page — no separate signed-in cabinet any more. Signed in, the welcome goes and two banners may appear: a session open (registration or running) in one of my clubs, and invitations waiting (plural: \"Club heads added you to 2 sessions.\"). My clubs, My schedule and Invitations live on My page."
+    }
+  ]
+}

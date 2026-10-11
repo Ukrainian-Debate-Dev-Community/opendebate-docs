@@ -50,6 +50,7 @@ webdesign/
     uadebate/v4/            v3 with no sign-in on the site; editors arrive by a given link to /manage
     uadebate/v5/            v4 where public pages look the same to everyone; signed-in state only in the /manage ribbon
     uadebate/v6/            v5 where clubs are cab's: the directory reads cab, no club editor under /manage
+    uadebate/v7/            v6 with the beta tag, theme and language buttons, the admin-only calendar switch, a Ukrainian home
     dfu/platform.json       label "dfu (dfu.uadebate.com)", English
     dfu/v1/                 the NGO cabinet, one column per scope as in cab
   dist/                     build output (gitignored)
@@ -79,6 +80,7 @@ The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 | v3.7 | feedback lives in the engine: questions, answers and the score there, the adjudicator average from stats/adjudicators?base=5 |
 | v3.8 | the engine keeps each room's prep end (PATCH /api/rooms/:id/prep, prep_ends_at on the motion call), shown as built; a club rename renames its engine organisation first; no planning markers |
 | v3.9 | the club profile gains format, language and audience, kept by the club head; GET /clubs lists every club's public profile for other services |
+| v3.10 | a beta tag beside the cab wordmark (sidenav, sign-in panel and form, error page), set by `brandTag` in the version's `_version.json` |
 
 ### main (uadebate.com)
 
@@ -90,6 +92,7 @@ The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 | v4 | v3 with no sign-in on uadebate.com: no Sign in item or page and no user column, since a signed-in person without a role sees the public site; editors get the link uadebate.com/manage from the admin and sign in on cab; every /manage address is 404 without the role; the admin is a cab admin (cab's is_admin read downward) on /manage/people; columns Public, Content manager, Admin, Phoenix API; the content-manager ribbon stays |
 | v5 | public pages look the same to everyone, content managers and admins included: they never read the session, so no name, avatar, Edit link, ribbon or private event shows outside /manage; the site header is the same under /manage, and the ribbon there is the one place with the role, the person, View site and Sign out; the content manager's calendar moves to /manage/calendar |
 | v6 | clubs are cab's: the directory and club page read cab's public club API (format, language, audience kept by the club head in cab) and cache it; map points come from a fixed city table; no club editor or club writes under /manage, the ribbon is Overview, News, Calendar |
+| v7 | the wordmark carries a beta tag; next to Cabinet a theme button (auto, light, dark) and a language menu (EN, UA, its own cookie); an admin-only switch keeps the whole calendar private (/calendar shows a calm note, the home page drops the announcement and events, the iCal feed is empty), content managers see a notice; a Ukrainian home page; the API adds GET /locale/:code and the admin calendar switch |
 
 ### dfu (dfu.uadebate.com)
 
@@ -158,7 +161,7 @@ default the directory name), `order` (switch position), `lang` (the board's
 
 ## Add a version
 
-1. Copy the latest version of the platform: `cp -r targets/cab/v3.9 targets/cab/v3.10`.
+1. Copy the latest version of the platform: `cp -r targets/cab/v3.10 targets/cab/v3.11`.
 2. Edit the specs (and `_columns.json`): only what actually changed.
 3. `bun run test`, and add the version's own checks to `check.ts`.
 

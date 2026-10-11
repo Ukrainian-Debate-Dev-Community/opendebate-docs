@@ -1,0 +1,18 @@
+{
+  "id": "main-calendar-private",
+  "title": "/calendar (calendar private)",
+  "column": "public",
+  "order": 9,
+  "path": "GET /calendar (private)",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates<span class=\"beta-tag\">beta</span></a><nav class=\"ua-nav\"><a href=\"#\">Home</a><a href=\"#\">News</a><a class=\"on\" href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></nav><div class=\"ua-right\"><span class=\"ua-ctrls\"><button class=\"ua-ic\" title=\"Theme: auto\"><svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><path d=\"M 8 1.5 A 6.5 6.5 0 0 1 8 14.5 Z\" fill=\"currentColor\"/></svg></button><button class=\"ua-ic ua-ic--txt\" title=\"Language\">EN</button></span><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Cabinet</a></div></header><main class=\"ua-main\"><div class=\"ua-head\"><div><span class=\"ua-kicker\">Calendar</span><h1>Tournaments and events</h1><p class=\"ua-lead\">Tournaments first, plus trainings and club events across Ukraine.</p></div></div><div class=\"ua-card ua-pad ua-calm\"><b>The calendar is not public yet</b><p>Tournaments and events will appear here once the federation opens the calendar.</p></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in ua-foot-in--3\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Debate Federation of Ukraine</p><p>A debate community since 2011</p></div><div><b>Site</b><a href=\"#\">News</a><a href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></div><div><b>Platform</b><a href=\"#\">Cabinet (cab)</a><a href=\"#\">Privacy policy</a><a href=\"#\">Terms of use</a></div><div><b>Contact</b><a href=\"#\">ngo.dfu@uadebate.com</a><a href=\"#\">support@uadebate.com</a><a href=\"#\">t.me/fdu_ua</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "The state while an admin keeps the whole calendar private: no events, a calm note instead. The iCal feed answers a valid empty calendar."
+    }
+  ]
+}

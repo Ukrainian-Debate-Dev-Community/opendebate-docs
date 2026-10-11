@@ -1,0 +1,72 @@
+{
+  "id": "own-add-person",
+  "title": "Add a person — what typing offers",
+  "column": "owner",
+  "order": 11,
+  "path": "phx-change search on /c/:club/owner/s/:sess <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Club › Thursday practice — registration open",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Add a person"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<i>typed \"ol\" — matching members:</i>",
+        "<span class=\"cpy\">Olena Kovalenko <span class=\"mut\">member</span></span>"
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<i>typed \"oleh-bilyk\" (exact username or email of a non-member):</i>",
+        "<span class=\"cpy\">Oleh Bilyk <span class=\"mut\">registered user, will accept on My page</span></span>"
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<i>typed \"Zara Nova\" — nobody in cab answers to it:</i>",
+        "<span class=\"cpy\">Add “Zara Nova” as a guest <span class=\"mut\">not in cab</span></span>",
+        "<p class=\"mut\">Send them their personal link from People.</p>"
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<i>typed \"zara@example.com\" — nobody uses the address:</i>",
+        "Nobody in cab uses zara@example.com. Their name [ ] <b>Add as a guest</b>",
+        "<p class=\"mut\">Email comes later; send them their personal link from People.</p>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "One field, four outcomes. A guest is offered only for a name no member or user answers to; Enter adds the one member the text matches. The typed address is never stored. A registered user is seated at once and accepts later with the engine's claim token (Invitations on My page)."
+    }
+  ],
+  "api": [
+    "POST events/:id/participants",
+    "POST events/:id/participants (no user_id) for guests"
+  ]
+}

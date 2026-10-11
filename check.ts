@@ -49,9 +49,9 @@ assert(!existsSync(join(ROOT, "dist", "cab.html")), "one page: dist/cab.html is 
 const pfSwitch = visible.match(/<div class="wb-seg" id="platform"[\s\S]*?<\/div>/)?.[0] ?? "";
 assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platform="uadebate"'), "platform switch offers cab and uadebate");
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
-assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.9"[^>]*selected/.test(visible), "version switch present, cab v3.9 selected by default");
+assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.10"[^>]*selected/.test(visible), "version switch present, cab v3.10 selected by default");
 assert(pfSwitch.includes('data-platform="dfu"') && pfSwitch.includes(">dfu (dfu.uadebate.com)</button>"), "platform switch offers dfu, labelled dfu (dfu.uadebate.com)");
-for (const [pf, v] of [["cab", "v3.8"], ["cab", "v3.9"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["uadebate", "v6"], ["dfu", "v1"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["cab", "v3.9"], ["cab", "v3.10"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["uadebate", "v6"], ["uadebate", "v7"], ["dfu", "v1"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -79,13 +79,13 @@ for (const pf of ["cab", "uadebate", "dfu"]) {
 
 /* ---------- cab history ---------- */
 const v = (ver: string) => chunk("cab", ver);
-const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38, v39] =
-  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9"].map(v);
+const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38, v39, v310] =
+  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10"].map(v);
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
-const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9"]
+const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10"]
   .map((ver) => v(ver).match(/<p class="vsub">(\d+) columns?/)?.[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2; the v2 changelog compares with v1 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -220,7 +220,7 @@ function houseRules(ver: string, c: string) {
   assert(!/\bJudge\b/.test(pages), `${ver} pages say Adjudicator, never Judge`);
   assert(goldOffenders(pages) === 0, `${ver} pages carry at most one gold action (offenders: ${goldOffenders(pages)})`);
 }
-for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) houseRules(ver, c);
+for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) houseRules(ver, c);
 
 /* feedback, as built from v3.5 on */
 function feedbackPages(ver: string, c: string) {
@@ -233,7 +233,7 @@ function feedbackPages(ver: string, c: string) {
     `${ver} adjudicator feedback names no team`);
   assert(pages.includes("Your team already sent feedback.") && pages.includes("Give feedback"), `${ver} shows giving and already-sent feedback`);
 }
-for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) feedbackPages(ver, c);
+for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) feedbackPages(ver, c);
 
 /* one command, one place (from v3.6): a page whose top bar carries commands draws no in-page button repeating one */
 function noDoubleActions(ver: string, c: string) {
@@ -249,10 +249,10 @@ function noDoubleActions(ver: string, c: string) {
   const members = pageChunk(pagesOf(c), "own-members");
   assert(members.length > 0 && !members.includes("signed-in user"), `${ver} join requests and members carry no account kind`);
 }
-for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) noDoubleActions(ver, c);
+for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) noDoubleActions(ver, c);
 
 /* feedback lives in the engine (from v3.7) */
-for (const [ver, c] of [["v3.7", v37], ["v3.8", v38], ["v3.9", v39]] as const) {
+for (const [ver, c] of [["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) {
   assert(!/kept by cab|engine is not involved|Avg feedback is cab's own/i.test(c), `${ver} never says feedback is kept by cab`);
   assert(c.includes("/api/events/:eventId/feedback-questions"), `${ver} engine column lists the feedback questions`);
   assert(c.includes("stats/adjudicators?base=5"), `${ver} reads the adjudicator average with the base vote from the engine`);
@@ -722,6 +722,48 @@ assert(pageChunk(d1, "s-doc").includes("Public") && d1col("phoenix-api").include
   "dfu v1: the secretariat publishes documents, uadebate.com reads the public ones");
 assert(d1col("phoenix-api").includes('class="swag"') && ["/inbox", "/cases", "/votes/:no/signatures", "/journal", "/people"]
   .every((p) => d1col("phoenix-api").includes(`<span class="p">${p}</span>`)), "dfu v1: the Phoenix API column lists dfu's endpoints");
+
+/* cab v3.10: a beta tag beside the cab wordmark, nothing else */
+const betaTag = '<span class="beta-tag">beta</span>';
+assert(chlogOf(v310).includes("Compared with v3.9"), "v3.10 changelog compares with v3.9");
+assert(!v39.includes(betaTag), "v3.9 stays without the beta tag");
+assert(pagesOf(v310).includes(`<div class="cp">cab${betaTag}</div>`), "v3.10 sidenav wordmark carries the beta tag");
+assert((pageChunk(v310, "pub-signin").match(/class="beta-tag">beta</g) ?? []).length === 2,
+  "v3.10 sign-in shows the beta tag on the brand panel and the form crest");
+assert(pageChunk(v310, "pub-signin-existing").includes("beta-tag") && pageChunk(v310, "pub-error").includes("beta-tag"),
+  "v3.10 existing-account sign-in and the error page carry the beta tag");
+
+/* main (uadebate.com) v7: beta tag, theme and language buttons, the admin-only calendar switch, Ukrainian */
+const u7 = chunk("uadebate", "v7");
+const u7col = (name: string) => u7.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u7pages = pagesOf(u7).split('<div class="page"').slice(1);
+// strip comments until none are left, so a cut-open "<!--" cannot survive
+let u7text = u7;
+for (let prev = ""; prev !== u7text; ) { prev = u7text; u7text = u7text.replace(/<!--[\s\S]*?-->/g, ""); }
+assert(chlogOf(u7).includes("Compared with v6"), "uadebate v7 changelog compares with v6");
+assert([...u7.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]).join(",") === "public,content-manager,admin,phoenix-api",
+  "uadebate v7 columns: public, content manager, admin, Phoenix API");
+assert(u7pages.length > 0 && u7pages.every((pg) => pg.includes('class="ua-brand wordmark"') && pg.includes('class="beta-tag">beta<')),
+  "uadebate v7: every page header shows the wordmark with the beta tag");
+assert(u7pages.every((pg) => (pg.match(/class="ua-ic[" ]/g) ?? []).length === 2 && pg.includes('<path d="M 8 1.5 A 6.5')),
+  "uadebate v7: every page header has the theme button and the language button next to Cabinet");
+const sw = "Calendar visible to the public";
+assert(u7col("admin").includes(sw) && !u7col("public").includes(sw) && !u7col("content-manager").includes(sw),
+  "uadebate v7: the calendar switch shows only in the admin column");
+const calPriv = pageChunk(u7, "main-calendar-private"), frontPriv = pageChunk(u7, "main-front-private");
+assert(calPriv.includes("The calendar is not public yet") && !calPriv.includes("ua-ev") && !calPriv.includes("ua-chip"),
+  "uadebate v7: the private calendar shows a calm note and no events");
+assert(!frontPriv.includes("ua-announce") && !frontPriv.includes('class="ua-ev'),
+  "uadebate v7: the home page drops the announcement and events while the calendar is private");
+assert(pageChunk(u7, "cm-calendar-private").includes("The whole calendar is private"),
+  "uadebate v7: the content manager sees a notice while the calendar is private");
+assert(/[Ѐ-ӿ]/.test(pageChunk(u7, "main-front-uk")) && pageChunk(u7, "main-front-uk").includes(">UA</button>"),
+  "uadebate v7: the Ukrainian home page shows the uk locale");
+assert(u7col("phoenix-api").includes("/locale/:code") && u7col("phoenix-api").includes("/manage/calendar/visibility"),
+  "uadebate v7: the API lists the language switch and the admin calendar switch");
+assert(!/[·←-⇿⬀-⯿“”‘’]/.test(u7text),
+  "uadebate v7 carries no middle dots, arrows or curly quotes");
+assert(goldOffenders(pagesOf(u7)) === 0, "uadebate v7 pages carry at most one gold action");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");
