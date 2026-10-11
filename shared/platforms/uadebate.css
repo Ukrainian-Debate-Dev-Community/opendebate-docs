@@ -1,0 +1,133 @@
+/* uadebate.com pages inside their frames: legacy/design/spec.css (uadebate design system
+   v1.1 «повітря») and the page's own styles from legacy/design/uadebate.html, scoped to the
+   frame. The site has no dark theme, so its frames stay light whatever the board shows. */
+.pf-uadebate .frame {
+  --violet-900:#241333; --violet-800:#38204E; --violet-700:#4C2A64; --violet-600:#66347E;
+  --violet-500:#7F4B99; --violet-400:#9C6DB4; --violet-300:#BC99CE; --violet-200:#D9C5E4;
+  --violet-100:#EDE2F3; --violet-50:#F8F4FB;
+  --ink:#2A2230; --muted:#7A7083; --line:#EDE7F2;
+  --gold:#E0A83C; --gold-soft:#F7E8CB; --gold-dark:#B9862A;
+  --ok:#2E8B6E; --ok-bg:#EAF5F0; --warn:#B4552D; --warn-bg:#FAF0EA;
+  --bg:#FDFCFE; --surface:#fff; --radius:14px;
+  color-scheme:light;
+  font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink); line-height:1.6; font-size:15px;
+  /* the ambient blobs body::before draws on the real site */
+  background:
+    radial-gradient(560px 420px at 88% -6%,  rgba(127,75,153,.10), transparent 70%),
+    radial-gradient(480px 420px at -6% 34%,  rgba(224,168,60,.09), transparent 70%),
+    radial-gradient(620px 520px at 104% 86%, rgba(102,52,126,.07), transparent 70%),
+    radial-gradient(360px 300px at 22% 96%,  rgba(156,109,180,.07), transparent 70%),
+    var(--bg);
+}
+.pf-uadebate .frame a { color:var(--violet-600); }
+.pf-uadebate .frame .wrap { max-width:1100px; margin:0 auto; padding:0 22px; }
+
+.pf-uadebate .frame .kicker { font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+                              color:var(--violet-500); }
+.pf-uadebate .frame .section-title { font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+                                     color:var(--muted); margin:34px 0 14px; font-weight:700; }
+.pf-uadebate .frame .text-muted { color:var(--muted); }
+
+.pf-uadebate .frame .topbar { display:flex; align-items:center; gap:22px; padding:16px 22px;
+                              background:rgba(253,252,254,.8); backdrop-filter:blur(8px); }
+.pf-uadebate .frame .topbar .brand { font-weight:800; font-size:1.02rem; display:flex; align-items:center; gap:10px;
+                                     letter-spacing:-.01em; color:var(--ink); text-decoration:none; }
+.pf-uadebate .frame .topbar .brand .dot { width:27px; height:27px; border-radius:9px; display:inline-flex;
+                                          align-items:center; justify-content:center; font-size:.66rem; font-weight:800; }
+.pf-uadebate .frame .topbar nav { display:flex; gap:2px; margin-left:auto; font-size:.86rem; font-weight:500;
+                                  align-items:center; }
+.pf-uadebate .frame .topbar nav a { color:var(--ink); text-decoration:none; padding:8px 13px; border-radius:999px;
+                                    opacity:.72; }
+.pf-uadebate .frame .topbar nav a:hover { opacity:1; background:var(--violet-50); }
+.pf-uadebate .frame .topbar nav a.active { opacity:1; font-weight:700; color:var(--violet-700); background:var(--violet-100); }
+.pf-uadebate .frame .topbar--brand .dot { background:var(--gold); color:var(--violet-900); }
+
+.pf-uadebate .frame .btn { display:inline-block; padding:11px 20px; border-radius:999px; font-weight:700;
+                           font-size:.86rem; text-decoration:none; border:none; cursor:pointer; font-family:inherit;
+                           transition:transform .12s, box-shadow .12s; }
+.pf-uadebate .frame .btn:hover { transform:translateY(-1px); }
+.pf-uadebate .frame .btn--primary { background:var(--violet-600); color:#fff; box-shadow:0 4px 14px rgba(102,52,126,.25); }
+.pf-uadebate .frame .btn--cta { background:var(--gold); color:var(--violet-900); box-shadow:0 4px 14px rgba(224,168,60,.3); }
+.pf-uadebate .frame .btn--soft { background:var(--violet-100); color:var(--violet-700); }
+.pf-uadebate .frame .btn--outline { background:transparent; color:var(--violet-600); border:1.5px solid var(--violet-200); }
+.pf-uadebate .frame .btn--sm { padding:7px 14px; font-size:.78rem; }
+
+.pf-uadebate .frame .tag { font-size:.68rem; font-weight:700; border-radius:999px; padding:4px 11px;
+                           display:inline-block; white-space:nowrap; }
+.pf-uadebate .frame .tag--ok { background:var(--ok-bg); color:var(--ok); }
+.pf-uadebate .frame .tag--info { background:var(--violet-50); color:var(--violet-600); }
+.pf-uadebate .frame .tag--gold { background:var(--gold-soft); color:var(--gold-dark); font-weight:800; }
+
+.pf-uadebate .frame .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+                            overflow:hidden; box-shadow:0 2px 16px rgba(56,32,78,.05); }
+.pf-uadebate .frame .card__pad { padding:18px 20px; }
+
+.pf-uadebate .frame .table-card { background:var(--surface); border:1px solid var(--line);
+                                  border-radius:var(--radius); overflow:hidden; box-shadow:0 2px 16px rgba(56,32,78,.05); }
+.pf-uadebate .frame .scroll-x { overflow-x:auto; }
+.pf-uadebate .frame table.tbl { width:100%; border-collapse:collapse; font-size:.87rem; }
+.pf-uadebate .frame .tbl th { text-align:left; padding:12px 18px; font-weight:700; font-size:.68rem;
+                              letter-spacing:.1em; text-transform:uppercase; white-space:nowrap;
+                              color:var(--violet-600); border-bottom:2px solid var(--violet-100); }
+.pf-uadebate .frame .tbl th.sort.asc::after { content:" ↑"; opacity:1; }
+.pf-uadebate .frame .tbl td { padding:13px 18px; border-top:1px solid var(--line); }
+.pf-uadebate .frame .tbl tbody tr:first-child td { border-top:none; }
+.pf-uadebate .frame .tbl tbody tr:hover { background:var(--violet-50); }
+.pf-uadebate .frame .tbl td.rank { font-weight:800; color:var(--violet-500); width:44px; }
+
+.pf-uadebate .frame .announce { display:flex; align-items:center; gap:14px; background:var(--surface);
+                                border:1px solid var(--gold-soft); box-shadow:0 2px 12px rgba(224,168,60,.12);
+                                color:var(--ink); border-radius:999px; padding:10px 12px 10px 10px; font-size:.85rem; }
+.pf-uadebate .frame .announce .tag--gold { flex-shrink:0; }
+.pf-uadebate .frame .announce a { color:var(--gold-dark); font-weight:700; text-decoration:none; margin-left:auto;
+                                  white-space:nowrap; padding-right:8px; }
+
+.pf-uadebate .frame .row { display:flex; align-items:center; gap:14px; background:var(--surface);
+                           border:1px solid var(--line); border-radius:12px; padding:13px 16px; margin-bottom:9px;
+                           box-shadow:0 1px 8px rgba(56,32,78,.04); }
+.pf-uadebate .frame .row__date { min-width:46px; text-align:center; background:var(--violet-50); color:var(--violet-700);
+                                 border-radius:10px; padding:6px 4px; flex-shrink:0; }
+.pf-uadebate .frame .row__date b { display:block; font-size:1.05rem; line-height:1; }
+.pf-uadebate .frame .row__date span { font-size:.6rem; text-transform:uppercase; font-weight:700; }
+.pf-uadebate .frame .row__body { flex:1; min-width:0; }
+.pf-uadebate .frame .row h4 { font-size:.88rem; }
+.pf-uadebate .frame .row .sub { font-size:.74rem; color:var(--muted); }
+
+.pf-uadebate .frame .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; }
+.pf-uadebate .frame .stat { padding:14px 4px; }
+.pf-uadebate .frame .stat .v { font-size:1.9rem; font-weight:800; letter-spacing:-.03em; color:var(--violet-600); }
+.pf-uadebate .frame .stat .l { font-size:.72rem; color:var(--muted); font-weight:600; }
+
+.pf-uadebate .frame .grid { display:grid; gap:16px; }
+.pf-uadebate .frame .grid--3 { grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+.pf-uadebate .frame .grid--2 { grid-template-columns:1.4fr 1fr; align-items:start; gap:26px; }
+
+.pf-uadebate .frame .hero { position:relative; padding:64px 8px 56px; overflow:visible; }
+.pf-uadebate .frame .hero .kicker { margin-bottom:10px; display:block; }
+.pf-uadebate .frame .hero h1 { font-size:2.4rem; line-height:1.12; letter-spacing:-.025em; max-width:640px;
+                               margin-bottom:14px; font-weight:800; }
+.pf-uadebate .frame .hero h1 em { font-style:normal; color:var(--violet-600); }
+.pf-uadebate .frame .hero p { max-width:520px; color:var(--muted); margin-bottom:26px; font-size:.98rem; }
+.pf-uadebate .frame .hero .blob { position:absolute; border-radius:50%; filter:blur(2px); z-index:-1; }
+
+.pf-uadebate .frame .footer { border-top:1px solid var(--line); padding:34px 0; margin-top:56px;
+                              font-size:.82rem; color:var(--muted); }
+.pf-uadebate .frame .footer .wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:22px; }
+.pf-uadebate .frame .footer b { color:var(--ink); display:block; margin-bottom:6px; }
+.pf-uadebate .frame .footer a { color:var(--violet-600); text-decoration:none; display:block; padding:2px 0; }
+.pf-uadebate .frame .footer a:hover { color:var(--gold-dark); }
+
+/* the page's own styles (uadebate.html <style>): hero blobs, news cover gradients */
+.pf-uadebate .frame .hero .b1 { width:340px; height:340px; right:-40px; top:-90px;
+            background:radial-gradient(circle at 35% 35%, var(--violet-200), var(--violet-100) 60%, transparent 75%); }
+.pf-uadebate .frame .hero .b2 { width:200px; height:200px; right:230px; top:110px;
+            background:radial-gradient(circle at 40% 40%, var(--gold-soft), transparent 70%); }
+.pf-uadebate .frame .hero .b3 { width:120px; height:120px; right:70px; top:190px;
+            background:radial-gradient(circle at 40% 40%, var(--violet-100), transparent 72%); }
+.pf-uadebate .frame .hero .btn { margin-right:8px; }
+.pf-uadebate .frame .cover { height:120px; display:flex; align-items:flex-end; padding:10px;
+         background:linear-gradient(135deg,var(--violet-300),var(--violet-100)); }
+.pf-uadebate .frame .cover.c2 { background:linear-gradient(135deg,var(--violet-200),var(--gold-soft)); }
+.pf-uadebate .frame .cover.c3 { background:linear-gradient(135deg,var(--violet-100) 20%,var(--violet-300)); }
+.pf-uadebate .frame .cover .tag { background:rgba(255,255,255,.75); color:var(--violet-700); }

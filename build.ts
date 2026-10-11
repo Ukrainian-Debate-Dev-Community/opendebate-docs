@@ -1,14 +1,15 @@
-/* webdesign build — renders targets/<target>/<version> page specs into dist/<target>.html.
+/* webdesign build — renders every targets/<platform>/<version> into one page, dist/index.html.
    Zero runtime deps; run with: bun run build.ts
-   Output is self-contained (frame.css + board.js inlined), one hidden board per
-   version, toggled client-side by the version <select>. */
+   Output is self-contained (styles, the cab wordmark font and board.js inlined): one hidden
+   board per platform+version, picked client-side by the platform and version switches. */
 
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync } from "fs";
 import { join } from "path";
 
 const ROOT = new URL(".", import.meta.url).pathname;
 const TARGETS_DIR = join(ROOT, "targets");
 const DIST = join(ROOT, "dist");
+const CAB_FONT = join(ROOT, "..", "platform", "apps", "cab", "priv", "static", "fonts", "cedarville-cursive.woff2");
 
 // the role ladder, weakest first: every successor inherits all
 // predecessor pages and adds its own (the two APIs sit above admin —
@@ -33,16 +34,18 @@ type Block = {
 };
 type PageSpec = {
   id: string; title?: string; column: string; order?: number; path?: string;
-  api?: string[]; m8b?: boolean; bare?: boolean;
+  api?: string[]; bare?: boolean;
   nav?: { items: string[]; context?: string; active?: string; profile?: string };
   chrome?: { crumb: string; segs?: Seg[] };
   blocks?: Block[];
   kind?: "swagger"; intro?: string;
   groups?: { title: string; rows: SwagRow[] }[];
 };
-type SwagRow = { id: string; method: string; path: string; desc: string; api?: string; apiNone?: boolean; m8b?: boolean; t?: string };
+type SwagRow = { id: string; method: string; path: string; desc: string; api?: string; apiNone?: boolean; t?: string };
 type Columns = Record<string, { title: string; cond: string }>;
 type Version = { name: string; columns: Columns; pages: PageSpec[] };
+// targets/<platform>/platform.json — all fields optional
+type Platform = { id: string; label: string; order: number; lang: string; frameWidth: number; versions: Version[] };
 
 /* ---------- helpers ---------- */
 const escAttr = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -54,12 +57,37 @@ function stable(v: unknown): string {
   return JSON.stringify(v);
 }
 
+// planning-era fields are ignored: drop them before anything reads a spec
+// (older specs drew the LIVE tag with the m8b class; it is the live class now)
+function dropPlanning(v: any): any {
+  if (typeof v === "string") return v.replace(/<span class="m8b">LIVE<\/span>/g, `<span class="live">LIVE</span>`);
+  if (Array.isArray(v)) return v.map(dropPlanning);
+  if (v && typeof v === "object") {
+    const o: any = {};
+    for (const k of Object.keys(v)) if (k !== "m8b") o[k] = dropPlanning(v[k]);
+    return o;
+  }
+  return v;
+}
+
+/* older specs carry milestone tags in their text (M8b, M9a, launch-timeline L2…).
+   The board no longer plans, so the renderer drops them; NEW tags stay as plain tags. */
+const MILESTONE = String.raw`(?:launch-timeline )?(?:M\d+[a-z]?|L\d)`;
+function scrub(html: string): string {
+  return html
+    .replace(/<span class="m8b">(NEW|ENGINE-NEW)<\/span>/g, `<span class="w-tag">$1</span>`)
+    .replace(new RegExp(String.raw`\s*<span class="m8b">${MILESTONE}(?::? [a-z]+)?</span>`, "g"), "")
+    .replace(new RegExp(String.raw`\s*\(${MILESTONE}\)`, "g"), "")
+    .replace(new RegExp(String.raw`,\s*${MILESTONE}\)`, "g"), ")")
+    .replace(new RegExp(String.raw`\b${MILESTONE}\b:?\s?`, "g"), "");
+}
+
 function loadVersion(dir: string, name: string): Version {
   const files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
   let columns: Columns = {};
   const pages: PageSpec[] = [];
   for (const f of files) {
-    const data = JSON.parse(readFileSync(join(dir, f), "utf8"));
+    const data = dropPlanning(JSON.parse(readFileSync(join(dir, f), "utf8")));
     if (f === "_columns.json") columns = data;
     else if (!f.startsWith("_")) pages.push(data);
   }
@@ -67,7 +95,31 @@ function loadVersion(dir: string, name: string): Version {
   return { name, columns, pages };
 }
 
-/* ---------- block renderers (mirror legacy/design/pages-board.html markup) ---------- */
+// versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
+function loadPlatform(id: string): Platform | null {
+  const dir = join(TARGETS_DIR, id);
+  const vnum = (d: string): [number, number] => {
+    const [maj, min] = d.slice(1).split(".");
+    return [Number(maj), Number(min ?? 0)];
+  };
+  const vdirs = readdirSync(dir)
+    .filter((d) => /^v\d+(\.\d+)?$/.test(d) && statSync(join(dir, d)).isDirectory())
+    .sort((a, b) => vnum(a)[0] - vnum(b)[0] || vnum(a)[1] - vnum(b)[1]);
+  if (!vdirs.length) return null;
+  const metaPath = join(dir, "platform.json");
+  const meta = existsSync(metaPath) ? JSON.parse(readFileSync(metaPath, "utf8")) : {};
+  return {
+    id, label: meta.label ?? id, order: meta.order ?? 99, lang: meta.lang ?? "en",
+    frameWidth: meta.frameWidth ?? 720, versions: vdirs.map((d) => loadVersion(join(dir, d), d)),
+  };
+}
+
+function columnsOf(v: Version): string[] {
+  const extra = Object.keys(v.columns).filter((c) => !COLUMN_ORDER.includes(c));
+  return [...COLUMN_ORDER, ...extra].filter((c) => v.pages.some((p) => p.column === c));
+}
+
+/* ---------- block renderers ---------- */
 function cell(raw: string): string {
   const i = raw.indexOf("::");
   if (i > 0) {
@@ -79,12 +131,13 @@ function cell(raw: string): string {
 
 function renderTable(b: Block): string {
   let h = `<div class="card"><table class="t">`;
-  if (b.head?.length) h += `<tr>${b.head.map((th) => `<th>${th}</th>`).join("")}</tr>`;
+  if (b.head?.length) h += `<thead><tr>${b.head.map((th) => `<th>${th}</th>`).join("")}</tr></thead>`;
+  h += `<tbody>`;
   (b.rows ?? []).forEach((row, i) => {
     const cls = b.rowClass?.[String(i)];
     h += `<tr${cls ? ` class="${cls}"` : ""}>${row.map(cell).join("")}</tr>`;
   });
-  return h + `</table></div>`;
+  return h + `</tbody></table></div>`;
 }
 
 function renderBlock(b: Block): string {
@@ -97,7 +150,7 @@ function renderBlock(b: Block): string {
     }
     case "table": return renderTable(b);
     case "banner": return `<div class="bn${b.kind === "gold" ? " gd" : ""}">${b.html ?? ""}</div>`;
-    case "note": return `<div class="card"><div class="pad mut">${b.text ?? ""}</div></div>`;
+    case "note": return `<div class="anno">${b.text ?? ""}</div>`;
     case "raw": return b.html ?? "";
     case "tabs": return ""; // lifted out of the body — rendered by renderPage
     default: throw new Error(`unknown block type: ${b.type}`);
@@ -109,7 +162,7 @@ function renderTabs(b: Block): string {
     .map((t) => `<a${t === b.active ? ` class="on"` : ""} href="#">${t}</a>`).join("")}</div>`;
 }
 
-function renderPage(p: PageSpec): string {
+function renderPage(p: PageSpec, brand: string): string {
   const api = (p.api ?? []).map((a) => `<span class="eng">${a}</span>`).join("");
   const cap = `<div class="cap">${p.path ?? ""}${api}</div>`;
   let inner: string;
@@ -117,7 +170,7 @@ function renderPage(p: PageSpec): string {
     inner = (p.blocks ?? []).map(renderBlock).join("\n");
   } else {
     const nav = p.nav
-      ? `<nav class="nav"><div class="cp">cab</div>` +
+      ? `<nav class="nav"><div class="cp">${brand}</div>` +
         (p.nav.context ? `<div class="sc">${p.nav.context}</div>` : "") +
         p.nav.items.map((it) => `<a${it === p.nav!.active ? ` class="on"` : ""} href="#">${it}</a>`).join("") +
         `<div class="pf">${p.nav.profile ?? ""}</div></nav>`
@@ -151,16 +204,16 @@ function renderSwagger(p: PageSpec): string {
   return h + `\n</div>`;
 }
 
-function renderColumn(name: string, v: Version): string {
+function renderColumn(name: string, v: Version, pf: Platform): string {
   const meta = v.columns[name] ?? { title: name, cond: "" };
   const pages = v.pages.filter((p) => p.column === name);
-  const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p))).join("\n\n");
+  const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p, pf.id))).join("\n\n");
   const intro = pages.find((p) => p.intro)?.intro;
-  return `<div class="col ${COLUMN_CLASS[name] ?? ""}" data-col="${name}"><h3>${meta.title}</h3>\n` +
+  return `<div class="col ${COLUMN_CLASS[name] ?? ""}" data-col="${name}" style="flex-basis:${pf.frameWidth}px"><h3>${meta.title}</h3>\n` +
          `<p class="cond">${meta.cond}</p>${intro ? `\n<p class="cond">${intro}</p>` : ""}\n${body}\n</div>`;
 }
 
-/* ---------- changelog: deep-compare specs between consecutive versions ---------- */
+/* ---------- changelog: deep-compare specs with the previous version of the same platform ---------- */
 type Changelog = { added: string[]; changed: string[]; removed: string[]; conds: string[] };
 
 function diffVersions(prev: Version, next: Version): Changelog {
@@ -169,87 +222,109 @@ function diffVersions(prev: Version, next: Version): Changelog {
   const added = [...nm.keys()].filter((id) => !pm.has(id)).sort();
   const removed = [...pm.keys()].filter((id) => !nm.has(id)).sort();
   const changed = [...nm.keys()].filter((id) => pm.has(id) && stable(pm.get(id)) !== stable(nm.get(id))).sort();
-  const conds = COLUMN_ORDER.filter(
+  const cols = [...new Set([...COLUMN_ORDER, ...Object.keys(prev.columns), ...Object.keys(next.columns)])];
+  const conds = cols.filter(
     (c) => (prev.columns[c] || next.columns[c]) && stable(prev.columns[c] ?? null) !== stable(next.columns[c] ?? null),
   );
   return { added, changed, removed, conds };
 }
 
 function renderChangelog(v: Version, prev: Version | null): string {
-  if (!prev) return `<div class="chlog"><b>${v.name}</b> — baseline (no previous version).</div>`;
+  if (!prev) return `<div class="chlog"><span class="vs">First version</span><span>nothing to compare with yet</span></div>`;
   const d = diffVersions(prev, v);
   const part = (cls: string, label: string, ids: string[]) =>
-    ids.length ? `<span class="${cls}">${label}:</span> ${ids.join(", ")}` : "";
+    ids.length ? `<span><span class="${cls}">${label}</span> ${ids.join(", ")}</span>` : "";
   const bits = [
-    part("add", `added in ${v.name}`, d.added),
-    part("chg", `changed in ${v.name}`, d.changed),
-    part("rem", `removed in ${v.name}`, d.removed),
-    part("chg", "column conditions changed", d.conds),
+    part("add", "Added", d.added),
+    part("chg", "Changed", d.changed),
+    part("rem", "Removed", d.removed),
+    part("chg", "Column conditions changed", d.conds),
   ].filter(Boolean);
-  return `<div class="chlog"><b>${v.name}</b> vs ${prev.name} — ${bits.length ? bits.join(" · ") : "no changes"}</div>`;
+  return `<div class="chlog"><span class="vs">Compared with ${prev.name}</span>${bits.length ? bits.join("") : "<span>no changes</span>"}</div>`;
 }
 
 /* ---------- page assembly ---------- */
-function buildTarget(target: string, versions: Version[]): string {
+function fontFace(): string {
+  if (!existsSync(CAB_FONT)) return "";
+  const b64 = readFileSync(CAB_FONT).toString("base64");
+  return `@font-face { font-family:"Cedarville Cursive"; font-style:normal; font-weight:400; font-display:swap;\n` +
+         `  src:url("data:font/woff2;base64,${b64}") format("woff2"); }`;
+}
+
+function platformStyle(id: string): string {
+  const path = join(ROOT, "shared", "platforms", `${id}.css`);
+  return existsSync(path) ? readFileSync(path, "utf8") : "";
+}
+
+function buildIndex(platforms: Platform[]): string {
   const css = readFileSync(join(ROOT, "shared", "frame.css"), "utf8");
   const js = readFileSync(join(ROOT, "shared", "board.js"), "utf8");
-  const latest = versions[versions.length - 1].name;
+  const first = platforms[0];
+  const latest = first.versions[first.versions.length - 1].name;
 
-  const options = versions
-    .map((v) => `<option value="${v.name}"${v.name === latest ? " selected" : ""}>${v.name}</option>`)
+  const manifest = platforms.map((pf) => ({ id: pf.id, label: pf.label, versions: pf.versions.map((v) => v.name) }));
+
+  const pfButtons = platforms
+    .map((pf) => `<button type="button" role="tab" data-platform="${pf.id}" aria-selected="${pf === first}">${pf.label}</button>`)
     .join("");
+  const verOptions = first.versions
+    .map((v) => `<option value="${v.name}"${v.name === latest ? " selected" : ""}>${v.name}</option>`)
+    .reverse().join("");
 
-  const vheads = versions
-    .map((v, i) => {
-      const cols = COLUMN_ORDER.filter((c) => v.pages.some((p) => p.column === c));
-      return `<div class="version" data-version="${v.name}" hidden>\n` +
-        `<h1>${target} pages board — ${cols.length} columns, every page as its role sees it</h1>\n` +
-        `<p><b>Click any page</b> → prompt modal pops up (type, click outside to close; gold dot = has a note).\n` +
-        `   <b>Export notes</b> (bottom right) downloads ${target}-pages-notes-&lt;version&gt;.json — notes are kept per version.\n` +
-        `   Caption over each page: phoenix path + <span style="color:var(--ok)">engine command</span>. <span style="color:var(--warn);font-weight:700">M8b</span> = specced, not yet built.</p>\n` +
-        renderChangelog(v, i > 0 ? versions[i - 1] : null) + `\n</div>`;
-    })
-    .join("\n");
-
-  const boards = versions
-    .map((v) => {
-      const cols = COLUMN_ORDER.filter((c) => v.pages.some((p) => p.column === c));
-      return `<div class="board version" data-version="${v.name}" hidden>\n\n` +
-        cols.map((c) => `<!-- ============ ${c.toUpperCase()} · ${v.name} ============ -->\n${renderColumn(c, v)}`).join("\n\n") +
+  const sections = platforms.flatMap((pf) =>
+    pf.versions.map((v, i) => {
+      const cols = columnsOf(v);
+      const head = `<div class="vhead">\n` +
+        `<h1>${pf.label} <span class="vn">${v.name}</span></h1>\n` +
+        `<p class="vsub">${cols.length} ${cols.length === 1 ? "column" : "columns"}, ${v.pages.length} ${v.pages.length === 1 ? "spec" : "specs"}, every page as its role sees it</p>\n` +
+        renderChangelog(v, i > 0 ? pf.versions[i - 1] : null) + `\n</div>`;
+      const board = `<div class="board">\n` +
+        cols.map((c) => `<!-- ${pf.id} ${v.name}: ${c} -->\n${scrub(renderColumn(c, v, pf))}`).join("\n\n") +
         `\n</div>`;
-    })
-    .join("\n\n");
+      return `<section class="version pf-${pf.id}" data-platform="${pf.id}" data-version="${v.name}" lang="${pf.lang}" hidden>\n${head}\n${board}\n</section>`;
+    }),
+  ).join("\n\n");
 
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${target} pages board</title>
+<title>Design workbench</title>
 <style>
+${fontFace()}
 ${css}
+${platforms.map((pf) => platformStyle(pf.id)).join("\n")}
 </style>
 </head>
 <body>
-<header>
-  <div class="verbar">
-    <select id="ver">${options}</select>
-    <span class="wb">generated by webdesign/build.ts — edit targets/${target}/&lt;version&gt;/*.json, never this file</span>
+<header class="wb">
+  <div class="wb-bar">
+    <span class="wb-name">Design workbench</span>
+    <div class="wb-field"><span class="wb-label">Platform</span>
+      <div class="wb-seg" id="platform" role="tablist" aria-label="Platform">${pfButtons}</div></div>
+    <label class="wb-field"><span class="wb-label">Version</span>
+      <select id="version" aria-label="Version">${verOptions}</select></label>
+    <span class="wb-hint">Click a page to leave a note. Captions show the route and, in green, the engine call behind it.</span>
+    <button type="button" class="wb-theme" id="theme" data-state="auto" title="Theme: follows the system">Auto</button>
+    <button type="button" class="wb-go" id="export">Export notes</button>
   </div>
-${vheads}
 </header>
 
-${boards}
+<main class="wb-main">
+${sections}
+</main>
 
 <div id="ov"><div id="modal">
   <h4 id="m-title"></h4><div class="mp" id="m-path"></div>
-  <textarea id="m-ta" placeholder="your prompt for this page…"></textarea>
-  <div class="hint">click outside to close — the note is kept (gold dot). Export notes → ${target}-pages-notes-&lt;version&gt;.json.</div>
+  <textarea id="m-ta" placeholder="Your prompt for this page"></textarea>
+  <div class="hint">Click outside to close; the note is kept and the page gets a gold dot. Export notes saves the notes of the version on screen.</div>
 </div></div>
-<button id="export">Export notes</button>
+
+<p class="wb-foot">Generated by webdesign/build.ts from targets/&lt;platform&gt;/&lt;version&gt;/*.json; edit the specs, never this file.</p>
 
 <script>
-window.__WD = { target: ${JSON.stringify(target)} };
+window.__WD = ${JSON.stringify({ platforms: manifest, initial: { platform: first.id, version: latest } })};
 ${js}
 </script>
 </body>
@@ -260,27 +335,21 @@ ${js}
 /* ---------- main ---------- */
 function main() {
   if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
-  const targets = readdirSync(TARGETS_DIR).filter((t) => statSync(join(TARGETS_DIR, t)).isDirectory());
-  let built = 0;
-  for (const target of targets) {
-    const tdir = join(TARGETS_DIR, target);
-    // versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
-    const vnum = (d: string): [number, number] => {
-      const [maj, min] = d.slice(1).split(".");
-      return [Number(maj), Number(min ?? 0)];
-    };
-    const vdirs = readdirSync(tdir)
-      .filter((d) => /^v\d+(\.\d+)?$/.test(d) && statSync(join(tdir, d)).isDirectory())
-      .sort((a, b) => vnum(a)[0] - vnum(b)[0] || vnum(a)[1] - vnum(b)[1]);
-    if (!vdirs.length) { console.log(`- ${target}: no versions, skipped`); continue; }
-    const versions = vdirs.map((d) => loadVersion(join(tdir, d), d));
-    const html = buildTarget(target, versions);
-    const out = join(DIST, `${target}.html`);
-    writeFileSync(out, html);
-    built++;
-    console.log(`✓ ${target}: ${versions.map((v) => `${v.name} (${v.pages.length} specs)`).join(", ")} → dist/${target}.html`);
+  const platforms: Platform[] = [];
+  for (const id of readdirSync(TARGETS_DIR).filter((t) => statSync(join(TARGETS_DIR, t)).isDirectory())) {
+    const pf = loadPlatform(id);
+    if (!pf) { console.log(`- ${id}: no versions, left out`); continue; }
+    platforms.push(pf);
   }
-  if (!built) console.log("nothing to build");
+  if (!platforms.length) { console.log("nothing to build"); return; }
+  platforms.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
+
+  // one page now; earlier builds wrote dist/<platform>.html
+  for (const f of readdirSync(DIST)) if (f.endsWith(".html") && f !== "index.html") rmSync(join(DIST, f));
+  writeFileSync(join(DIST, "index.html"), buildIndex(platforms));
+  for (const pf of platforms)
+    console.log(`✓ ${pf.label}: ${pf.versions.map((v) => `${v.name} (${v.pages.length})`).join(", ")}`);
+  console.log("→ dist/index.html");
 }
 
 main();

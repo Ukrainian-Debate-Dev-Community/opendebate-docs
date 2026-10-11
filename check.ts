@@ -1,10 +1,12 @@
-/* assert script: verifies dist/cab.html against the specs. Run after build:
+/* assert script: verifies dist/index.html against the specs. Run after build:
    bun run build.ts && bun run check.ts */
-import { readFileSync, readdirSync } from "fs";
+import { readFileSync, readdirSync, existsSync } from "fs";
 import { join } from "path";
 
 const ROOT = new URL(".", import.meta.url).pathname;
-const html = readFileSync(join(ROOT, "dist", "cab.html"), "utf8");
+const html = readFileSync(join(ROOT, "dist", "index.html"), "utf8");
+// what people read: the page without its inlined styles, font and script
+const visible = html.replace(/<style>[\s\S]*?<\/style>/g, "").replace(/<script>[\s\S]*?<\/script>/g, "");
 
 let failures = 0;
 function assert(cond: boolean, msg: string) {
@@ -12,86 +14,96 @@ function assert(cond: boolean, msg: string) {
   else { failures++; console.error(`FAIL: ${msg}`); }
 }
 
-function specIds(version: string): string[] {
-  const dir = join(ROOT, "targets", "cab", version);
-  const ids: string[] = [];
-  for (const f of readdirSync(dir)) {
-    if (!f.endsWith(".json") || f.startsWith("_")) continue;
-    const spec = JSON.parse(readFileSync(join(dir, f), "utf8"));
-    if (spec.kind === "swagger") for (const g of spec.groups) for (const r of g.rows) ids.push(r.id);
-    else ids.push(spec.id);
-  }
-  return ids;
+function specFiles(platform: string, version: string): { file: string; spec: any }[] {
+  const dir = join(ROOT, "targets", platform, version);
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => ({ file: f, spec: JSON.parse(readFileSync(join(dir, f), "utf8")) }));
+}
+function specIds(platform: string, version: string): string[] {
+  return specFiles(platform, version).flatMap(({ spec }) =>
+    spec.kind === "swagger" ? spec.groups.flatMap((g: any) => g.rows.map((r: any) => r.id)) : [spec.id]);
+}
+function versionsOf(platform: string): string[] {
+  const dir = join(ROOT, "targets", platform);
+  return readdirSync(dir).filter((d) => /^v\d+(\.\d+)?$/.test(d));
 }
 
-/* split the output into per-version board chunks */
-function boardChunk(version: string): string {
-  const marker = `<div class="board version" data-version="${version}"`;
+/* one platform+version: its <section> */
+function chunk(platform: string, version: string): string {
+  const marker = `data-platform="${platform}" data-version="${version}"`;
   const start = html.indexOf(marker);
   if (start < 0) return "";
-  const next = html.indexOf(`<div class="board version"`, start + marker.length);
-  return next < 0 ? html.slice(start) : html.slice(start, next);
+  return html.slice(start, html.indexOf("</section>", start));
+}
+const chlogOf = (c: string) => c.match(/<div class="chlog">[\s\S]*?<\/div>/)?.[0] ?? "";
+const listed = (log: string, label: string) =>
+  log.match(new RegExp(`>${label}</span>([^<]*)`))?.[1] ?? "";
+const pagesOf = (c: string) => c.split('data-col="phoenix-api"')[0];
+const pageChunk = (pages: string, id: string) => pages.split(`data-id="${id}"`)[1]?.split('<div class="page"')[0] ?? "";
+const goldOffenders = (pages: string) =>
+  pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
+
+/* ---------- the workbench: one page, two switches ---------- */
+assert(!existsSync(join(ROOT, "dist", "cab.html")), "one page: dist/cab.html is no longer written");
+const pfSwitch = visible.match(/<div class="wb-seg" id="platform"[\s\S]*?<\/div>/)?.[0] ?? "";
+assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platform="uadebate"'), "platform switch offers cab and uadebate");
+assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
+assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
+assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
+for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"]]) {
+  assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
+}
+const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
+const versionsOnDisk = ["cab", "uadebate"].flatMap((pf) => versionsOf(pf).map((v) => `${pf}/${v}`));
+assert(versionsOnDisk.every((v) => versionsInPage.includes(v)) && versionsInPage.length === versionsOnDisk.length,
+  `every platform+version on disk has exactly one board (${versionsInPage.length})`);
+
+/* no planning-era markers anywhere people read */
+const milestones = [...visible.matchAll(/\b(?:M\d+[a-z]?|L\d)\b|launch-timeline|specced|not yet built|class="m8b"/g)].map((m) => m[0]);
+assert(milestones.length === 0, `no milestone or M8b markers in the page${milestones.length ? " — found: " + [...new Set(milestones)].join(", ") : ""}`);
+const chromeText = visible.replace(/<section[\s\S]*?<\/section>/g, "");
+assert(!chromeText.includes("·"), "the workbench chrome carries no middle dots");
+
+/* every spec id is rendered, and ids are unique within a platform+version */
+for (const pf of ["cab", "uadebate"]) {
+  for (const ver of versionsOf(pf)) {
+    const c = chunk(pf, ver);
+    const missing = specIds(pf, ver).filter((id) => !c.includes(`data-id="${id}"`));
+    assert(missing.length === 0, `${pf} ${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
+    const ids = [...c.matchAll(/ data-id="([^"]+)"/g)].map((m) => m[1]);
+    const dups = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+    assert(dups.length === 0, `${pf} ${ver}: page ids unique${dups.length ? " — repeated: " + dups.join(", ") : ""}`);
+  }
 }
 
-const v1 = boardChunk("v1");
-const v2 = boardChunk("v2");
-const v21 = boardChunk("v2.1");
-const v22 = boardChunk("v2.2");
-const v23 = boardChunk("v2.3");
-const v3 = boardChunk("v3");
-const v31 = boardChunk("v3.1");
-const v32 = boardChunk("v3.2");
-const v33 = boardChunk("v3.3");
-const v34 = boardChunk("v3.4");
-const v35 = boardChunk("v3.5");
-const v36 = boardChunk("v3.6");
-const v37 = boardChunk("v3.7");
-assert(v1.length > 0, "v1 board present");
-assert(v2.length > 0, "v2 board present");
-assert(v21.length > 0, "v2.1 board present");
-assert(v22.length > 0, "v2.2 board present");
-assert(v23.length > 0, "v2.3 board present");
-assert(v3.length > 0, "v3 board present");
-assert(v31.length > 0, "v3.1 board present");
-assert(v32.length > 0, "v3.2 board present");
-assert(v33.length > 0, "v3.3 board present");
-assert(v34.length > 0, "v3.4 board present");
-assert(v35.length > 0, "v3.5 board present");
-assert(v36.length > 0, "v3.6 board present");
-assert(v37.length > 0, "v3.7 board present");
-
-/* every spec id of each version appears in that version's board */
-for (const [ver, chunk] of [["v1", v1], ["v2", v2], ["v2.1", v21], ["v2.2", v22], ["v2.3", v23], ["v3", v3], ["v3.1", v31], ["v3.2", v32], ["v3.3", v33], ["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37]] as const) {
-  const missing = specIds(ver).filter((id) => !chunk.includes(`data-id="${id}"`));
-  assert(missing.length === 0, `${ver}: every spec id rendered${missing.length ? " — missing: " + missing.join(", ") : ""}`);
-}
+/* ---------- cab history ---------- */
+const v = (ver: string) => chunk("cab", ver);
+const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38] =
+  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8"].map(v);
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
-const counts = [...html.matchAll(/cab pages board — (\d+) columns/g)].map((m) => m[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8"]
+  .map((ver) => v(ver).match(/<p class="vsub">(\d+) columns?/)?.[1]);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
-/* v1-only pages exist in v1 and not in v2 */
+/* v1-only pages exist in v1 and not in v2; the v2 changelog compares with v1 */
 for (const id of ["own-compose", "own-sessions"]) {
   assert(v1.includes(`data-id="${id}"`), `v1 contains ${id}`);
   assert(!v2.includes(`data-id="${id}"`), `v2 does not contain ${id}`);
 }
-
-/* changelog lists them as removed in v2 */
-const chlog = html.match(/<div class="chlog"><b>v2<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
-const removed = chlog.match(/removed in v2:<\/span>([^·<]*)/)?.[1] ?? "";
+const chlog2 = chlogOf(v2);
+assert(chlog2.includes("Compared with v1"), "v2 changelog compares with v1");
 for (const id of ["own-compose", "own-sessions", "mem-lists", "par-guest", "par-results", "jud-guest", "jud-reopen"]) {
-  assert(removed.includes(id), `v2 changelog lists ${id} as removed`);
+  assert(listed(chlog2, "Removed").includes(id), `v2 changelog lists ${id} as removed`);
 }
-assert(/added in v2:<\/span>[^·<]*mem-members/.test(chlog), "v2 changelog lists mem-members as added");
+assert(listed(chlog2, "Added").includes("mem-members"), "v2 changelog lists mem-members as added");
 
 /* v2.1: ballot correction = unlock + resubmit, reopen gone everywhere */
-const chlog21 = html.match(/<div class="chlog"><b>v2.1<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
-const changed21 = chlog21.match(/changed in v2.1:<\/span>([^·<]*)/)?.[1] ?? "";
 for (const id of ["own-sess-run", "jud-ballot", "engine-api", "phoenix-api"]) {
-  assert(changed21.includes(id), `v2.1 changelog lists ${id} as changed`);
+  assert(listed(chlogOf(v21), "Changed").includes(id), `v2.1 changelog lists ${id} as changed`);
 }
 assert(v21.includes("/rooms/:id/unlock"), "v2.1 documents the unlock route");
-/* the only reopen left is sign-up registration and the "no reopen" explainer */
 const scrubbed = v21
   .replace(/api-reopen-reg/g, "")
   .replace(/reopen-registration/g, "")
@@ -100,44 +112,34 @@ const scrubbed = v21
   .replace(/no reopen:/g, "");
 assert(!/reopen/i.test(scrubbed), "v2.1 has no ballot reopen left");
 
-/* v2.2: edit ballot is the only user-facing verb — lock/unlock never
-   appears outside the engine-api column (internal) */
-const chlog22 = html.match(/<div class="chlog"><b>v2.2<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
-const changed22 = chlog22.match(/changed in v2.2:<\/span>([^·<]*)/)?.[1] ?? "";
+/* v2.2: edit ballot is the only user-facing verb */
 for (const id of ["own-sess-run", "jud-ballot", "phoenix-api"]) {
-  assert(changed22.includes(id), `v2.2 changelog lists ${id} as changed`);
+  assert(listed(chlogOf(v22), "Changed").includes(id), `v2.2 changelog lists ${id} as changed`);
 }
-assert(/column conditions changed/.test(chlog22), "v2.2 changelog flags the ladder column conditions");
+assert(chlogOf(v22).includes("Column conditions changed"), "v2.2 changelog flags the ladder column conditions");
 assert(v22.includes("edit ballot"), "v2.2 shows the edit ballot verb");
 assert(!/unlock/i.test(v22), "v2.2 never says unlock");
 const v22cab = v22.split('data-col="engine-api"')[0];
 assert(!/unconfirm/i.test(v22cab.replace(/cab unconfirms as head first \(internal, never a page verb\)/g, "")),
   "v2.2 keeps unconfirm out of the page columns (internal note aside)");
-
-/* the columns render in ladder order, weakest first */
 const colOrder = [...v22.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
 assert(colOrder.join(",") === "public,participant,judge,member,owner,admin,phoenix-api,engine-api",
   `v2.2 columns follow the ladder (got: ${colOrder.join(",")})`);
 
-/* v2.3: the notes round — pages re-homed, my page split out, honest navs */
+/* v2.3: the notes round */
 for (const id of ["pub-join", "mem-my-page", "mem-account"]) {
   assert(v23.includes(`data-id="${id}"`), `v2.3 contains ${id}`);
+  assert(listed(chlogOf(v23), "Added").includes(id), `v2.3 changelog adds ${id}`);
 }
 for (const id of ["mem-join", "adm-account"]) {
   assert(!v23.includes(`data-id="${id}"`), `v2.3 no longer contains ${id}`);
-}
-const chlog23 = html.match(/<div class="chlog"><b>v2.3<\/b>[\s\S]*?<\/div>/)?.[0] ?? "";
-for (const id of ["pub-join", "mem-my-page", "mem-account"]) {
-  assert(new RegExp(`added in v2.3:</span>[^·<]*${id}`).test(chlog23), `v2.3 changelog adds ${id}`);
-}
-for (const id of ["mem-join", "adm-account"]) {
-  assert(new RegExp(`removed in v2.3:</span>[^·<]*${id}`).test(chlog23), `v2.3 changelog removes ${id}`);
+  assert(listed(chlogOf(v23), "Removed").includes(id), `v2.3 changelog removes ${id}`);
 }
 assert(v23.includes("Register") && v23.includes("My page"), "v2.3 navs carry Register and My page");
 assert(v23.includes("GDPR concerns → support@uadebate.com"), "v2.3 front page renders the footer example");
 
-/* v3: two trees — no per-role route spellings anywhere in the page columns */
-const v3pages = v3.split('data-col="phoenix-api"')[0];
+/* v3: two trees */
+const v3pages = pagesOf(v3);
 for (const bad of ["/member/", "/participant/", "/judge/r", "/owner/rooms/"]) {
   assert(!v3pages.includes(bad), `v3 pages carry no ${bad} route`);
 }
@@ -149,7 +151,7 @@ assert(!/href="#">Sessions</.test(v3navItems), "v3 navs dropped the Sessions ite
 assert(v3.includes("no-store") && v3.includes("cached hard"), "v3 states the cache rule");
 assert(v3.includes("engine_round_id"), "v3 notes the stored round id + concurrent reads");
 
-/* v3.1: the user step separates anonymous from signed-in; club standings get a page */
+/* v3.1: the user step */
 const colOrder31 = [...v31.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
 assert(colOrder31.join(",") === "public,user,participant,judge,member,owner,admin,phoenix-api,engine-api",
   `v3.1 columns follow the 9-step ladder (got: ${colOrder31.join(",")})`);
@@ -160,8 +162,8 @@ for (const id of ["pub-join", "mem-cabinet", "mem-my-page", "mem-account", "mem-
   assert(!v31.includes(`data-id="${id}"`), `v3.1 no longer contains ${id}`);
 }
 
-/* v3.2: the board is rebuilt from the code — real routes, live pages, records-backed lists */
-const v32pages = v32.split('data-col="phoenix-api"')[0];
+/* v3.2: rebuilt from the code */
+const v32pages = pagesOf(v32);
 for (const id of ["pub-privacy", "pub-error", "pub-session-signup", "pub-session-done", "pub-room", "pub-reg-done",
                   "user-reg", "par-session-signup", "jud-session", "own-sess-closed", "own-sess-done"]) {
   assert(v32.includes(`data-id="${id}"`), `v3.2 contains ${id}`);
@@ -174,16 +176,14 @@ assert(!/no-store|cached hard/.test(v32), "v3.2 makes no cache claims");
 assert(v32.includes("ceil(speakers ÷ 8)") && v32.includes("Nobody is placed automatically"),
   "v3.2 states the automatic room count and manual placement");
 assert(v32.includes("draft_allocation"), "v3.2 names the server-held allocator draft");
-assert(/LIVE<\/span>/.test(v32), "v3.2 marks the LiveView pages");
+assert(/<span class="live">LIVE<\/span>/.test(v32), "v3.2 marks the LiveView pages");
 assert(v32.includes("Privacy&amp;Policy") && v32.includes("ВМГО «Федерація Дебатів України»"), "v3.2 footer labels as built");
 assert(!/unlock/i.test(v32pages), "v3.2 page columns never say unlock");
-const golds32 = [...v32pages.matchAll(/<div class="page"[\s\S]*?(?=<div class="page"|<\/div>\n<div class="col|$)/g)]
-  .filter((m) => (m[0].match(/class="go"/g) ?? []).length > 1).length;
-assert(golds32 === 0, `v3.2 pages carry at most one gold action (offenders: ${golds32})`);
+assert(goldOffenders(v32pages) === 0, `v3.2 pages carry at most one gold action (offenders: ${goldOffenders(v32pages)})`);
 
-/* v3.3: role-less registration, one remove verb, public rosters, no middle dots */
-const v33pages = v33.split('data-col="phoenix-api"')[0];
-assert(!v33.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.3 carries no middle dots");
+/* v3.3: role-less registration, one remove verb, public rosters */
+const v33pages = pagesOf(v33);
+assert(!v33.replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.3 carries no middle dots");
 assert(v33.includes('data-id="pub-members"') && !v33.includes('data-id="mem-members"'), "v3.3 moves the roster to the public column");
 assert(v33.includes("ceil(people ÷ 9)"), "v3.3 states the seat-based room count");
 assert(!/I am tonight|Signed up as|Signs up to/.test(v33pages), "v3.3 pages ask no role at registration");
@@ -191,12 +191,11 @@ assert(v33pages.includes("Add a person") && v33pages.includes("People (14 people
 assert(!/revoke/i.test(v33pages), "v3.3 pages never say revoke");
 assert(/SPK/.test(v33pages) && /ADJ/.test(v33pages), "v3.3 allocator tags placed chips SPK and ADJ");
 assert(!v33.includes('data-id="api-link-del"'), "v3.3 drops the link delete endpoint");
-const golds33 = v33pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
-assert(golds33 === 0, `v3.3 pages carry at most one gold action (offenders: ${golds33})`);
+assert(goldOffenders(v33pages) === 0, `v3.3 pages carry at most one gold action (offenders: ${goldOffenders(v33pages)})`);
 
-/* v3.4: the launch-prep round, rebuilt from the code */
-const v34pages = v34.split('data-col="phoenix-api"')[0];
-assert(!v34.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.4 carries no middle dots");
+/* v3.4: the launch-prep round */
+const v34pages = pagesOf(v34);
+assert(!v34.replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.4 carries no middle dots");
 for (const id of ["user-home", "user-merge", "user-claim", "pub-policy", "pub-terms", "pub-signin-existing", "own-add-person", "pub-standings-adjudicators"]) {
   assert(v34.includes(`data-id="${id}"`), `v3.4 contains ${id}`);
 }
@@ -204,88 +203,94 @@ for (const id of ["user-cabinet", "pub-privacy"]) {
   assert(!v34.includes(`data-id="${id}"`), `v3.4 no longer contains ${id}`);
 }
 assert(!/my cab/i.test(v34pages), "v3.4 has no separate signed-in cabinet");
-assert(!/\bJudge\b/.test(v34pages), "v3.4 pages say Adjudicator, never Judge");
 assert(v34pages.includes("Prep ends at") && v34pages.includes("Motions"), "v3.4 shows the motion form's prep end and the Motions table");
 assert(v34pages.includes("will accept on My page") && v34pages.includes("Add as a guest"), "v3.4 shows the add field's outcomes");
 assert(v34.includes("is_iron") && v34.includes("stats/adjudicators"), "v3.4 records iron speeches and adjudicator stats");
 assert(!/stats\/judges/.test(v34), "v3.4 no longer calls stats/judges");
-const golds34 = v34pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
-assert(golds34 === 0, `v3.4 pages carry at most one gold action (offenders: ${golds34})`);
 
 /* v3.5: club-night feedback */
-const v35pages = v35.split('data-col="phoenix-api"')[0];
-assert(!v35.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.5 carries no middle dots");
 for (const id of ["par-feedback-form", "par-feedback-sent", "jud-feedback", "api-feedback-post", "api-feedback-get"]) {
   assert(v35.includes(`data-id="${id}"`), `v3.5 contains ${id}`);
 }
-assert(!/\bJudge\b/.test(v35pages), "v3.5 pages say Adjudicator, never Judge");
-const form35 = v35pages.split('data-id="par-feedback-form"')[1]?.split('<div class="page"')[0] ?? "";
-assert(form35.includes("How accurate was the adjudicator's call?") && form35.includes("How was the adjudicator's reasoning?") && form35.includes("Discussion"),
-  "v3.5 feedback form asks accuracy, reasoning and discussion");
-const jud35 = v35pages.split('data-id="jud-feedback"')[1]?.split('<div class="page"')[0] ?? "";
-assert(jud35.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/td>|Daryna &amp; Olesia<\/td>/.test(jud35.split("Feedback on your adjudication")[1] ?? ""),
-  "v3.5 adjudicator feedback names no team");
-assert(v35pages.includes("Your team already sent feedback.") && v35pages.includes("Give feedback"), "v3.5 shows giving and already-sent feedback");
-const golds35 = v35pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
-assert(golds35 === 0, `v3.5 pages carry at most one gold action (offenders: ${golds35})`);
 
-/* v3.6: one command, one place */
-const v36pages = v36.split('data-col="phoenix-api"')[0];
-assert(!v36.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "").includes("·"), "v3.6 carries no middle dots");
-assert(!/\bJudge\b/.test(v36pages), "v3.6 pages say Adjudicator, never Judge");
-const golds36 = v36pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
-assert(golds36 === 0, `v3.6 pages carry at most one gold action (offenders: ${golds36})`);
-const form36 = v36pages.split('data-id="par-feedback-form"')[1]?.split('<div class="page"')[0] ?? "";
-assert(form36.includes("How accurate was the adjudicator's call?") && form36.includes("How was the adjudicator's reasoning?") && form36.includes("Discussion"),
-  "v3.6 feedback form asks accuracy, reasoning and discussion");
-const jud36 = v36pages.split('data-id="jud-feedback"')[1]?.split('<div class="page"')[0] ?? "";
-assert(jud36.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/td>|Daryna &amp; Olesia<\/td>/.test(jud36.split("Feedback on your adjudication")[1] ?? ""),
-  "v3.6 adjudicator feedback names no team");
-assert(v36pages.includes("Your team already sent feedback.") && v36pages.includes("Give feedback"), "v3.6 shows giving and already-sent feedback");
-/* no double action: a page whose top bar carries commands draws no in-page button repeating one */
-const doubled36: string[] = [];
-for (const f of readdirSync(join(ROOT, "targets", "cab", "v3.6"))) {
-  if (!f.endsWith(".json") || f.startsWith("_")) continue;
-  const spec = JSON.parse(readFileSync(join(ROOT, "targets", "cab", "v3.6", f), "utf8"));
-  if (spec.kind === "swagger") continue;
-  // notes describe the page; only drawn blocks can hold a button
-  const body = JSON.stringify((spec.blocks ?? []).filter((b: { type: string }) => b.type !== "note"));
-  const segs: string[] = (spec.chrome?.segs ?? []).map((s: { label: string }) => s.label.replace(/<[^>]+>/g, ""));
-  if (/\((plain )?button\)/.test(body) || segs.some((label) => body.includes(`<b>${label}</b> (`))) doubled36.push(spec.id);
+/* the house rules every version from v3.4 keeps */
+function houseRules(ver: string, c: string) {
+  const pages = pagesOf(c);
+  assert(!c.replace(/<!--[\s\S]*?-->/g, "").includes("·"), `${ver} carries no middle dots`);
+  assert(!/\bJudge\b/.test(pages), `${ver} pages say Adjudicator, never Judge`);
+  assert(goldOffenders(pages) === 0, `${ver} pages carry at most one gold action (offenders: ${goldOffenders(pages)})`);
 }
-assert(doubled36.length === 0, `v3.6 forms leave their command to the top bar${doubled36.length ? " — doubled: " + doubled36.join(", ") : ""}`);
-const members36 = v36pages.split('data-id="own-members"')[1]?.split('<div class="page"')[0] ?? "";
-assert(members36.length > 0 && !members36.includes("signed-in user"), "v3.6 join requests and members carry no account kind");
+for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) houseRules(ver, c);
 
-/* v3.7: feedback lives in the engine */
-const v37pages = v37.split('data-col="phoenix-api"')[0];
-const v37clean = v37.replace(/<div class="chlog">[\s\S]*?<\/div>/g, "").replace(/<!--[\s\S]*?-->/g, "");
-assert(!v37clean.includes("·"), "v3.7 carries no middle dots");
-assert(!/\bJudge\b/.test(v37pages), "v3.7 pages say Adjudicator, never Judge");
-const golds37 = v37pages.split('<div class="page"').slice(1).filter((pg) => (pg.match(/class="go"/g) ?? []).length > 1).length;
-assert(golds37 === 0, `v3.7 pages carry at most one gold action (offenders: ${golds37})`);
-const form37 = v37pages.split('data-id="par-feedback-form"')[1]?.split('<div class="page"')[0] ?? "";
-assert(form37.includes("How accurate was the adjudicator's call?") && form37.includes("How was the adjudicator's reasoning?") && form37.includes("Discussion"),
-  "v3.7 feedback form asks accuracy, reasoning and discussion");
-const jud37 = v37pages.split('data-id="jud-feedback"')[1]?.split('<div class="page"')[0] ?? "";
-assert(jud37.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/td>|Daryna &amp; Olesia<\/td>/.test(jud37.split("Feedback on your adjudication")[1] ?? ""),
-  "v3.7 adjudicator feedback names no team");
-assert(v37pages.includes("Your team already sent feedback.") && v37pages.includes("Give feedback"), "v3.7 shows giving and already-sent feedback");
-assert(!/kept by cab|engine is not involved|Avg feedback is cab's own/i.test(v37clean), "v3.7 never says feedback is kept by cab");
-assert(v37.includes("/api/events/:eventId/feedback-questions"), "v3.7 engine column lists the feedback questions");
-assert(v37.includes("stats/adjudicators?base=5"), "v3.7 reads the adjudicator average with the base vote from the engine");
-const doubled37: string[] = [];
-for (const f of readdirSync(join(ROOT, "targets", "cab", "v3.7"))) {
-  if (!f.endsWith(".json") || f.startsWith("_")) continue;
-  const spec = JSON.parse(readFileSync(join(ROOT, "targets", "cab", "v3.7", f), "utf8"));
-  if (spec.kind === "swagger") continue;
-  const body = JSON.stringify((spec.blocks ?? []).filter((b: { type: string }) => b.type !== "note"));
-  const segs: string[] = (spec.chrome?.segs ?? []).map((s: { label: string }) => s.label.replace(/<[^>]+>/g, ""));
-  if (/\((plain )?button\)/.test(body) || segs.some((label) => body.includes(`<b>${label}</b> (`))) doubled37.push(spec.id);
+/* feedback, as built from v3.5 on */
+function feedbackPages(ver: string, c: string) {
+  const pages = pagesOf(c);
+  const form = pageChunk(pages, "par-feedback-form");
+  assert(form.includes("How accurate was the adjudicator's call?") && form.includes("How was the adjudicator's reasoning?") && form.includes("Discussion"),
+    `${ver} feedback form asks accuracy, reasoning and discussion`);
+  const jud = pageChunk(pages, "jud-feedback");
+  assert(jud.includes("Feedback on your adjudication") && !/Anna &amp; Bohdan<\/td>|Daryna &amp; Olesia<\/td>/.test(jud.split("Feedback on your adjudication")[1] ?? ""),
+    `${ver} adjudicator feedback names no team`);
+  assert(pages.includes("Your team already sent feedback.") && pages.includes("Give feedback"), `${ver} shows giving and already-sent feedback`);
 }
-assert(doubled37.length === 0, `v3.7 forms leave their command to the top bar${doubled37.length ? " — doubled: " + doubled37.join(", ") : ""}`);
-const members37 = v37pages.split('data-id="own-members"')[1]?.split('<div class="page"')[0] ?? "";
-assert(members37.length > 0 && !members37.includes("signed-in user"), "v3.7 join requests and members carry no account kind");
+for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) feedbackPages(ver, c);
+
+/* one command, one place (from v3.6): a page whose top bar carries commands draws no in-page button repeating one */
+function noDoubleActions(ver: string, c: string) {
+  const doubled: string[] = [];
+  for (const { spec } of specFiles("cab", ver)) {
+    if (spec.kind === "swagger") continue;
+    // notes describe the page; only drawn blocks can hold a button
+    const body = JSON.stringify((spec.blocks ?? []).filter((b: { type: string }) => b.type !== "note"));
+    const segs: string[] = (spec.chrome?.segs ?? []).map((s: { label: string }) => s.label.replace(/<[^>]+>/g, ""));
+    if (/\((plain )?button\)/.test(body) || segs.some((label) => body.includes(`<b>${label}</b> (`))) doubled.push(spec.id);
+  }
+  assert(doubled.length === 0, `${ver} forms leave their command to the top bar${doubled.length ? " — doubled: " + doubled.join(", ") : ""}`);
+  const members = pageChunk(pagesOf(c), "own-members");
+  assert(members.length > 0 && !members.includes("signed-in user"), `${ver} join requests and members carry no account kind`);
+}
+for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38]] as const) noDoubleActions(ver, c);
+
+/* feedback lives in the engine (from v3.7) */
+for (const [ver, c] of [["v3.7", v37], ["v3.8", v38]] as const) {
+  assert(!/kept by cab|engine is not involved|Avg feedback is cab's own/i.test(c), `${ver} never says feedback is kept by cab`);
+  assert(c.includes("/api/events/:eventId/feedback-questions"), `${ver} engine column lists the feedback questions`);
+  assert(c.includes("stats/adjudicators?base=5"), `${ver} reads the adjudicator average with the base vote from the engine`);
+}
+
+/* v3.8: the engine keeps room prep; a club rename reaches the engine */
+const raw38 = specFiles("cab", "v3.8").map(({ spec }) => JSON.stringify(spec)).join("\n") +
+  readFileSync(join(ROOT, "targets", "cab", "v3.8", "_columns.json"), "utf8");
+assert(!/"m8b"|class=\\"m8b\\"/.test(raw38), "v3.8 specs carry no m8b fields or markers");
+assert(chlogOf(v38).includes("Compared with v3.7"), "v3.8 changelog compares with v3.7");
+const prepRow = v38.split('data-id="eng-prep"')[1]?.split('<div class="row"')[0] ?? "";
+assert(prepRow.includes("/api/rooms/:id/prep") && prepRow.includes("PATCH"), "v3.8 engine column lists PATCH /api/rooms/:id/prep");
+assert(v38.includes("POST /api/rooms/:id/motion (prep_ends_at)"), "v3.8 sets prep_ends_at on the motion call");
+assert(!v38.includes("room_preps") && pageChunk(pagesOf(v38), "jud-room").includes("The engine keeps one prep end time per room"),
+  "v3.8 room prep is the engine's, cab keeps no prep table");
+assert(pageChunk(pagesOf(v38), "own-club").includes("Renaming the club renames its engine organisation too"),
+  "v3.8 own club page says a rename renames the engine organisation");
+assert(v38.includes("PUT</span> /:id") && v38.includes("a new name renames the engine organisation first"),
+  "v3.8 API columns carry the organisation rename");
+
+/* ---------- main (uadebate.com) v1: the legacy front page, ported as is ---------- */
+const u1 = chunk("uadebate", "v1");
+const legacy = (() => {
+  const p = join(ROOT, "..", "legacy", "design", "uadebate.html");
+  return existsSync(p) ? readFileSync(p, "utf8") : "";
+})();
+assert(/lang="uk"/.test(u1.slice(0, 200)), "uadebate v1 board is marked Ukrainian");
+assert(u1.includes('data-id="main-front"') && u1.includes("GET /"), "uadebate v1 renders the front page");
+for (const text of ["Дебатна спільнота України — <em>турніри, рейтинги, розвиток</em>", "Реєстрація на Чемпіонат України з дебатів відкрита до 1 жовтня",
+                    "Федерації дебатів України 10 років!", "Чумачов Андрій", "Кубок Фенікса", "Атестованих суддів", "Кабінет ФДУ (dfu)"]) {
+  assert(u1.includes(text), `uadebate v1 keeps «${text.replace(/<[^>]+>/g, "")}»`);
+}
+if (legacy) {
+  const spec = JSON.parse(readFileSync(join(ROOT, "targets", "uadebate", "v1", "main-front.json"), "utf8"));
+  const body = legacy.slice(legacy.indexOf("<body>") + 6, legacy.indexOf("</body>")).replace(/\s+/g, " ").trim();
+  const ported = spec.blocks.map((b: { html: string }) => b.html).join(" ").replace(/\s+/g, " ").trim();
+  assert(ported === body, "uadebate v1 front page is the legacy markup, unchanged");
+}
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

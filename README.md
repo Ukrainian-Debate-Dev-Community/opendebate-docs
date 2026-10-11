@@ -1,83 +1,90 @@
 # webdesign
 
-Declarative, versioned design workbench. Page boards (the mini-frame grids from
-`legacy/design/pages-board.html`) are described as JSON specs per target and version;
-the build renders a single self-contained HTML board per target with a version
-switcher, a computed changelog strip and the usual comment modal + note export.
+Declarative, versioned design workbench. Every page of every platform is a JSON
+spec under `targets/<platform>/<version>/`; the build renders them all into one
+self-contained page, `dist/index.html`, with a platform switch, a version switch,
+a changelog strip, and the note modal with Export notes.
 
 `legacy/design/` stays the read-only reference; this directory is the tracked,
 reproducible source of truth for page setups.
+
+## The workbench
+
+- **Platform switch** (top bar): one button per platform that has at least one
+  version. Today: `cab` and `main (uadebate.com)`. `dfu` has no versions yet, so
+  it is left out until it gets one.
+- **Version switch**: the versions of the chosen platform, newest first. The
+  choice is kept in the URL hash (`index.html#cab/v3.8`, `#uadebate/v1`), so a
+  link opens the same board.
+- **Changelog strip**: under the title, the pages added, changed and removed, and
+  the column conditions changed, compared with the previous version of the same
+  platform. It is computed from the specs, never written by hand.
+- **Notes**: click any page (or API row) for the note modal; a gold dot marks a
+  page with a note. Notes are kept in localStorage per platform+version+page, so
+  switching never mixes them. **Export notes** downloads
+  `<platform>-pages-notes-<version>.json` for the board on screen.
+- **Theme**: Auto follows the system; Light and Dark pin it, as in cab.
+- **Frames look like the product**: cab frames use cab's own tokens and component
+  rules (`platform/apps/cab/assets/css/app.css`) and its Cedarville Cursive
+  wordmark, light and dark; uadebate frames use the legacy uadebate design system
+  (`legacy/design/spec.css`), which has no dark theme.
 
 ## Layout
 
 ```
 webdesign/
-  build.ts            spec reader + renderer → dist/<target>.html
-  check.ts            assertions over the built board (run after build)
-  shared/frame.css    page-window chrome, ported verbatim from legacy/design/pages-board.html
-  shared/board.js     comment modal, per-version localStorage notes, export, version switch
+  build.ts                  spec reader + renderer → dist/index.html
+  check.ts                  assertions over the built page (run after build)
+  shared/frame.css          the workbench: tokens (cab's), header, switches, columns, captions, modal
+  shared/board.js           switches, note modal, per-version localStorage notes, export, theme
+  shared/platforms/cab.css  cab pages inside their frames, after app.css
+  shared/platforms/uadebate.css  uadebate.com pages inside their frames, after legacy spec.css
   targets/
-    cab/v1/*.json     one spec per page (plus _columns.json) — version 1
-    cab/v2/*.json     version 2 (current pages-board state + coverage fixes)
-    cab/v2.1/*.json   version 2.1 (ballot correction: unlock + resubmit, no reopen)
-    cab/v3.7/*.json   version 3.7 (feedback lives in the engine: each session's form
-                      as engine feedback questions, answers and the computed score
-                      there, the adjudicator average with a base vote from
-                      stats/adjudicators?base=5; feedback pages match the built app;
-                      room prep end time specced for the engine)
-    cab/v3.6/*.json   version 3.6 (one command, one place: a form whose command sits
-                      in the top bar has no button of its own — feedback form, room
-                      motion form; join requests and members carry no account kind)
-    cab/v3.5/*.json   version 3.5 (club-night feedback: one per team after the ballot,
-                      accuracy + reasoning 1-10 and a discussion, the team sees its own,
-                      the adjudicator sees theirs anonymous after finish, the head sees
-                      all with progress; public average with a base vote of 5)
-    cab/v3.4/*.json   version 3.4 (rebuilt from the code after the launch-prep round:
-                      the directory for everyone, My page holds my clubs and
-                      invitations, Google sign-in with link and merge, guests
-                      claimed by the engine's token, Policy and Terms as
-                      documents, the add field's four outcomes, room rows that
-                      open the room, a Motions table, one motion form with Prep
-                      ends at, ballots after the motion, speaker points and iron
-                      speeches, the API without engine ids, all text in gettext)
-    cab/v3.3/*.json   version 3.3 (role-less registration with seat-based room count,
-                      SPK/ADJ seat tags, one remove verb that keeps no personal
-                      data, one people table + add form, public rosters, no
-                      middle dots)
-    cab/v3.2/*.json   version 3.2 (rebuilt from the code, page by page: real routes and
-                      templates, LiveView pages marked, records-backed lists, live
-                      allocator with server draft, stage-by-stage owner session)
-    cab/v3.1/*.json   version 3.1 (ladder gains the User step — anonymous split from
-                      signed-in; cabinet/my page/account/join/session re-homed there;
-                      club standings get their own page, three tabs, latest finished
-                      session default)
-    cab/v3/*.json     version 3 (two trees only: one URL per view, identity gates
-                      actions; one room URL, one registration URL /r/:sess with QR;
-                      prefilled ballot edit; one gold action per page; cache rule —
-                      finished sessions cached hard, live page no-store)
-    cab/v2.3/*.json   version 2.3 (the v2.2 notes round: honest full navs, my page
-                      split from the cabinet, join/account re-homed, rooms = draw,
-                      footer demo on the front page)
-    cab/v2.2/*.json   version 2.2 (edit ballot only — lock is internal; role ladder
-                      public → participant/judge → member → owner → admin → cab api
-                      → engine api, every step inherits the pages below it)
-    dfu/              empty scaffold, ready for specs
-    uadebate/         empty scaffold, ready for specs
-  dist/               build output (gitignored)
+    cab/platform.json       label and order in the platform switch
+    cab/v*/                 cab versions (below)
+    uadebate/platform.json  label "main (uadebate.com)", Ukrainian, 1120px frames
+    uadebate/v1/            the uadebate.com front page
+    dfu/                    empty, left out of the page until it has a version
+  dist/                     build output (gitignored)
 ```
+
+The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.woff2`
+(read only); without it the wordmark falls back to a cursive system face.
+
+## Versions
+
+### cab
+
+| Version | What changed |
+|---|---|
+| v1 | first board, ported from legacy/design/pages-board.html |
+| v2 | pages-board state + coverage fixes |
+| v2.1 | ballot correction: unlock + resubmit, no reopen |
+| v2.2 | edit ballot only, lock is internal; the role ladder, every step inherits the pages below it |
+| v2.3 | honest full navs, my page split from the cabinet, join and account re-homed, rooms = draw, footer on the front page |
+| v3 | two trees only: one URL per view, identity gates actions; one room URL, one registration URL with QR; prefilled ballot edit; one gold action per page |
+| v3.1 | the User step: anonymous split from signed-in; club standings get their own page |
+| v3.2 | rebuilt from the code: real routes and templates, LiveView pages marked, records-backed lists, live allocator with a server draft |
+| v3.3 | role-less registration with a seat-based room count, SPK/ADJ seat tags, one remove verb, one people table + add form, public rosters, no middle dots |
+| v3.4 | the launch-prep round: directory for everyone, My page, Google sign-in with link and merge, guests claimed by the engine's token, Policy and Terms, the add field's outcomes, a Motions table, Prep ends at, iron speeches |
+| v3.5 | club-night feedback: one per team after the ballot, accuracy + reasoning and a discussion, public average with a base vote of 5 |
+| v3.6 | one command, one place: a form whose command sits in the top bar has no button of its own |
+| v3.7 | feedback lives in the engine: questions, answers and the score there, the adjudicator average from stats/adjudicators?base=5 |
+| v3.8 | the engine keeps each room's prep end (PATCH /api/rooms/:id/prep, prep_ends_at on the motion call), shown as built; a club rename renames its engine organisation first; no planning markers |
+
+### main (uadebate.com)
+
+| Version | What changed |
+|---|---|
+| v1 | the front page from legacy/design/uadebate.html, markup and Ukrainian text as is |
 
 ## Run
 
 ```sh
-bun run build    # renders dist/<target>.html for every target with versions
-bun run check    # asserts the built cab board (ids, column count, changelog)
+bun run build    # renders dist/index.html from every platform with versions
+bun run check    # asserts the built page against the specs
 bun run test     # build + check
 ```
-
-Open `dist/cab.html`; the select (top-left) switches versions. Click any page
-for the note modal; Export notes downloads `cab-pages-notes-<version>.json`.
-Notes are stored per target+version+page in localStorage, so switching
-versions never mixes them.
 
 ## Spec schema
 
@@ -86,57 +93,70 @@ One JSON per page:
 ```json
 { "id": "pub-club", "title": "Club welcome", "column": "public", "order": 20,
   "path": "GET /c/:club", "api": ["GET organisations/:id events + rooms"],
-  "m8b": false,
-  "nav": {"items": ["Club","Rooms"], "context": "Kyiv DC", "active": "Club", "profile": "sign in"},
-  "chrome": {"crumb": "club", "segs": [{"label": "Send request", "kind": "gold"}]},
+  "nav": {"items": ["Club","Rooms"], "context": "Kyiv DC", "active": "Club", "profile": "Sign in"},
+  "chrome": {"crumb": "Club", "segs": [{"label": "Send request", "kind": "gold"}]},
   "blocks": [
-    {"type": "section", "title": "Club Sessions"},
+    {"type": "section", "title": "Club sessions"},
     {"type": "card", "lines": ["<b>first line</b>", "muted follow-up"]},
     {"type": "table", "head": ["#","Name"], "rows": [["rk::39","…"]], "rowClass": {"0": "me"}},
     {"type": "banner", "kind": "info|gold", "html": "…"},
     {"type": "tabs", "items": ["Teams","Speakers"], "active": "Speakers"},
-    {"type": "note", "text": "muted explainer"},
-    {"type": "raw", "html": "escape hatch — used only by the bare /signin split page"}
+    {"type": "note", "text": "what the frame cannot show"},
+    {"type": "raw", "html": "escape hatch: bare pages and whole ported pages"}
   ] }
 ```
 
-Notes on the schema:
-
 - Content strings are raw HTML (specs are trusted, authored by hand).
 - Table cells may carry a class prefix: `"rk::39"` → `<td class="rk">39</td>`,
-  `"sd og::Taras &amp; Yuri"` → `<td class="sd og">…</td>`.
-- `"bare": true` drops the nav/chrome shell; blocks render straight into the frame.
-- Seg kinds: `gold` (primary), `quiet` (muted), omitted = plain.
+  `"sd og::Taras &amp; Yuri"` → `<td class="sd og">…</td>`. cab cell classes:
+  `rk`, `num`, `code`, `st`, `mut`, `sd` + `og|oo|cg|co`.
+- `"bare": true` drops the nav and chrome shell; blocks render straight into the frame.
+- Seg kinds: `gold` (the page's one action), `quiet` (muted), omitted = plain.
+- A LiveView page marks its path with `<span class="live">LIVE</span>`.
+- `note` blocks render as a dashed design note, apart from the page itself.
 - API-reference columns use the swagger kind:
 
 ```json
 { "id": "phoenix-api", "column": "phoenix-api", "kind": "swagger",
   "groups": [{"title": "clubs", "rows": [
     {"id": "api-club-get", "method": "GET", "path": "/clubs/:uuid",
-     "desc": "…", "api": "GET organisations/:id …", "m8b": false}]}] }
+     "desc": "…", "api": "GET organisations/:id …"}]}] }
 ```
 
-- `_columns.json` holds each column's header title and `.cond` paragraph for
-  that version (conditions are versioned content too).
-- Columns render in fixed order: engine-api, phoenix-api, admin, public,
-  owner, member, participant, judge. The header's column count is computed
-  from the columns actually present — never hardcoded.
+- `_columns.json` holds each column's title and condition paragraph for that
+  version (conditions are versioned content too).
+- Columns render in ladder order: public, user, participant, judge, member,
+  owner, admin, phoenix-api, engine-api; a platform's own column names follow, in
+  `_columns.json` order. The column count is computed, never hardcoded.
+- Page ids are unique within a platform+version.
+- Older versions carry an `m8b` field and milestone tags (M8b, M9a…) from the
+  planning days. The build ignores the field and strips the tags; new versions
+  carry neither.
+
+`targets/<platform>/platform.json` (all optional): `label` (the switch text,
+default the directory name), `order` (switch position), `lang` (the board's
+`lang`, default `en`), `frameWidth` (column width in px, default 720).
 
 ## Add a version
 
-1. Copy the latest version dir: `cp -r targets/cab/v2 targets/cab/v3`.
-2. Edit the specs (and `_columns.json`) — only what actually changed.
-3. `bun run test`. The changelog strip (added / changed / removed page ids and
-   changed column conditions) is deep-computed from the specs; pages removed in
-   the new version stay visible under the old one.
+1. Copy the latest version of the platform: `cp -r targets/cab/v3.8 targets/cab/v3.9`.
+2. Edit the specs (and `_columns.json`): only what actually changed.
+3. `bun run test`, and add the version's own checks to `check.ts`.
 
-## Add a target
+Never edit an existing version's specs: a version is a record. Pages removed in
+a new version stay visible under the old one.
 
-Drop `targets/<name>/v1/` with `_columns.json` + page specs; the build picks it
-up automatically and emits `dist/<name>.html`.
+## Add a platform
+
+1. `targets/<name>/v1/` with `_columns.json` and page specs.
+2. `targets/<name>/platform.json` for its label, language and frame width.
+3. `shared/platforms/<name>.css` for what its pages look like, scoped to
+   `.pf-<name> .frame`.
+
+The build picks it up and adds it to the platform switch.
 
 ## Rules
 
-- Do not alter design content when porting — extraction must be faithful.
+- Do not alter design content when porting: extraction must be faithful.
 - `legacy/design/` is read-only reference; never edit it from here.
 - `dist/` is generated; never hand-edit, never commit.
