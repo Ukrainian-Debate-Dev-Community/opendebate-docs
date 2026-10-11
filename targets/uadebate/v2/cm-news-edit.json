@@ -1,0 +1,18 @@
+{
+  "id": "cm-news-edit",
+  "title": "/manage/news/:id/edit — редактор новини",
+  "column": "content-manager",
+  "order": 2,
+  "path": "GET /manage/news/:id/edit",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates</a><nav class=\"ua-nav\"><a href=\"#\">Головна</a><a class=\"on\" href=\"#\">Новини</a><a href=\"#\">Турніри</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a><a href=\"#\">Про ФДУ</a></nav><div class=\"ua-right\"><a class=\"ua-edit\" href=\"#\">Редагування</a><span class=\"ua-who\"><span class=\"ua-av\">ОК</span>Олена Коваль</span></div></header><div class=\"ua-cmbar\"><span class=\"ua-cmrole\">Контент-менеджер</span><a href=\"#\">Огляд</a><a class=\"on\" href=\"#\">Новини</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><span class=\"ua-cmnote\">Сайт uadebate.com, без доступу до адміністрування кабінету</span></div><main class=\"ua-main\"><div class=\"ua-cmd\"><div class=\"cr\"><a href=\"#\">Новини</a> / Як підготуватися до першого турніру БПФ</div><div class=\"seg\"><a class=\"\" href=\"#\">Переглянути</a><a class=\"\" href=\"#\">Зберегти чернетку</a><a class=\"go\" href=\"#\">Опублікувати</a></div></div><div class=\"form ua-card\"><div class=\"f-head\"><h3>Редагування новини</h3><p>Чернетка, змінено 9 жовтня 2026</p></div><div class=\"f-block\"><label class=\"q\">Заголовок <span class=\"req\">*</span></label><input type=\"text\" value=\"Як підготуватися до першого турніру БПФ\"></div><div class=\"f-block\"><div class=\"half\"><div><label class=\"q\">Рубрика</label><select><option>Поради</option></select></div><div><label class=\"q\">Дата публікації</label><input type=\"text\" value=\"12 жовтня 2026, 10:00\"></div></div></div><div class=\"f-block\"><label class=\"q\">Обкладинка</label><div class=\"ua-drop\">Перетягни зображення сюди або <a href=\"#\">вибери файл</a></div><div class=\"hint\">JPG або PNG, щонайменше 1200 на 630 пікселів</div></div><div class=\"f-block\"><label class=\"q\">Текст <span class=\"req\">*</span></label><div class=\"ua-rte\"><div class=\"ua-rte-bar\"><b>Ж</b><i>К</i><span>Заголовок</span><span>Цитата</span><span>Посилання</span></div><textarea rows=\"6\">Перший турнір у британському парламентському форматі — це чотири команди по два спікери, сім хвилин на промову і пʼятнадцять хвилин на підготовку. Ось що варто зробити заздалегідь.</textarea></div></div><div class=\"f-block\"><label class=\"q\">На головній</label><div class=\"opts\"><label><input type=\"checkbox\" checked> Показати в блоці новин</label><label><input type=\"checkbox\"> Зробити анонсом над героєм</label></div></div></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Федерація дебатів України</p><p>Дебатна спільнота з 2011 року</p></div><div><b>Сайт</b><a href=\"#\">Новини</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a></div><div><b>Платформа</b><a href=\"#\">Кабінет (cab)</a><a href=\"#\">Базові правила</a><a href=\"#\">База резолюцій</a><a href=\"#\">Реєстр суддів</a></div><div><b>Документи</b><a href=\"#\">Політика конфіденційності</a><a href=\"#\">Умови користування</a><a href=\"#\">Статут ФДУ</a></div><div><b>Контакти</b><a href=\"#\">t.me/fdu_ua</a><a href=\"#\">info@uadebate.com</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "The command sits in the bar, as in cab: the form has no button of its own. Опублікувати is the one gold action."
+    }
+  ]
+}

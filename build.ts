@@ -20,6 +20,7 @@ const COLUMN_ORDER = [
 const COLUMN_CLASS: Record<string, string> = {
   "engine-api": "c-api", "phoenix-api": "c-api", admin: "c-adm", public: "c-pub",
   user: "c-usr", owner: "c-own", member: "c-mem", participant: "c-par", judge: "c-jud",
+  "content-manager": "c-own",
 };
 const METHOD_CLASS: Record<string, string> = {
   GET: "get", POST: "post", PUT: "put", PATCH: "patch", DEL: "del", DELETE: "del",

@@ -27,7 +27,8 @@ reproducible source of truth for page setups.
 - **Frames look like the product**: cab frames use cab's own tokens and component
   rules (`platform/apps/cab/assets/css/app.css`) and its Cedarville Cursive
   wordmark, light and dark; uadebate frames use the legacy uadebate design system
-  (`legacy/design/spec.css`), which has no dark theme.
+  (`legacy/design/spec.css`), which has no dark theme, in v1; from v2 they take
+  cab's tokens and wordmark, light and dark.
 
 ## Layout
 
@@ -43,7 +44,8 @@ webdesign/
     cab/platform.json       label and order in the platform switch
     cab/v*/                 cab versions (below)
     uadebate/platform.json  label "main (uadebate.com)", Ukrainian, 1120px frames
-    uadebate/v1/            the uadebate.com front page
+    uadebate/v1/            the uadebate.com front page, legacy look
+    uadebate/v2/            the whole site in cab's look: public and content manager
     dfu/                    empty, left out of the page until it has a version
   dist/                     build output (gitignored)
 ```
@@ -77,6 +79,7 @@ The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.w
 | Version | What changed |
 |---|---|
 | v1 | the front page from legacy/design/uadebate.html, markup and Ukrainian text as is |
+| v2 | the whole site in cab's look and rules: one header (UAdebates wordmark in Cedarville Cursive, seven-item nav, Кабінет) and one footer on every page; home, news, article, tournaments (under construction), calendar, clubs with filters and a map, club, ratings, about, sign-in; a content-manager column with news, event and club editors and a calendar with private events; cab's tokens light and dark, at most one gold action, no middle dots, no arrows |
 
 ## Run
 

@@ -1,0 +1,18 @@
+{
+  "id": "main-signin",
+  "title": "/signin — вхід через кабінет",
+  "column": "public",
+  "order": 10,
+  "path": "GET /signin",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates</a><nav class=\"ua-nav\"><a href=\"#\">Головна</a><a href=\"#\">Новини</a><a href=\"#\">Турніри</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a><a href=\"#\">Про ФДУ</a></nav><div class=\"ua-right\"><a class=\"ua-lang\" href=\"#\">EN</a><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Кабінет</a></div></header><main class=\"ua-main\"><div class=\"ua-signin ua-card\"><a class=\"wordmark ua-crest\" href=\"#\">UAdebates</a><h1>Вхід до кабінету</h1><p class=\"ua-lead\">Один обліковий запис для всього: клуби, сесії, рейтинг, а для контент-менеджерів — редагування сайту.</p><div class=\"ua-providers\"><a class=\"ua-btn ua-btn--line\" href=\"#\">Увійти через Google</a><a class=\"ua-btn ua-btn--line\" href=\"#\">Увійти через GitHub</a></div><p class=\"ua-meta\">Вхід відбувається в кабінеті ФДУ (cab). Продовжуючи, ви погоджуєтеся з <a href=\"#\">Умовами користування</a> і <a href=\"#\">Політикою конфіденційності</a>.</p></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Федерація дебатів України</p><p>Дебатна спільнота з 2011 року</p></div><div><b>Сайт</b><a href=\"#\">Новини</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a></div><div><b>Платформа</b><a href=\"#\">Кабінет (cab)</a><a href=\"#\">Базові правила</a><a href=\"#\">База резолюцій</a><a href=\"#\">Реєстр суддів</a></div><div><b>Документи</b><a href=\"#\">Політика конфіденційності</a><a href=\"#\">Умови користування</a><a href=\"#\">Статут ФДУ</a></div><div><b>Контакти</b><a href=\"#\">t.me/fdu_ua</a><a href=\"#\">info@uadebate.com</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "The site keeps no accounts of its own: both buttons start cab's sign-in and come back here. Кабінет in the bar leads to the same place."
+    }
+  ]
+}

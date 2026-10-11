@@ -1,0 +1,18 @@
+{
+  "id": "main-about",
+  "title": "/about — про ФДУ",
+  "column": "public",
+  "order": 9,
+  "path": "GET /about",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates</a><nav class=\"ua-nav\"><a href=\"#\">Головна</a><a href=\"#\">Новини</a><a href=\"#\">Турніри</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a><a class=\"on\" href=\"#\">Про ФДУ</a></nav><div class=\"ua-right\"><a class=\"ua-lang\" href=\"#\">EN</a><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Кабінет</a></div></header><main class=\"ua-main\"><div class=\"ua-head\"><div><span class=\"ua-kicker\">Про ФДУ</span><h1>Федерація дебатів України</h1><p class=\"ua-lead\">Всеукраїнська молодіжна громадська організація, що з 2011 року розвиває дебати у школах, університетах і клубах.</p></div></div><div class=\"ua-grid2\"><div class=\"ua-prose\"><div class=\"ua-sec\">Що ми робимо</div><p>Проводимо чемпіонат України та відкриті турніри, готуємо і атестуємо суддів, підтримуємо клуби в містах і ведемо рейтинг спікерів.</p><p>Дебати — це навичка аргументувати, слухати і змінювати думку, коли аргументи сильніші. Ми хочемо, щоб кожен школяр і студент мав клуб поруч.</p><div class=\"ua-sec\">Історія</div><ol class=\"ua-time\"><li><b>2011</b>Перші спільні турніри клубів Києва та Харкова</li><li><b>2015</b>Перший Чемпіонат України з дебатів</li><li><b>2021</b>Десять років федерації, клуби в шести містах</li><li><b>2026</b>Кабінет ФДУ: клуби, сесії та рейтинг в одному місці</li></ol></div><div><div class=\"ua-sec\">Документи</div><div class=\"ua-card ua-docs\"><a href=\"#\"><b>Політика конфіденційності</b><span>Які дані ми зберігаємо і навіщо</span></a><a href=\"#\"><b>Умови користування</b><span>Правила користування кабінетом і сайтом</span></a><a href=\"#\"><b>Статут ФДУ</b><span>Установчий документ організації</span></a></div><div class=\"ua-sec\">Контакти</div><div class=\"ua-card ua-pad ua-dl\"><div><span>Загальні питання</span><a href=\"#\">info@uadebate.com</a></div><div><span>Правління</span><a href=\"#\">ngo.dfu@uadebate.com</a></div><div><span>Підтримка кабінету</span><a href=\"#\">support@uadebate.com</a></div><div><span>Telegram</span><a href=\"#\">t.me/fdu_ua</a></div></div></div></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Федерація дебатів України</p><p>Дебатна спільнота з 2011 року</p></div><div><b>Сайт</b><a href=\"#\">Новини</a><a href=\"#\">Календар</a><a href=\"#\">Клуби</a><a href=\"#\">Рейтинги</a></div><div><b>Платформа</b><a href=\"#\">Кабінет (cab)</a><a href=\"#\">Базові правила</a><a href=\"#\">База резолюцій</a><a href=\"#\">Реєстр суддів</a></div><div><b>Документи</b><a href=\"#\">Політика конфіденційності</a><a href=\"#\">Умови користування</a><a href=\"#\">Статут ФДУ</a></div><div><b>Контакти</b><a href=\"#\">t.me/fdu_ua</a><a href=\"#\">info@uadebate.com</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "Політика і Умови are the documents cab serves at /policy and /terms, in the reader's language; the site links to them rather than keeping copies."
+    }
+  ]
+}

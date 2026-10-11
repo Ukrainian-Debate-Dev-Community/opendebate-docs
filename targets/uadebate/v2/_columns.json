@@ -1,0 +1,10 @@
+{
+  "public": {
+    "title": "1. Public (everyone)",
+    "cond": "<b>uadebate.com, the federation's site, in cab's look.</b> One header on every page: the UAdebates wordmark in Cedarville Cursive, Головна, Новини, Турніри, Календар, Клуби, Рейтинги, Про ФДУ, and Кабінет, which leads to cab. One footer with the documents. cab's tokens light and dark; at most one gold action per page; commas, not middle dots; no arrows. Турніри is under construction and points to the calendar. The calendar shows public events only. Accounts live in cab: sign-in starts there."
+  },
+  "content-manager": {
+    "title": "2. Content manager",
+    "cond": "<b>All public pages +</b> Редагування: news, the calendar and the club directory. A role on uadebate.com only, given by the federation: not a cab admin, and cab roles do not grant it. The calendar shows private events too, each with a Публічна / Приватна switch; private events never leave this column. Forms follow cab's: the command sits in the bar, one gold action."
+  }
+}

@@ -51,7 +51,7 @@ assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platf
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
 assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
 assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
-for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -290,6 +290,54 @@ if (legacy) {
   const body = legacy.slice(legacy.indexOf("<body>") + 6, legacy.indexOf("</body>")).replace(/\s+/g, " ").trim();
   const ported = spec.blocks.map((b: { html: string }) => b.html).join(" ").replace(/\s+/g, " ").trim();
   assert(ported === body, "uadebate v1 front page is the legacy markup, unchanged");
+}
+
+/* ---------- main (uadebate.com) v2: the whole site in cab's look, public and content manager ---------- */
+const u2 = chunk("uadebate", "v2");
+const u2col = (name: string) => u2.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u2pages = u2.split('<div class="page"').slice(1);
+const u2text = u2.replace(/<!--[\s\S]*?-->/g, "");
+assert(chlogOf(u2).includes("Compared with v1") && listed(chlogOf(u2), "Changed").includes("main-front"),
+  "uadebate v2 changelog compares with v1 and lists main-front as changed");
+const sitePages = ["main-front", "main-news", "main-news-article", "main-tournaments", "main-calendar", "main-clubs",
+  "main-club", "main-ratings", "main-about", "main-signin"];
+const cmPages = ["cm-dash", "cm-news-edit", "cm-calendar", "cm-event-edit", "cm-clubs", "cm-club-edit"];
+const missing2 = [...sitePages, ...cmPages].filter((id) => !u2.includes(`data-id="${id}"`));
+assert(missing2.length === 0, `uadebate v2 has every site page${missing2.length ? " — missing: " + missing2.join(", ") : ""}`);
+assert(cmPages.every((id) => u2col("content-manager").includes(`data-id="${id}"`)) &&
+  sitePages.every((id) => u2col("public").includes(`data-id="${id}"`)), "uadebate v2: public and content-manager columns hold their pages");
+const navItems = ["Головна", "Новини", "Турніри", "Календар", "Клуби", "Рейтинги", "Про ФДУ"];
+const noNav = u2pages.filter((pg) => {
+  const bar = pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "";
+  return !/class="ua-brand wordmark"[^>]*>UAdebates</.test(bar) || !navItems.every((t) => bar.includes(`>${t}</a>`));
+}).length;
+assert(noNav === 0, `uadebate v2: every page carries the header with the wordmark and the seven-item nav (${noNav} without)`);
+assert(u2pages.every((pg) => pg.includes('<footer class="ua-foot">')), "uadebate v2: every page carries the footer");
+const goldy = u2pages.filter((pg) => (pg.match(/ua-btn--gold|class="go"/g) ?? []).length > 1).length;
+assert(goldy === 0, `uadebate v2: at most one gold action per page (${goldy} pages with more)`);
+assert(!/btn--cta|tag--gold|class="blob/.test(u2), "uadebate v2 uses no legacy gold marks and no hero blobs");
+assert(!u2text.includes("·"), "uadebate v2 carries no middle dots");
+const arrows = [...new Set(u2text.match(/[\u2190-\u21FF\u2B00-\u2BFF\u203A\u276F]/g) ?? [])];
+assert(arrows.length === 0, `uadebate v2 carries no arrows${arrows.length ? " — found: " + arrows.join(" ") : ""}`);
+const wordmarkCss = /\.ua \.wordmark \{ font-family:"Cedarville Cursive"/.test(html) && html.includes('font-family:"Cedarville Cursive"; font-style:normal');
+assert(wordmarkCss, "uadebate v2 wordmark is set in the embedded Cedarville Cursive");
+const privateEvents = ["Збори правління ФДУ", "Закритий відбір суддів Чемпіонату України"];
+assert(privateEvents.every((t) => !u2col("public").includes(t)) && !u2col("public").includes("ua-ev--priv") && !u2col("public").includes("ua-chip--priv"),
+  "uadebate v2: private events never reach the public column");
+assert(privateEvents.every((t) => pageChunk(u2, "cm-calendar").includes(t)), "uadebate v2: the content manager's calendar shows the private events");
+const cmCal = pageChunk(u2, "cm-calendar");
+assert((cmCal.match(/class="ua-vis"/g) ?? []).length === (cmCal.match(/class="ua-ev[ "]/g) ?? []).length && cmCal.includes("ua-vis"),
+  "uadebate v2: every event in the content manager's list carries the public/private switch");
+assert(pageChunk(u2, "cm-event-edit").includes("Приватна: бачать лише контент-менеджери"), "uadebate v2: the event form offers private visibility");
+assert(/class="ua-map"[\s\S]*?class="ua-city/.test(pageChunk(u2, "main-clubs")) && pageChunk(u2, "main-clubs").includes("Формат"),
+  "uadebate v2: the clubs page has the map with city dots and the filters");
+assert(pageChunk(u2, "main-tournaments").includes("У розробці") && pageChunk(u2, "main-tournaments").includes("Відкрити календар"),
+  "uadebate v2: Турніри is under construction and leads to the calendar");
+assert(pageChunk(u2, "main-club").includes("Відкрити в кабінеті"), "uadebate v2: the club page opens the club in cab");
+assert(/Політика конфіденційності[\s\S]*Умови користування/.test(pageChunk(u2, "main-about")), "uadebate v2: Про ФДУ links the Policy and the Terms");
+assert(u2.includes("2. Content manager") && u2col("content-manager").includes("not a cab admin"), "uadebate v2: the content-manager column says it is not a cab admin");
+for (const text of ["Дебатна спільнота України — <em>турніри, рейтинги, розвиток</em>", "Федерації дебатів України 10 років!", "Кубок Фенікса", "Онлайн, БПФ"]) {
+  assert(u2text.includes(text), `uadebate v2 keeps «${text.replace(/<[^>]+>/g, "")}»`);
 }
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
