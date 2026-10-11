@@ -51,7 +51,7 @@ assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platf
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
 assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.8"[^>]*selected/.test(visible), "version switch present, cab v3.8 selected by default");
 assert(!/data-platform="dfu"/.test(html), "dfu has no versions and is left out");
-for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -412,6 +412,67 @@ assert(pageChunk(u3, "cm-event-edit").includes("Private: only content managers s
 assert(pageChunk(u3, "main-club").includes("Open in cab"), "uadebate v3: the club page opens the club in cab");
 assert(u3col("content-manager").includes("not a cab admin") && pageChunk(u3, "adm-roles").includes("Grant the role"),
   "uadebate v3: content managers are not cab admins, and admins grant the role");
+
+/* ---------- main (uadebate.com) v4: no sign-in on the site, editors arrive by a given link ---------- */
+const u4 = chunk("uadebate", "v4");
+const u4col = (name: string) => u4.split(`data-col="${name}"`)[1]?.split('<div class="col ')[0] ?? "";
+const u4pages = u4.split('<div class="page"').slice(1);
+const u4text = u4.replace(/<!--[\s\S]*?-->/g, "");
+assert(/lang="en"/.test(u4.slice(0, 300)), "uadebate v4 board is marked English");
+assert(chlogOf(u4).includes("Compared with v3"), "uadebate v4 changelog compares with v3");
+const v4cols = [...u4.matchAll(/data-col="([a-z-]+)"/g)].map((m) => m[1]);
+assert(v4cols.join(",") === "public,content-manager,admin,phoenix-api",
+  `uadebate v4 columns are Public, Content manager, Admin, Phoenix API (got: ${v4cols.join(",")})`);
+assert(["1. Public (anonymous)", "2. Content manager", "3. Admin", "4. Phoenix API"].every((t) => u4.includes(`<h3>${t}`)),
+  "uadebate v4 columns are numbered as in cab");
+for (const [col, prev] of [["content-manager", "public"], ["admin", "content-manager"]]) {
+  assert(u4col(col).includes(`<b>All ${prev} pages +</b>`), `uadebate v4: ${col} inherits all ${prev} pages`);
+}
+assert(!u4.includes('data-col="user"') && !u4.includes('data-id="user-front"'), "uadebate v4 has no user column");
+const v4scope: Record<string, string[]> = {
+  public: ["main-front", "main-news", "main-news-article", "main-calendar", "main-clubs", "main-club", "main-about"],
+  "content-manager": ["cm-dash", "cm-news-edit", "cm-calendar", "cm-event-edit", "cm-clubs", "cm-club-edit"],
+  admin: ["adm-people"],
+};
+const misplaced4 = Object.entries(v4scope).flatMap(([col, ids]) => ids.filter((id) => !u4col(col).includes(`data-id="${id}"`)));
+assert(misplaced4.length === 0, `uadebate v4: every page sits in its scope${misplaced4.length ? " (missing: " + misplaced4.join(", ") + ")" : ""}`);
+assert(u4pages.length === Object.values(v4scope).flat().length, `uadebate v4 has exactly the scoped pages (${u4pages.length})`);
+assert(!/Sign in|\/signin/.test(u4text), "uadebate v4 has no Sign in text and no /signin route");
+assert(!/\/admin\/roles|\/roles\/content-managers/.test(u4text), "uadebate v4 moved the roles page to /manage/people");
+assert(pageChunk(u4, "adm-people").includes("Grant the role") && u4col("admin").includes("GET /manage/people"),
+  "uadebate v4: the admin column has /manage/people, where the role is granted");
+const cmPages4 = [...v4scope["content-manager"], ...v4scope.admin].map((id) => pageChunk(u4, id));
+assert(cmPages4.every((pg) => pg.includes('class="ua-cmbar"') && pg.includes('class="ua-cmrole"')),
+  "uadebate v4: the content-manager ribbon is on every content-manager and admin page");
+assert(!u4col("public").includes('class="ua-cmbar"') && !/Edit site/.test(u4col("public")), "uadebate v4: the public column never shows editing");
+assert(u4col("content-manager").includes("404") && u4col("content-manager").includes("uadebate.com/manage") &&
+  u4col("content-manager").includes("nothing in cab links here"), "uadebate v4 states the link entry, the 404 and that cab never links here");
+assert(pageChunk(u4, "cm-dash").includes("You reached this through the link you were given"), "uadebate v4 overview notes the given link");
+assert(u4col("phoenix-api").includes("mix uadebate.grant") && !u4col("phoenix-api").includes("<span class=\"p\">/me</span>"),
+  "uadebate v4 API: bootstrap grant named, no session endpoint");
+assert(["/news", "/events", "/calendar.ics", "/clubs", "/manage/events", "/manage/people"]
+  .every((p) => u4col("phoenix-api").includes(`<span class="p">${p}</span>`)), "uadebate v4: the Phoenix API column lists the site's endpoints");
+const badNav4 = u4pages.filter((pg) => {
+  const bar = pg.match(/<header class="ua-top">[\s\S]*?<\/header>/)?.[0] ?? "";
+  const items = [...(bar.match(/<nav class="ua-nav">([\s\S]*?)<\/nav>/)?.[1] ?? "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]);
+  return !/class="ua-brand wordmark"[^>]*>UAdebates</.test(bar) || items.join(",") !== nav3.join(",") || !bar.includes(">Cabinet</a>");
+}).length;
+assert(badNav4 === 0, `uadebate v4: every header has the wordmark, exactly Home, News, Calendar, Clubs, About, and Cabinet (${badNav4} off)`);
+const foot4 = u4pages.map((pg) => pg.match(/<footer class="ua-foot">[\s\S]*?<\/footer>/)?.[0] ?? "");
+const mails4 = [...new Set(foot4.flatMap((f) => f.match(/[\w.+-]+@[\w.-]+/g) ?? []))].sort();
+assert(foot4.every((f) => f.length > 0 && f.includes("t.me/fdu_ua")) && mails4.join(",") === "ngo.dfu@uadebate.com,support@uadebate.com",
+  `uadebate v4: every footer carries exactly ngo.dfu@, support@ and Telegram (got: ${mails4.join(", ")})`);
+assert(!/info@|dfu\.ngo@|noreply@|admin@uadebate/.test(u4text), "uadebate v4 shows no invented or internal address");
+const goldy4 = u4pages.filter((pg) => (pg.match(/ua-btn--gold|class="go"/g) ?? []).length > 1).length;
+assert(goldy4 === 0, `uadebate v4: at most one gold action per page (${goldy4} pages with more)`);
+assert(!u4text.includes("·"), "uadebate v4 carries no middle dots");
+const arrows4 = [...new Set(u4text.match(/[←-⇿⬀-⯿›❯]/g) ?? [])];
+assert(arrows4.length === 0, `uadebate v4 carries no arrows${arrows4.length ? " (found: " + arrows4.join(" ") + ")" : ""}`);
+const cyr4 = u4text.replace(/<[^>]+>/g, " ").match(/[Ѐ-ӿ]+/g) ?? [];
+assert(cyr4.length === 0, `uadebate v4 is English only${cyr4.length ? " (found: " + cyr4.slice(0, 5).join(" ") + ")" : ""}`);
+assert(private3.every((t) => !u4col("public").includes(t)) && !/ua-ev--priv|ua-chip--priv|class="ua-vis"/.test(u4col("public")),
+  "uadebate v4: private events and the visibility switch stay out of the public column");
+assert(private3.every((t) => pageChunk(u4, "cm-calendar").includes(t)), "uadebate v4: the content manager's calendar shows the private events");
 
 if (failures) { console.error(`\n${failures} check(s) failed`); process.exit(1); }
 console.log("\nall checks passed");

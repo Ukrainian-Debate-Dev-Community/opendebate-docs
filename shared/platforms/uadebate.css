@@ -467,3 +467,17 @@
 .ua-branch text { font-size:13px; font-weight:700; fill:var(--on-brand); paint-order:stroke; stroke:var(--brand-fill);
                    stroke-width:4px; stroke-linejoin:round; }
 .ua-branch:hover circle { fill:var(--gold); }
+
+/* v4: v3 with no sign-in on the site; the same pages and classes, so only the frame
+   rules v3 scoped to itself are repeated here. */
+.pf-uadebate[data-version="v4"] .frame {
+  --ink:inherit; --muted:inherit; --line:inherit; --bg:inherit; --surface:inherit; --gold:inherit;
+  --ok:inherit; --ok-bg:inherit; --warn:inherit; --warn-bg:inherit; --radius:var(--r);
+  color-scheme:inherit; font-family:inherit; background:var(--bg);
+                                          color:var(--ink); font-size:14px; line-height:1.5; }
+.pf-uadebate[data-version="v4"] .frame a { color:var(--brand); }
+.pf-uadebate[data-version="v4"] .anno { font-size:.72rem; color:var(--muted); line-height:1.5; padding:8px 12px 9px;
+  margin:10px; border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-uadebate[data-version="v4"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+  text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-uadebate[data-version="v4"] .anno b { color:var(--ink); }

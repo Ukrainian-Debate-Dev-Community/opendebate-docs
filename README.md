@@ -47,6 +47,7 @@ webdesign/
     uadebate/v1/            the uadebate.com front page, legacy look
     uadebate/v2/            the whole site in cab's look: public and content manager
     uadebate/v3/            the site in English, one column per scope as in cab (_version.json sets lang en)
+    uadebate/v4/            v3 with no sign-in on the site; editors arrive by a given link to /manage
     dfu/                    empty, left out of the page until it has a version
   dist/                     build output (gitignored)
 ```
@@ -82,6 +83,7 @@ The build also inlines `platform/apps/cab/priv/static/fonts/cedarville-cursive.w
 | v1 | the front page from legacy/design/uadebate.html, markup and Ukrainian text as is |
 | v2 | the whole site in cab's look and rules: one header (UAdebates wordmark in Cedarville Cursive, seven-item nav, Кабінет) and one footer on every page; home, news, article, tournaments (under construction), calendar, clubs with filters and a map, club, ratings, about, sign-in; a content-manager column with news, event and club editors and a calendar with private events; cab's tokens light and dark, at most one gold action, no middle dots, no arrows |
 | v3 | in English (Ukrainian later), one column per scope as in cab: public, user, content manager, admin, Phoenix API; pages cut to Home, News, Calendar (mostly tournaments, private events for content managers only), Clubs and About, which carries the history ported from the Wix About page (Mission, Goal, Means, the 2011 to 2015 year line, the 16 branches); Sign in hands off to cab; the footer shows only the real addresses ngo.dfu@ and support@uadebate.com and Telegram; admins grant the content-manager role |
+| v4 | v3 with no sign-in on uadebate.com: no Sign in item or page and no user column, since a signed-in person without a role sees the public site; editors get the link uadebate.com/manage from the admin and sign in on cab; every /manage address is 404 without the role; the admin is a cab admin (cab's is_admin read downward) on /manage/people; columns Public, Content manager, Admin, Phoenix API; the content-manager ribbon stays |
 
 ## Run
 
