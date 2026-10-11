@@ -1,0 +1,45 @@
+{
+  "id": "pub-reg",
+  "title": "/r/:sess — guest registration",
+  "column": "public",
+  "order": 40,
+  "path": "GET/POST /r/:sess",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Register",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Register — registration open",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Registration"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Register for Thursday practice</b>",
+        "<p class=\"mut\">No account needed — you'll get a personal link that is your access to this session.</p>",
+        "Your name → <b>Register</b>",
+        "<p class=\"mut\">You appear in this session's list right away; the club head seats you as a speaker or the adjudicator.</p>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The ONLY registration URL. A guest is an engine participant with NO engine account; the personal link keeps its participant id and the engine's one-time claim token. Once registration closes: \"Registration is closed for this session. Ask the club head about the next session.\""
+    }
+  ],
+  "api": [
+    "POST events/:id/participants (no user_id)"
+  ]
+}

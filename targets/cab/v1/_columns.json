@@ -1,0 +1,34 @@
+{
+  "engine-api": {
+    "title": "Engine API — node :3100 (internal only)",
+    "cond": "Auth: HS256 JWT {id, isAdmin} minted per request by cab. Guards: <b>admin</b> · <b>org</b> = owner/organiser · <b>chair</b> = room judge (falls through to org). Never public."
+  },
+  "phoenix-api": {
+    "title": "Phoenix API — /api/v1 (cab)",
+    "cond": "Session cookie today; keyed public API = pillar 3. Green = the engine call behind the write."
+  },
+  "admin": {
+    "title": "Admin",
+    "cond": "<b>is_admin only</b> (404 otherwise). Club creation is admin-only."
+  },
+  "public": {
+    "title": "Public (anonymous)",
+    "cond": "Reads + session registration. Auth walls → /signin."
+  },
+  "owner": {
+    "title": "Owner (club head)",
+    "cond": "<b>The owner never plays.</b> Lifecycle: sign-ups → Close sign-ups → compose rooms → MONITOR only while running → Finish session · Cancel session. Set/release motion, ballots and finish room belong to each room's judge."
+  },
+  "member": {
+    "title": "Member",
+    "cond": "Member of several clubs — fine. Becomes Participant/Judge by registering."
+  },
+  "participant": {
+    "title": "Participant (registered speaker)",
+    "cond": "Member or guest. The guest's /l/:code shows ONLY their session/room view — no club-local pages. History lives on the club page table, nowhere else."
+  },
+  "judge": {
+    "title": "Judge (chairs a room)",
+    "cond": "Member-judge or guest-judge (link) — the judge PLAYS the room: edit draw, set + release motion, ballot, finish room. Judge before rooms exist = spectator. Guest judges see only their session via /l/:code."
+  }
+}

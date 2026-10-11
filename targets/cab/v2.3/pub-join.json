@@ -1,0 +1,39 @@
+{
+  "id": "pub-join",
+  "title": "join — signed-in non-member",
+  "column": "public",
+  "order": 25,
+  "path": "GET /c/:club (+ form unfolds on Send request)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Lviv DS",
+    "active": "Club",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "club",
+    "segs": [
+      {
+        "label": "Send request",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "club info card by default (title, head, schedule, message)",
+        "clicking Send request reveals the form: about me + contact (required)"
+      ]
+    }
+  ]
+}

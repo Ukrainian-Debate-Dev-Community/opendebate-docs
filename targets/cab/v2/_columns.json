@@ -1,0 +1,34 @@
+{
+  "engine-api": {
+    "title": "Engine API — node :3100 (internal only)",
+    "cond": "Auth: HS256 JWT {id, isAdmin} minted per request by cab. Guards: <b>admin</b> · <b>org</b> = owner/organiser · <b>chair</b> = room judge (falls through to org). Never public. <span class=\"m8b\">ENGINE-NEW</span> = the M9a stats PR."
+  },
+  "phoenix-api": {
+    "title": "Phoenix API — /api/v1 (cab)",
+    "cond": "Session cookie today; keyed public API = pillar 3. Green = the engine call behind the write."
+  },
+  "admin": {
+    "title": "Admin",
+    "cond": "<b>is_admin only</b> (404 otherwise). Club creation is admin-only. FOOTER (every page, all roles): beta notice + \"GDPR concerns → support@uadebate.com\"."
+  },
+  "public": {
+    "title": "Public (anonymous)",
+    "cond": "Reads + session registration. Auth walls → /signin. Guests via /l/:code see the SAME session page (scoped) — no special guest views."
+  },
+  "owner": {
+    "title": "Owner (club head)",
+    "cond": "<b>FULL CONTROL restored:</b> owner can set/publish motions and view/edit/confirm ballots on EVERY room, judge or not. Lifecycle: Start session → Reopen registration | Finish session. No cancel in the UI."
+  },
+  "member": {
+    "title": "Member",
+    "cond": "Member of several clubs — fine. Becomes Participant/Judge by registering. New: MY PAGE (global) with personal stats."
+  },
+  "participant": {
+    "title": "Participant (registered speaker)",
+    "cond": "Member or guest — SAME session page (guest /l/:code is just auth, scoped to the session; no special guest views). History lives on the club page table, nowhere else."
+  },
+  "judge": {
+    "title": "Judge (chairs a room)",
+    "cond": "Member-judge, guest-judge (link) or owner-as-judge — same panel, powers from the CHAIR (owner has them everywhere anyway). Judge before rooms exist = spectator."
+  }
+}

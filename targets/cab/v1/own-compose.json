@@ -1,0 +1,58 @@
+{
+  "id": "own-compose",
+  "title": "compose rooms — dnd table",
+  "column": "owner",
+  "order": 50,
+  "path": "GET /c/:club/owner/s/:sess/compose",
+  "api": [
+    "POST rounds/:id/rooms on Create rooms"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "compose rooms",
+    "segs": [
+      {
+        "label": "+ room"
+      },
+      {
+        "label": "Create rooms",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms — drag to adjust"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Anna · Bohdan",
+          "sd oo::Daryna · Olesia",
+          "sd cg::Hlib · Marko",
+          "sd co::Taras, iron",
+          "mut::judge Petro"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "dnd table — the judge's \"Edit my room\" is the same surface, scoped to one room. Create rooms makes them real."
+    }
+  ]
+}

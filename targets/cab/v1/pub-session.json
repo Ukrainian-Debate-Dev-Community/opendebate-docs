@@ -1,0 +1,39 @@
+{
+  "id": "pub-session",
+  "title": "session page (public) — stage-aware",
+  "column": "public",
+  "order": 30,
+  "path": "GET /c/:club/s/:sess",
+  "api": [
+    "GET event + rooms + participants"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "Thursday practice <span class=\"st\">· running</span>"
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "Session in progress. 2 rooms, 17 players.",
+        "Results appear when it ends."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "stage-aware: sign-ups open → Register on top; running → this notice; finished → results + winner. Status words live in the crumb."
+    }
+  ]
+}

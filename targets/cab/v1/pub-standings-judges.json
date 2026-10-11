@@ -1,0 +1,62 @@
+{
+  "id": "pub-standings-judges",
+  "title": "/standings/judges — plain counts",
+  "column": "public",
+  "order": 52,
+  "path": "GET /standings/judges",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Judges"
+    },
+    {
+      "type": "section",
+      "title": "Judges · session: Thursday practice, 2 Oct — plain count of engine room chairs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Judge",
+        "Club",
+        "Rooms judged"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Petro Demchuk",
+          "Kyiv Debate Club",
+          "1"
+        ],
+        [
+          "rk::2",
+          "Nadia Hon",
+          "Kyiv Debate Club",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "plain count of engine room chairs in that session — no cab-side math."
+    }
+  ]
+}

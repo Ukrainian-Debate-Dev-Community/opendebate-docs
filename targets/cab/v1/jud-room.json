@@ -1,0 +1,77 @@
+{
+  "id": "jud-room",
+  "title": "room — judge plays it",
+  "column": "judge",
+  "order": 10,
+  "path": "GET /c/:club/judge/r/:room",
+  "api": [
+    "POST rooms/:id/motion (on release)"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "nadia"
+  },
+  "chrome": {
+    "crumb": "Thursday practice — my room R2",
+    "segs": [
+      {
+        "label": "Edit my room"
+      },
+      {
+        "label": "Set motion"
+      },
+      {
+        "label": "Release motion",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "gold",
+      "html": "Motion written, not released. Releasing shows it to players and starts 15:00 prep."
+    },
+    {
+      "type": "section",
+      "title": "My room R2"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Iryna &amp; Sofia"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Other rooms"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "mut::debating since 18:40 · ballot not in"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "motion TEXT only — no infoslide, no keyword. \"Edit my room\" opens the compose table scoped to R2. Chrome by room state: Edit my room · Set motion → Release motion (gold) → Fill ballot (gold) → Finish room (gold)."
+    }
+  ]
+}

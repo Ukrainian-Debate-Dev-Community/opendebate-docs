@@ -1,0 +1,81 @@
+{
+  "id": "pub-session",
+  "title": "session page (public)",
+  "column": "public",
+  "order": 30,
+  "path": "GET /c/:club/s/:sess",
+  "api": [
+    "GET event + rooms + participants"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "Thursday practice",
+    "segs": [
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "og",
+        "oo",
+        "cg",
+        "co",
+        "judge",
+        "status"
+      ],
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Taras &amp; Yuri",
+          "sd oo::Lera &amp; Ira",
+          "sd cg::Max &amp; Oles",
+          "sd co::Nina, iron",
+          "mut::Petro",
+          "mut::motion published 18:42 · debating"
+        ],
+        [
+          "rk::R2",
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Iryna &amp; Sofia",
+          "mut::Nadia",
+          "mut::motion pending"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "open room = the row, clicked: <b>R1</b> — motion text + infoslide, prep until 18:57, then \"debating — waiting for the ballot\""
+      ]
+    },
+    {
+      "type": "note",
+      "text": "a room IS its draw row — no separate draw section; the row opens the room page. Before rooms exist — \"no active rooms yet\". Register stays in the nav at all times."
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "id": "phoenix-api",
+  "kind": "swagger",
+  "column": "phoenix-api",
+  "order": 1,
+  "groups": [
+    {
+      "title": "clubs & membership",
+      "rows": [
+        {
+          "id": "api-club-get",
+          "t": "GET /clubs/:uuid",
+          "method": "GET",
+          "path": "/clubs/:uuid",
+          "desc": "public — club profile + archive from cab's records"
+        },
+        {
+          "id": "api-club-patch",
+          "t": "PATCH /clubs/:uuid",
+          "method": "PATCH",
+          "path": "/clubs/:uuid",
+          "desc": "head — profile fields + is_private"
+        },
+        {
+          "id": "api-members",
+          "t": "GET /clubs/:uuid/members",
+          "method": "GET",
+          "path": "/clubs/:uuid/members",
+          "desc": "roster — anyone for a public club, members for a private one"
+        },
+        {
+          "id": "api-member-del",
+          "t": "DEL /clubs/:uuid/members/:user_id",
+          "method": "DEL",
+          "path": "/clubs/:uuid/members/:user_id",
+          "desc": "head — remove a member"
+        },
+        {
+          "id": "api-join-create",
+          "t": "POST /clubs/:uuid/join-requests",
+          "method": "POST",
+          "path": "/clubs/:uuid/join-requests",
+          "desc": "signed in — {message, contact}"
+        },
+        {
+          "id": "api-join-patch",
+          "t": "PATCH /join-requests/:id",
+          "method": "PATCH",
+          "path": "/join-requests/:id",
+          "desc": "head — approve | decline"
+        }
+      ]
+    },
+    {
+      "title": "sessions — lifecycle",
+      "rows": [
+        {
+          "id": "api-sess-create",
+          "t": "POST /clubs/:uuid/sessions",
+          "method": "POST",
+          "path": "/clubs/:uuid/sessions",
+          "desc": "head — open a session; answers {uuid, scheduled_at}, no engine ids",
+          "api": "POST events + rounds"
+        },
+        {
+          "id": "api-sess-get",
+          "t": "GET /sessions/:uuid",
+          "method": "GET",
+          "path": "/sessions/:uuid",
+          "desc": "public — {uuid, club_uuid, name, stage, scheduled_at, short_link, signups [{name, role}], rooms [{no, status, motion {text, infoslide, keyword, prep_until}, adjudicator, teams [{side, name, rank, points, speakers [{name, score, iron}]}]}], winner, winners [{room, team}]} — no engine records, ids or accounts; the head gets every id, a room's chair their room's ids, everyone their own registration's id"
+        },
+        {
+          "id": "api-sess-del",
+          "t": "DEL /sessions/:uuid",
+          "method": "DEL",
+          "path": "/sessions/:uuid",
+          "desc": "head — cancel",
+          "api": "DEL events/:id"
+        },
+        {
+          "id": "api-sess-start",
+          "t": "POST /sessions/:uuid/start",
+          "method": "POST",
+          "path": "/sessions/:uuid/start",
+          "desc": "head — {rooms} required (422 otherwise); closes sign-ups",
+          "api": "POST rounds/:id/rooms"
+        },
+        {
+          "id": "api-close",
+          "t": "POST /sessions/:uuid/close-signups",
+          "method": "POST",
+          "path": "/sessions/:uuid/close-signups",
+          "desc": "head"
+        },
+        {
+          "id": "api-reopen-signups",
+          "t": "POST /sessions/:uuid/reopen-signups",
+          "method": "POST",
+          "path": "/sessions/:uuid/reopen-signups",
+          "desc": "head"
+        },
+        {
+          "id": "api-reopen-reg",
+          "t": "POST /sessions/:uuid/reopen-registration",
+          "method": "POST",
+          "path": "/sessions/:uuid/reopen-registration",
+          "desc": "head — only while no ballot is in"
+        },
+        {
+          "id": "api-finish",
+          "t": "POST /sessions/:uuid/finish",
+          "method": "POST",
+          "path": "/sessions/:uuid/finish",
+          "desc": "head — records finished_at + winner",
+          "api": "PUT events/:id"
+        }
+      ]
+    },
+    {
+      "title": "signups, rooms & play",
+      "rows": [
+        {
+          "id": "api-signup",
+          "t": "POST /sessions/:uuid/signups",
+          "method": "POST",
+          "path": "/sessions/:uuid/signups",
+          "desc": "no role — a member signs up, or the head with {username}",
+          "api": "POST events/:id/participants"
+        },
+        {
+          "id": "api-signup-del",
+          "t": "DEL /sessions/:uuid/signups/:participant_id",
+          "method": "DEL",
+          "path": "/sessions/:uuid/signups/:participant_id",
+          "desc": "REMOVE — self (own id from the session read) or head; waitlist only once rooms exist; name scrubbed, a guest's account and link deleted",
+          "api": "PUT + DEL participants/:pid"
+        },
+        {
+          "id": "api-rooms",
+          "t": "POST /sessions/:uuid/rooms",
+          "method": "POST",
+          "path": "/sessions/:uuid/rooms",
+          "desc": "head — {rooms} required; no server-side pairing; chairs re-roled",
+          "api": "PUT participants + POST rounds/:id/rooms"
+        },
+        {
+          "id": "api-rooms-del",
+          "t": "DEL /sessions/:uuid/rooms",
+          "method": "DEL",
+          "path": "/sessions/:uuid/rooms",
+          "desc": "head — only while no ballot is in",
+          "api": "DEL rooms/:id"
+        },
+        {
+          "id": "api-motion",
+          "t": "POST /rooms/:id/motion",
+          "method": "POST",
+          "path": "/rooms/:id/motion",
+          "desc": "chair or head — answers {room_id, motion {text, infoslide, keyword}}; starts 15 minutes of prep",
+          "api": "POST rooms/:id/motion"
+        },
+        {
+          "id": "api-ballot",
+          "t": "POST /rooms/:id/ballot",
+          "method": "POST",
+          "path": "/rooms/:id/ballot",
+          "desc": "chair or head, only after the room's motion; confirmed → head only (edit ballot); each score may carry iron, and the speaker who actually spoke",
+          "api": "POST rooms/:id/scores (is_iron, participant_id)"
+        }
+      ]
+    },
+    {
+      "title": "people & invitations",
+      "rows": [
+        {
+          "id": "api-people",
+          "t": "GET /sessions/:uuid/people",
+          "method": "GET",
+          "path": "/sessions/:uuid/people",
+          "desc": "head — ?q= members by prefix, other users by exact username or email, a guest offer for a name nobody answers to"
+        },
+        {
+          "id": "api-invite",
+          "t": "POST /sessions/:uuid/invitations",
+          "method": "POST",
+          "path": "/sessions/:uuid/invitations",
+          "desc": "head — {user}: seats a registered user now; they accept on My page",
+          "api": "POST events/:id/participants (no user_id) + claim token"
+        }
+      ]
+    },
+    {
+      "title": "guest links",
+      "rows": [
+        {
+          "id": "api-links",
+          "t": "GET /sessions/:uuid/links",
+          "method": "GET",
+          "path": "/sessions/:uuid/links",
+          "desc": "head"
+        },
+        {
+          "id": "api-link-create",
+          "t": "POST /sessions/:uuid/links",
+          "method": "POST",
+          "path": "/sessions/:uuid/links",
+          "desc": "head — {name}: adds a guest (an engine participant with no account) with a personal link",
+          "api": "POST events/:id/participants (no user_id)"
+        }
+      ]
+    }
+  ]
+}

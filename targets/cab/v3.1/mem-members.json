@@ -1,0 +1,46 @@
+{
+  "id": "mem-members",
+  "title": "club members — roster",
+  "column": "member",
+  "order": 40,
+  "path": "GET /c/:club/members",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Members",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "members · 24"
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Anna Kovalenko",
+          "mut::head · since Mar 2025"
+        ],
+        [
+          "Bohdan Shevchenko",
+          "mut::member · Apr 2026"
+        ],
+        [
+          "demo-nina",
+          "mut::member · Oct 2026"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "roster only — approve/decline/revoke live on the owner path; per-member stats live under Standings (rule 0, engine output)."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "pub-front",
+  "title": "/ front",
+  "column": "public",
+  "order": 10,
+  "path": "GET /",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Clubs",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "debate clubs of Ukraine",
+    "segs": [
+      {
+        "label": "Sign in",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "City",
+        "Next session"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "mut::Thu 18:30 — <a href=\"#\">register</a>"
+        ],
+        [
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "Lviv",
+          "mut::live now — <a href=\"#\">watch rooms</a>"
+        ],
+        [
+          "<a href=\"#\">Odesa Debates</a>",
+          "Odesa",
+          "mut::not planned yet"
+        ]
+      ]
+    },
+    {
+      "type": "raw",
+      "html": "<div style=\"margin-top:14px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--mut);\">cab is in beta testing · GDPR concerns → support@uadebate.com</div>"
+    },
+    {
+      "type": "note",
+      "text": "the footer above renders on EVERY page, all roles — shown once here."
+    }
+  ]
+}

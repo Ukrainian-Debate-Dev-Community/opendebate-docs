@@ -1,0 +1,44 @@
+{
+  "id": "pub-reg",
+  "title": "/r/:sess — guest registration",
+  "column": "public",
+  "order": 40,
+  "path": "GET/POST /r/:sess",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Register",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › register — sign-ups open",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Registration"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Register for Thursday practice</b>",
+        "<p class=\"mut\">No account needed — you'll get a personal link that is your access to this session.</p>",
+        "Your name → <b>Register</b>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The ONLY registration URL. No role choice: the club head seats people as speakers or the judge at allocation. Once sign-ups close it renders \"Registration is closed for this session.\""
+    }
+  ],
+  "api": [
+    "POST events/:id/participants"
+  ]
+}

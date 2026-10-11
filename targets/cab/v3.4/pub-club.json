@@ -1,0 +1,83 @@
+{
+  "id": "pub-club",
+  "title": "/c/:club — club page = the archive",
+  "column": "public",
+  "order": 10,
+  "path": "GET /c/:club",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Club",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club",
+    "segs": [
+      {
+        "label": "Request to join",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "About"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Kyiv Debate Club</b>, Kyiv",
+        "11 members, head: Oleksii Stroganov",
+        "Weekly BP practice for students and graduates.",
+        "Meetings: Thursdays 18:30, Hrushevskoho 4",
+        "Contacts: t.me/kyivdc"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Club Sessions"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "Status"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Thursday practice</a> <span class=\"mut\">9 Oct 2026</span>",
+          "st::registration open"
+        ],
+        [
+          "<a href=\"#\">Thursday practice</a> <span class=\"mut\">2 Oct 2026</span>",
+          "st::done — won by Olena (R1), Andrii (R2)"
+        ],
+        [
+          "<a href=\"#\">Open round</a> <span class=\"mut\">25 Sep 2026</span>",
+          "st::done — won by Anna &amp; Bohdan"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Standings"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Standings for each session are under <a href=\"#\">Standings</a>."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Archive rows come from cab's session records (name, date, finished_at, winner line) — zero engine calls. A session with several rooms records every room's winner: \"Team A (R1), Team B (R2)\". Request to join: anonymous → /signin; signed-in non-member → /c/:club/join. A head or admin sees <b>Edit club</b> instead. Register in the sidebar appears whenever the club has a session."
+    }
+  ]
+}

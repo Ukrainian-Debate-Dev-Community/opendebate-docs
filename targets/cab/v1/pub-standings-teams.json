@@ -1,0 +1,65 @@
+{
+  "id": "pub-standings-teams",
+  "title": "/standings/teams — engine output verbatim",
+  "column": "public",
+  "order": 51,
+  "path": "GET /standings/teams",
+  "api": [
+    "GET events/:id/standings/calculated/teams"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Teams"
+    },
+    {
+      "type": "section",
+      "title": "Teams · session: Thursday practice, 2 Oct (latest finished)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Team",
+        "Club",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Anna &amp; Bohdan",
+          "Kyiv Debate Club",
+          "3"
+        ],
+        [
+          "rk::2",
+          "Daryna &amp; Olesia",
+          "Kyiv Debate Club",
+          "2"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "engine calculated total_points for ONE session, verbatim; default = latest finished. No cab-side math."
+    }
+  ]
+}

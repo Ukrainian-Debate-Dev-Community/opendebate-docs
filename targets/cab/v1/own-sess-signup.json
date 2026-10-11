@@ -1,0 +1,78 @@
+{
+  "id": "own-sess-signup",
+  "title": "session @ sign-ups",
+  "column": "owner",
+  "order": 30,
+  "path": "GET /c/:club/owner/s/:sess (sign-ups)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice — sign-ups",
+    "segs": [
+      {
+        "label": "Close sign-ups",
+        "kind": "gold"
+      },
+      {
+        "label": "Cancel session",
+        "kind": "quiet"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Register without an account:&nbsp;<span class=\"cpy\">cab.uadebate.com/r/328333f6</span> <a href=\"#\">copy</a>"
+    },
+    {
+      "type": "section",
+      "title": "Signed up — 9 speakers, 1 judge"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Anna Kovalenko",
+          "mut::speaker",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Greta — guest · link <span class=\"cpy\">/l/Vq8…c2M</span> · <a href=\"#\">copy</a> · <a href=\"#\">revoke</a>",
+          "mut::speaker",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Petro Demchuk",
+          "mut::judge",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Add by hand"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "member dropdown OR guest name · speaker|judge pills → <b>Add</b>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "after Close sign-ups the SAME page becomes the allocation surface: chrome Compose · Make rooms (gold) · Reopen sign-ups. No embedded allocator here."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "member": {
+    "title": "1. Member",
+    "cond": "<b>dfu.uadebate.com, the NGO cabinet of the Debate Federation of Ukraine, only for people with a dfu role.</b> Anyone else, signed in or not, gets 404 on every dfu page: the public never sees dfu, and no public page links to it. Sign-in is cab's (one session across uadebate.com); dfu keeps its own roles keyed by the cab account id, and cab never links to dfu or knows its roles. In English for now, Ukrainian later. cab's look: the sidenav with the dfu wordmark, the bar with its one gold action, cab's tokens light and dark; no middle dots, no arrows. The Danish model of the legacy spec: every document gets a permanent journal number, cases bundle documents, a vote counts only once signed, quorum is always shown. A member reads the inbox, the cases they take part in, the votes in their scope, announcements, documents, the member registry, branches, leadership and the AKS register. People, branches, leadership and the AKS rows come from the old Wix site and may be out of date; inbox items, cases, votes and documents are illustrative."
+  },
+  "branch-head": {
+    "title": "2. Branch head",
+    "cond": "<b>All member pages +</b> their branch: its members with contacts, the documents addressed to it, and Submit a document to the Secretariat, which registers it and gives it a number."
+  },
+  "board": {
+    "title": "3. Board",
+    "cond": "<b>All branch-head pages +</b> every case (open, assign, move between Open, Waiting and Closed), starting votes with a scope, a quorum and a ballot kind, signing board votes, and announcements. The supervisory board and the AKS are scopes of votes and cases, not columns: the Wix site shows them only as lists of people, with no tools of their own."
+  },
+  "admin": {
+    "title": "4. Secretariat (admin)",
+    "cond": "<b>All board pages +</b> the journal: register incoming and outgoing documents with their numbers, set a document Internal or Public (public ones are listed on uadebate.com), and People and roles: grant and remove dfu roles and scopes for cab accounts."
+  },
+  "phoenix-api": {
+    "title": "5. Phoenix API, /api/v1 (dfu)",
+    "cond": "<b>Every page verb above maps to one of these</b>, with the same ladder; without a dfu role every call is 404. dfu owns documents, cases, votes, announcements, the registry and its roles; identity stays cab's. uadebate.com reads the public documents and the structure with a service token. Green = the cab call behind it."
+  }
+}

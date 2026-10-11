@@ -1,0 +1,177 @@
+/* dfu pages inside their frames: cab's frame rules (shared/platforms/cab.css) under .pf-dfu,
+   so dfu reads as the same app family, plus the records pieces of legacy/design/dfu.html
+   (journal numbers, status chips, the vote with its quorum, forms, a case's timeline).
+   Generated with cab.css as the base; keep in step with it by hand. */
+.pf-dfu .frame { background:var(--bg); color:var(--ink); }
+.pf-dfu .frame .mut { color:var(--muted); }
+.pf-dfu .frame code { font-family:ui-monospace,Menlo,monospace; font-size:.92em; }
+
+/* shell: sidenav runs the full height, main column beside it */
+.pf-dfu .shell { display:flex; align-items:stretch; min-height:220px; }
+.pf-dfu .nav { width:150px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--line);
+               padding:8px 0 0; font-size:.74rem; display:flex; flex-direction:column; }
+.pf-dfu .nav .cp { font-family:"Cedarville Cursive",cursive; font-size:1.35rem; line-height:1.2;
+                   color:var(--brand); padding:2px 14px 6px; }
+.pf-dfu .nav .sc { font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+                   font-weight:700; padding:8px 14px 3px; }
+.pf-dfu .nav a { display:block; padding:5px 14px; color:var(--ink); text-decoration:none; font-weight:550; }
+.pf-dfu .nav a.on { background:var(--brand-50); color:var(--brand-700); font-weight:700;
+                    border-left:3px solid var(--brand); padding-left:11px; }
+.pf-dfu .nav .pf { margin-top:auto; border-top:1px solid var(--line); padding:8px 14px;
+                   font-size:.68rem; color:var(--muted); font-weight:600; }
+.pf-dfu .mainc { flex:1; min-width:0; display:flex; flex-direction:column; }
+
+/* chrome / action bar: thin strip, actions are flush segments of it */
+.pf-dfu .chrome { display:flex; align-items:stretch; height:30px; background:var(--surface);
+                  font-size:.74rem; border-bottom:1px solid var(--line); }
+.pf-dfu .chrome .cr { display:flex; align-items:center; gap:6px; padding:0 12px; font-weight:600;
+                      min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pf-dfu .chrome .cr .st { color:var(--muted); font-weight:500; }
+.pf-dfu .chrome .seg { margin-left:auto; display:flex; align-items:stretch; border-left:1px solid var(--line); }
+.pf-dfu .chrome .seg > * { display:flex; align-items:center; padding:0 12px; font-weight:650; white-space:nowrap;
+                           border-right:1px solid var(--line); background:var(--surface); color:var(--ink);
+                           text-decoration:none; }
+.pf-dfu .chrome .seg > *:last-child { border-right:none; }
+.pf-dfu .chrome .seg > *:hover { background:var(--brand-50); }
+.pf-dfu .chrome .seg .go { background:var(--gold); color:var(--gold-ink); }
+.pf-dfu .chrome .seg .go:hover { background:var(--gold-hover); }
+.pf-dfu .chrome .seg .qt { color:var(--muted); font-weight:550; }
+
+/* tab row under the chrome (app .selrow) */
+.pf-dfu .tabs { display:flex; align-items:stretch; height:26px; background:var(--surface);
+                border-bottom:1px solid var(--line); font-size:.7rem; }
+.pf-dfu .tabs a { display:flex; align-items:center; padding:0 12px; color:var(--muted); font-weight:650;
+                  text-decoration:none; border-right:1px solid var(--line); }
+.pf-dfu .tabs a.on { background:var(--brand-50); color:var(--brand-700); border-bottom:2px solid var(--brand); }
+
+/* page body (app .pbody) */
+.pf-dfu .body { padding:12px 12px 14px; display:flex; flex-direction:column; gap:10px; font-size:.78rem; }
+.pf-dfu .body a { color:var(--brand); font-weight:650; text-decoration:none; }
+.pf-dfu .sec { font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+               font-weight:700; margin:2px 2px -4px; }
+.pf-dfu .card { border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; }
+.pf-dfu .card .pad { padding:9px 12px; }
+.pf-dfu .card .pad p { color:var(--muted); font-size:.74rem; margin-top:2px; }
+.pf-dfu .card .pad p b { color:var(--ink); }
+
+/* table / standings */
+.pf-dfu table.t { width:100%; border-collapse:collapse; font-size:.74rem; }
+.pf-dfu .t th { text-align:left; font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+                color:var(--muted); padding:5px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+.pf-dfu .t td { padding:5px 10px; border-bottom:1px solid var(--line); }
+.pf-dfu .t tbody tr:last-child td { border-bottom:none; }
+.pf-dfu .t tr.me td { background:var(--me-tint); }
+.pf-dfu .t td.rk { color:var(--brand); font-weight:750; width:30px; }
+.pf-dfu .t td.num { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; }
+.pf-dfu .t td.code { font-family:ui-monospace,Menlo,monospace; font-size:.68rem; color:var(--brand-700); }
+.pf-dfu .t td.st { color:var(--muted); font-size:.7rem; }
+.pf-dfu .t td.mut { color:var(--muted); } .pf-dfu .t td.mut b { color:var(--ink); }
+.pf-dfu .t td a { color:var(--brand); font-weight:650; text-decoration:none; }
+.pf-dfu .t td.sd { border-left:3px solid; font-size:.72rem; }
+.pf-dfu .t td.og { border-left-color:var(--og); } .pf-dfu .t td.oo { border-left-color:var(--oo); }
+.pf-dfu .t td.cg { border-left-color:var(--cg); } .pf-dfu .t td.co { border-left-color:var(--co); }
+
+/* banner (app .banner.info), the gold one for a person's own next step */
+.pf-dfu .bn { background:var(--brand-50); color:var(--brand-700); border-radius:var(--r);
+              padding:8px 12px; font-size:.76rem; }
+.pf-dfu .bn a { color:var(--brand); font-weight:700; text-decoration:none; }
+.pf-dfu .bn.gd { background:var(--co-bg); color:var(--co-ink); }
+
+/* copy affordance (app .copy) */
+.pf-dfu .cpy { display:inline-block; border:1px solid var(--line); background:var(--surface); border-radius:5px;
+               font-size:.62rem; font-weight:700; color:var(--brand); padding:1px 8px; white-space:nowrap; }
+
+/* a design note under the page: what the frame cannot show */
+.pf-dfu .anno { font-size:.7rem; color:var(--muted); line-height:1.5; padding:8px 11px 9px;
+                border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-dfu .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+                        text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-dfu .anno b { color:var(--ink); }
+
+/* ---- dfu only: the records app (legacy/design/dfu.html) in cab's tokens ---- */
+.pf-dfu .nav .sc:first-of-type { padding-top:4px; }
+.pf-dfu .nav .n { float:right; background:var(--brand-fill); color:var(--on-brand); border-radius:9px;
+                  font-size:.58rem; font-weight:700; padding:0 6px; line-height:15px; }
+.pf-dfu .nav .pf a { display:inline; padding:0; color:var(--brand); font-weight:650; }
+.pf-dfu .nav .pf .who { display:block; color:var(--ink); font-weight:700; }
+
+/* journal numbers: permanent, monospaced, always shown */
+.pf-dfu .jnr { font-family:ui-monospace,Menlo,monospace; font-size:.66rem; font-weight:700; color:var(--brand-700);
+               background:var(--brand-50); border-radius:4px; padding:0 5px; white-space:nowrap; }
+
+/* document / case rows (legacy .row) */
+.pf-dfu .rows { border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; }
+.pf-dfu .rw { display:flex; align-items:center; gap:10px; padding:7px 12px; border-bottom:1px solid var(--line); }
+.pf-dfu .rw:last-child { border-bottom:none; }
+.pf-dfu .rw.unread { background:var(--me-tint); }
+.pf-dfu .rw.unread .tt { font-weight:750; }
+.pf-dfu .rw .ico { width:30px; flex-shrink:0; text-align:center; font-size:.56rem; font-weight:800; letter-spacing:.04em;
+                   color:var(--muted); border:1px solid var(--line); border-radius:5px; padding:3px 0; }
+.pf-dfu .rw .bd { flex:1; min-width:0; }
+.pf-dfu .rw .tt { font-weight:650; display:block; }
+.pf-dfu .rw .sub { color:var(--muted); font-size:.68rem; }
+.pf-dfu .rw > a { font-size:.7rem; }
+
+/* status chips: open / waiting / closed, public / internal */
+.pf-dfu .chip { display:inline-block; font-size:.6rem; font-weight:750; border-radius:9px; padding:1px 8px;
+                white-space:nowrap; border:1px solid transparent; }
+.pf-dfu .chip.open { background:var(--ok-bg); color:var(--ok-ink); }
+.pf-dfu .chip.wait { background:var(--co-bg); color:var(--co-ink); }
+.pf-dfu .chip.closed { background:var(--surface-2); color:var(--muted); border-color:var(--line); }
+.pf-dfu .chip.pub { background:var(--oo-bg); color:var(--oo); }
+.pf-dfu .chip.int { background:var(--surface-2); color:var(--muted); border-color:var(--line); }
+.pf-dfu .chip.scope { background:var(--brand-50); color:var(--brand-700); }
+
+/* the vote: question, the three choices, deadline, quorum always visible */
+.pf-dfu .vote { border:1px solid var(--brand); border-radius:var(--r); background:var(--surface); padding:10px 12px; }
+.pf-dfu .vote h4 { font-size:.86rem; margin:4px 0 2px; }
+.pf-dfu .vote .mut { color:var(--muted); font-size:.72rem; }
+.pf-dfu .vopts { display:flex; gap:6px; margin:9px 0 4px; }
+.pf-dfu .vopt { border:1.5px solid var(--line); border-radius:7px; padding:4px 14px; font-weight:700; font-size:.72rem;
+                background:var(--surface); color:var(--ink); }
+.pf-dfu .vopt.yes { border-color:var(--ok); color:var(--ok); }
+.pf-dfu .vopt.no { border-color:var(--warn); color:var(--warn); }
+.pf-dfu .vopt.sel { box-shadow:inset 0 0 0 1.5px currentColor; background:var(--ok-bg); }
+.pf-dfu .meter { height:6px; border-radius:3px; background:var(--line); overflow:hidden; margin-top:4px; }
+.pf-dfu .meter i { display:block; height:100%; background:var(--brand-fill); }
+.pf-dfu .quorum { font-size:.68rem; color:var(--muted); margin-top:8px; }
+.pf-dfu .quorum b { color:var(--ink); }
+.pf-dfu .warnline { background:var(--warn-bg); color:var(--warn-ink); border-radius:6px; padding:4px 9px; font-size:.7rem;
+                    font-weight:600; margin-top:6px; }
+
+/* announcements */
+.pf-dfu .ann { border-left:3px solid var(--brand); background:var(--surface); border-radius:0 var(--r) var(--r) 0;
+               padding:7px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line);
+               border-bottom:1px solid var(--line); }
+.pf-dfu .ann h4 { font-size:.8rem; }
+.pf-dfu .ann .when { color:var(--muted); font-size:.66rem; margin:1px 0 3px; }
+.pf-dfu .ann p { font-size:.74rem; }
+
+/* forms, cab's: one flowing card, label over field, the command sits in the chrome bar */
+.pf-dfu .form { border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:10px 12px;
+                display:flex; flex-direction:column; gap:8px; }
+.pf-dfu .fld { display:flex; flex-direction:column; gap:2px; }
+.pf-dfu .fld > span { font-size:.62rem; font-weight:700; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; }
+.pf-dfu .fld > i { font-style:normal; border:1px solid var(--line); border-radius:6px; padding:4px 8px; font-size:.74rem;
+                   background:var(--surface-2); color:var(--ink); min-height:24px; }
+.pf-dfu .fld > i.area { min-height:44px; }
+.pf-dfu .fld > i.ph { color:var(--muted); }
+.pf-dfu .fld small { color:var(--muted); font-size:.64rem; }
+.pf-dfu .pick { display:flex; gap:0; border:1px solid var(--line); border-radius:6px; overflow:hidden; width:max-content; }
+.pf-dfu .pick b { font-size:.68rem; padding:3px 10px; border-right:1px solid var(--line); font-weight:650; color:var(--muted); }
+.pf-dfu .pick b:last-child { border-right:none; }
+.pf-dfu .pick b.on { background:var(--brand-fill); color:var(--on-brand); }
+.pf-dfu .two { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+/* a case's documents in order (a timeline) */
+.pf-dfu .tl { list-style:none; border-left:2px solid var(--line); margin-left:6px; padding-left:12px;
+              display:flex; flex-direction:column; gap:7px; }
+.pf-dfu .tl li { position:relative; font-size:.74rem; }
+.pf-dfu .tl li::before { content:""; position:absolute; left:-17px; top:4px; width:8px; height:8px; border-radius:50%;
+                         background:var(--brand-fill); }
+.pf-dfu .tl li .sub { color:var(--muted); font-size:.66rem; display:block; }
+
+/* key and value pairs of a record */
+.pf-dfu .kv { display:grid; grid-template-columns:120px 1fr; gap:4px 10px; font-size:.74rem; }
+.pf-dfu .kv dt { color:var(--muted); font-weight:600; }
+.pf-dfu .foot { color:var(--muted); font-size:.64rem; padding:6px 12px 8px; border-top:1px solid var(--line); }

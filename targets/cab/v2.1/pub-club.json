@@ -1,0 +1,82 @@
+{
+  "id": "pub-club",
+  "title": "/c/:club welcome",
+  "column": "public",
+  "order": 20,
+  "path": "GET /c/:club",
+  "api": [
+    "GET organisations/:id events + rooms"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Club",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "club",
+    "segs": [
+      {
+        "label": "Send request",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "<b>Kyiv Debate Club, Kyiv, KNU</b>",
+        "head: Anna Kovalenko · Thursdays 18:30 · t.me/kyivdc",
+        "<p style=\"border-top:1px solid var(--line);margin-top:6px;padding-top:6px;\">“Come debate with us — beginners welcome, English and Ukrainian rounds.” — Anna</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Club Sessions"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Name",
+        "Date",
+        "Rooms",
+        "Status"
+      ],
+      "rows": [
+        [
+          "rk::39",
+          "<a href=\"#\">Thursday practice</a>",
+          "today",
+          "2",
+          "mut::<b>live</b>"
+        ],
+        [
+          "rk::38",
+          "<a href=\"#\">Thursday practice</a>",
+          "2 Oct",
+          "2",
+          "mut::done"
+        ],
+        [
+          "rk::37",
+          "<a href=\"#\">Open night</a>",
+          "25 Sep",
+          "1",
+          "mut::done"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "join: club info shows by default — the request form (about me + contact) opens only on \"Send request\". NO separate sessions page anywhere."
+    }
+  ]
+}

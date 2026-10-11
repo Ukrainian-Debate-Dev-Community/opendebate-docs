@@ -1,0 +1,40 @@
+{
+  "id": "own-club",
+  "title": "club page = settings",
+  "column": "owner",
+  "order": 10,
+  "path": "GET /c/:club/owner · POST …/owner/club",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Club",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "club",
+    "segs": [
+      {
+        "label": "Save",
+        "kind": "gold"
+      },
+      {
+        "label": "Open new session"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "name · city · university · schedule · link/contact · <b>head's message</b> (the quote on the welcome page)",
+        "Club Sessions table below, same as public. \"Open new session\" lives HERE now (no sessions page)."
+      ]
+    }
+  ]
+}

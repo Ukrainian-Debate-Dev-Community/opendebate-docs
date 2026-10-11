@@ -1,0 +1,41 @@
+{
+  "id": "mem-session",
+  "title": "session (member) — register",
+  "column": "member",
+  "order": 30,
+  "path": "GET /c/:club/member/s/:sess",
+  "api": [
+    "POST participants on register"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice",
+    "segs": [
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "speaker|judge pills → Register → <b>\"you're registered\"</b> notice. No stage tags anywhere; cancel own registration while registration is open."
+      ]
+    }
+  ]
+}

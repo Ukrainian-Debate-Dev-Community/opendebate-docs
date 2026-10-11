@@ -1,0 +1,83 @@
+{
+  "id": "pub-club-standings",
+  "title": "/c/:club/standings/:tab — one session's standings",
+  "column": "public",
+  "order": 11,
+  "path": "GET /c/:club/standings/:tab",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Standings",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges"
+      ],
+      "active": "Teams"
+    },
+    {
+      "type": "section",
+      "title": "Teams"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice</b>, 2 Oct · Kyiv Debate Club (latest finished)",
+        "<span class=\"mut\">earlier:</span> <a href=\"#\">Open round · 25 Sep</a>"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Team",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Team Anna",
+          "num::3"
+        ],
+        [
+          "rk::2",
+          "Team Bohdan",
+          "num::2"
+        ],
+        [
+          "rk::3",
+          "Team Hlib",
+          "num::1"
+        ],
+        [
+          "rk::4",
+          "Team Taras",
+          "num::0"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Defaults to the club's latest finished session; <code>?session=uuid</code> walks earlier finished ones. Teams and Speakers = engine calculated standings verbatim; Judges = engine <code>stats/judges</code> (rooms judged, avg feedback). <b>Private club</b> (owner set standings to members only): members pass; a guest or user who played the shown session keeps that session; anyone else — signed out → /signin, signed in → 403."
+    }
+  ],
+  "api": [
+    "GET events/:id/standings/calculated/*",
+    "GET events/:id/stats/judges"
+  ]
+}

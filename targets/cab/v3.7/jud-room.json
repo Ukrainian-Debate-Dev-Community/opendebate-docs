@@ -1,0 +1,103 @@
+{
+  "id": "jud-room",
+  "title": "room — the motion form (chair or head)",
+  "column": "judge",
+  "order": 2,
+  "path": "GET /c/:club/s/:sess/rooms/:id <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice › Room R1 — waiting to start",
+    "segs": [
+      {
+        "label": "Publish motion",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Draw"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Side",
+        "Team",
+        "Speakers"
+      ],
+      "rows": [
+        [
+          "code::OG",
+          "Anna &amp; Bohdan",
+          "Anna &amp; Bohdan"
+        ],
+        [
+          "code::OO",
+          "Daryna &amp; Olesia",
+          "Daryna &amp; Olesia"
+        ],
+        [
+          "code::CG",
+          "Hlib &amp; Marko",
+          "Hlib &amp; Marko"
+        ],
+        [
+          "code::CO",
+          "Taras",
+          "Taras"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Adjudicator: <b>Petro</b>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Motion"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">prep: 14:58 left</p>",
+        "<p class=\"mut\">Publishing shows it to the room and starts 15 minutes of prep.</p>",
+        "Motion <span class=\"mut\">(filled in once published)</span>",
+        "Infoslide <span class=\"mut\">— Optional context read before prep.</span>",
+        "Keyword <span class=\"mut\">— Optional tag for finding the motion later.</span>",
+        "Prep ends at <code>18:47</code> <span class=\"mut\">— Set to 15 minutes from publishing, or type a time. / Change the time to move the end of prep; left empty, it is 15 minutes from now.</span>",
+        "<span class=\"mut\">Visible to everyone in the room right away.</span>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Share this room"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "[room card PNG] <span class=\"cpy\">Copy image</span> <span class=\"cpy\">Save image</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "One motion form for the chair and the head, kept while the room is open; it has no button of its own, the top bar is its only command. Before a motion: gold <b>Publish motion</b>. Once published the form stays filled in and the top bar reads plain <b>Update motion</b> plus gold <b>Fill ballot</b> (Edit ballot once the ballot is in). Prep is stored by cab as one end time per room (<code>room_preps.ends_at</code>): publishing sets now + 15 min, the same time keeps it, a new time moves it. Everyone else reads the motion read-only with the countdown."
+    }
+  ],
+  "api": [
+    "POST rooms/:id/motion"
+  ]
+}

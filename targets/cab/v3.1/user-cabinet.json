@@ -1,0 +1,80 @@
+{
+  "id": "user-cabinet",
+  "title": "cabinet (signed-in home)",
+  "column": "user",
+  "order": 10,
+  "path": "GET /",
+  "api": [
+    "GET …/stats/speakers (per event, M9a)"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "Clubs",
+    "profile": "anna · /account · sign out"
+  },
+  "chrome": {
+    "crumb": "cabinet"
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "My clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Status",
+        "Games"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "mut::member",
+          "18"
+        ],
+        [
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "mut::owner",
+          "4"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My schedule"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "Club",
+        "Date",
+        "Signed up as"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Thursday practice</a>",
+          "Kyiv DC",
+          "today 18:30",
+          "mut::speaker"
+        ],
+        [
+          "<a href=\"#\">Friday open</a>",
+          "Lviv DS",
+          "tomorrow",
+          "mut::judge"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "all signups across clubs land here — per-session rows, nothing merged. Stats live on My page."
+    }
+  ]
+}

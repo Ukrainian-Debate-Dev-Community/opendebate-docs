@@ -1,0 +1,40 @@
+{
+  "id": "jud-guest",
+  "title": "guest judge via link",
+  "column": "judge",
+  "order": 30,
+  "path": "GET /l/:code (judge)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Rooms"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "guest · Oksana"
+  },
+  "chrome": {
+    "crumb": "my room R1",
+    "segs": [
+      {
+        "label": "Edit my room"
+      },
+      {
+        "label": "Set motion"
+      },
+      {
+        "label": "Release motion",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "guest-judge arrives by personal link — same room panel, scoped to their room only",
+        "no club-local pages; the link is the auth"
+      ]
+    }
+  ]
+}

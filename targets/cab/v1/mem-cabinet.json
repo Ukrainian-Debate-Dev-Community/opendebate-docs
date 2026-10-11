@@ -1,0 +1,68 @@
+{
+  "id": "mem-cabinet",
+  "title": "cabinet (signed-in /)",
+  "column": "member",
+  "order": 10,
+  "path": "GET / (signed in)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Clubs",
+    "profile": "anna · /account · sign out"
+  },
+  "chrome": {
+    "crumb": "my cab"
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Kyiv Debate Club: sign-ups open for tonight 18:30. <a href=\"#\">Register</a>"
+    },
+    {
+      "type": "section",
+      "title": "My clubs"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "mut::member",
+          "mut::session tonight, sign-ups open"
+        ],
+        [
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "mut::head",
+          "mut::no session planned"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "My sessions"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "<a href=\"#\">2 Oct — Thursday practice</a>",
+          "mut::Kyiv Debate Club · speaker",
+          "mut::<b>won</b>"
+        ],
+        [
+          "<a href=\"#\">25 Sep — Open night</a>",
+          "mut::Kyiv Debate Club · judge",
+          "mut::judged"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "profile lives in the sidenav bottom (name → /account, sign out) — this cabinet IS your page; no /me anywhere."
+    }
+  ]
+}

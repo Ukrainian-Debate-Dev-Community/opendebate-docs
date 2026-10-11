@@ -1,0 +1,60 @@
+{
+  "id": "own-sess-signup",
+  "title": "session @ registration — embedded auto-allocator",
+  "column": "owner",
+  "order": 30,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">M9</span>",
+  "api": [
+    "POST rounds/:id/rooms on Start"
+  ],
+  "m8b": true,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice · 9 spk, 2 judges",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "share: <span class=\"cpy\">/r/328333f6</span> copy — guests' links emailed automatically"
+    },
+    {
+      "type": "section",
+      "title": "Allocation — live, automatic (9 spk + 2 judges → 2 rooms? no: 1 room + bench; >8+judge → 2nd room auto)"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Anna · Bohdan",
+          "sd oo::Daryna · Olesia",
+          "sd cg::Hlib · Marko",
+          "sd co::Taras, iron",
+          "mut::judge Petro"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "the dnd allocator IS this table — drag to adjust, auto-updates as people register; add by hand (member dropdown or guest name) · remove per row. NO \"Create rooms\", NO \"+ room\", no tray banner. <b>Start session</b> = closes public registration, rooms become real; owner can still add/edit after."
+    }
+  ]
+}

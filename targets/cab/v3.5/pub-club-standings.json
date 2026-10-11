@@ -1,0 +1,78 @@
+{
+  "id": "pub-club-standings",
+  "title": "/c/:club/standings/:tab — one session's standings",
+  "column": "public",
+  "order": 11,
+  "path": "GET /c/:club/standings/:tab",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Standings",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Adjudicators"
+      ],
+      "active": "Speakers"
+    },
+    {
+      "type": "section",
+      "title": "Speakers"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice</b>, Thu 2 Oct, Kyiv Debate Club (latest finished)",
+        "<span class=\"mut\">earlier:</span> <a href=\"#\">Open round, Thu 25 Sep</a>"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Speaker",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Olena Kovalenko",
+          "num::104"
+        ],
+        [
+          "rk::2",
+          "Taras Shevchuk",
+          "num::88.8"
+        ],
+        [
+          "rk::3",
+          "Daryna Lysenko",
+          "num::83.6"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Defaults to the club's latest finished session; <code>?session=uuid</code> walks earlier finished ones. Engine standings verbatim; an iron's second speech counts for the team only, never in the speaker table (engine #89). <b>Private club</b>: members pass; a guest or user who played the shown session keeps that session; anyone else — signed out → /signin, signed in → 403."
+    }
+  ],
+  "api": [
+    "GET events/:id/standings/calculated/*",
+    "GET events/:id/stats/adjudicators"
+  ]
+}

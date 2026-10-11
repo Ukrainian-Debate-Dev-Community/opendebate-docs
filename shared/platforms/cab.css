@@ -1,0 +1,89 @@
+/* cab pages inside their frames: the rules of platform/apps/cab/assets/css/app.css
+   (sidenav, chrome bar segments, tables, banners, cards, tab row, BP side stripes)
+   mapped onto the spec markup and scaled to a 720px frame. Colours are the app's
+   tokens, so light and dark follow it. Keep in step with app.css by hand. */
+.pf-cab .frame { background:var(--bg); color:var(--ink); }
+.pf-cab .frame .mut { color:var(--muted); }
+.pf-cab .frame code { font-family:ui-monospace,Menlo,monospace; font-size:.92em; }
+
+/* shell: sidenav runs the full height, main column beside it */
+.pf-cab .shell { display:flex; align-items:stretch; min-height:220px; }
+.pf-cab .nav { width:150px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--line);
+               padding:8px 0 0; font-size:.74rem; display:flex; flex-direction:column; }
+.pf-cab .nav .cp { font-family:"Cedarville Cursive",cursive; font-size:1.35rem; line-height:1.2;
+                   color:var(--brand); padding:2px 14px 6px; }
+.pf-cab .nav .sc { font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+                   font-weight:700; padding:8px 14px 3px; }
+.pf-cab .nav a { display:block; padding:5px 14px; color:var(--ink); text-decoration:none; font-weight:550; }
+.pf-cab .nav a.on { background:var(--brand-50); color:var(--brand-700); font-weight:700;
+                    border-left:3px solid var(--brand); padding-left:11px; }
+.pf-cab .nav .pf { margin-top:auto; border-top:1px solid var(--line); padding:8px 14px;
+                   font-size:.68rem; color:var(--muted); font-weight:600; }
+.pf-cab .mainc { flex:1; min-width:0; display:flex; flex-direction:column; }
+
+/* chrome / action bar: thin strip, actions are flush segments of it */
+.pf-cab .chrome { display:flex; align-items:stretch; height:30px; background:var(--surface);
+                  font-size:.74rem; border-bottom:1px solid var(--line); }
+.pf-cab .chrome .cr { display:flex; align-items:center; gap:6px; padding:0 12px; font-weight:600;
+                      min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pf-cab .chrome .cr .st { color:var(--muted); font-weight:500; }
+.pf-cab .chrome .seg { margin-left:auto; display:flex; align-items:stretch; border-left:1px solid var(--line); }
+.pf-cab .chrome .seg > * { display:flex; align-items:center; padding:0 12px; font-weight:650; white-space:nowrap;
+                           border-right:1px solid var(--line); background:var(--surface); color:var(--ink);
+                           text-decoration:none; }
+.pf-cab .chrome .seg > *:last-child { border-right:none; }
+.pf-cab .chrome .seg > *:hover { background:var(--brand-50); }
+.pf-cab .chrome .seg .go { background:var(--gold); color:var(--gold-ink); }
+.pf-cab .chrome .seg .go:hover { background:var(--gold-hover); }
+.pf-cab .chrome .seg .qt { color:var(--muted); font-weight:550; }
+
+/* tab row under the chrome (app .selrow) */
+.pf-cab .tabs { display:flex; align-items:stretch; height:26px; background:var(--surface);
+                border-bottom:1px solid var(--line); font-size:.7rem; }
+.pf-cab .tabs a { display:flex; align-items:center; padding:0 12px; color:var(--muted); font-weight:650;
+                  text-decoration:none; border-right:1px solid var(--line); }
+.pf-cab .tabs a.on { background:var(--brand-50); color:var(--brand-700); border-bottom:2px solid var(--brand); }
+
+/* page body (app .pbody) */
+.pf-cab .body { padding:12px 12px 14px; display:flex; flex-direction:column; gap:10px; font-size:.78rem; }
+.pf-cab .body a { color:var(--brand); font-weight:650; text-decoration:none; }
+.pf-cab .sec { font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+               font-weight:700; margin:2px 2px -4px; }
+.pf-cab .card { border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; }
+.pf-cab .card .pad { padding:9px 12px; }
+.pf-cab .card .pad p { color:var(--muted); font-size:.74rem; margin-top:2px; }
+.pf-cab .card .pad p b { color:var(--ink); }
+
+/* table / standings */
+.pf-cab table.t { width:100%; border-collapse:collapse; font-size:.74rem; }
+.pf-cab .t th { text-align:left; font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+                color:var(--muted); padding:5px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+.pf-cab .t td { padding:5px 10px; border-bottom:1px solid var(--line); }
+.pf-cab .t tbody tr:last-child td { border-bottom:none; }
+.pf-cab .t tr.me td { background:var(--me-tint); }
+.pf-cab .t td.rk { color:var(--brand); font-weight:750; width:30px; }
+.pf-cab .t td.num { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; }
+.pf-cab .t td.code { font-family:ui-monospace,Menlo,monospace; font-size:.68rem; color:var(--brand-700); }
+.pf-cab .t td.st { color:var(--muted); font-size:.7rem; }
+.pf-cab .t td.mut { color:var(--muted); } .pf-cab .t td.mut b { color:var(--ink); }
+.pf-cab .t td a { color:var(--brand); font-weight:650; text-decoration:none; }
+.pf-cab .t td.sd { border-left:3px solid; font-size:.72rem; }
+.pf-cab .t td.og { border-left-color:var(--og); } .pf-cab .t td.oo { border-left-color:var(--oo); }
+.pf-cab .t td.cg { border-left-color:var(--cg); } .pf-cab .t td.co { border-left-color:var(--co); }
+
+/* banner (app .banner.info), the gold one for a person's own next step */
+.pf-cab .bn { background:var(--brand-50); color:var(--brand-700); border-radius:var(--r);
+              padding:8px 12px; font-size:.76rem; }
+.pf-cab .bn a { color:var(--brand); font-weight:700; text-decoration:none; }
+.pf-cab .bn.gd { background:var(--co-bg); color:var(--co-ink); }
+
+/* copy affordance (app .copy) */
+.pf-cab .cpy { display:inline-block; border:1px solid var(--line); background:var(--surface); border-radius:5px;
+               font-size:.62rem; font-weight:700; color:var(--brand); padding:1px 8px; white-space:nowrap; }
+
+/* a design note under the page: what the frame cannot show */
+.pf-cab .anno { font-size:.7rem; color:var(--muted); line-height:1.5; padding:8px 11px 9px;
+                border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-cab .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+                        text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-cab .anno b { color:var(--ink); }

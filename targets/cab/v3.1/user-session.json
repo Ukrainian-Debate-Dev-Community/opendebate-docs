@@ -1,0 +1,41 @@
+{
+  "id": "user-session",
+  "title": "session page (signed-in)",
+  "column": "user",
+  "order": 30,
+  "path": "GET /c/:club/s/:sess",
+  "api": [
+    "POST participants on register"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice",
+    "segs": [
+      {
+        "label": "Register → /r/:sess (prefilled)",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "Register goes to /r/:sess prefilled → <b>\"you're registered\"</b> notice back here.",
+        "cancel own registration while sign-ups are open — one action, this page only"
+      ]
+    }
+  ]
+}

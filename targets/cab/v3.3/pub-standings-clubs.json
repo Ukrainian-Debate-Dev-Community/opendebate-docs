@@ -1,0 +1,68 @@
+{
+  "id": "pub-standings-clubs",
+  "title": "/standings/clubs — plain counts",
+  "column": "public",
+  "order": 23,
+  "path": "GET /standings/clubs",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Clubs"
+    },
+    {
+      "type": "section",
+      "title": "Clubs — plain counts only"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Club",
+        "City",
+        "Members",
+        "Sessions",
+        "Rooms"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "num::14",
+          "num::12",
+          "num::19"
+        ],
+        [
+          "rk::2",
+          "<a href=\"#\">Lviv Debaters</a>",
+          "Lviv",
+          "num::9",
+          "num::7",
+          "num::8"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Counts only, from cab's records (rooms_count per session) — no invented scores. Private clubs are left out. Global only: a club's own standings have no Clubs tab."
+    }
+  ]
+}

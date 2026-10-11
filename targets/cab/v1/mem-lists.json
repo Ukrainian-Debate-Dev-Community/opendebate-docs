@@ -1,0 +1,67 @@
+{
+  "id": "mem-lists",
+  "title": "sessions + members lists",
+  "column": "member",
+  "order": 40,
+  "path": "GET /c/:club/member/sessions · …/members",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Sessions",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "sessions · members"
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Previous sessions — progress"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "<a href=\"#\">Thursday practice</a>",
+          "mut::2 Oct",
+          "mut::won by Anna &amp; Bohdan"
+        ],
+        [
+          "<a href=\"#\">Open night</a>",
+          "mut::25 Sep",
+          "mut::won by Daryna &amp; Olesia"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Members"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::1",
+          "Anna Kovalenko",
+          "mut::22 played · 14 wins · 64%"
+        ],
+        [
+          "rk::2",
+          "Bohdan Shevchenko",
+          "mut::19 played · 11 wins · 58%"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "member path: no Open new session; any session row opens that session's page in your role."
+    }
+  ]
+}

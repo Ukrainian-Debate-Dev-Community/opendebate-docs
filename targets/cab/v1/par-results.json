@@ -1,0 +1,55 @@
+{
+  "id": "par-results",
+  "title": "after: results",
+  "column": "participant",
+  "order": 30,
+  "path": "GET /c/:club/s/:sess (finished)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice <span class=\"st\">· finished</span>"
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "won by <b>Anna &amp; Bohdan</b>"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Taras &amp; Yuri",
+          "sd oo::Lera &amp; Ira",
+          "sd cg::Max &amp; Oles",
+          "sd co::Nina, iron",
+          "mut::Petro"
+        ],
+        [
+          "rk::R2",
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Iryna &amp; Sofia",
+          "mut::Nadia"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "done = results for everyone; winner from confirmed ballots."
+    }
+  ]
+}

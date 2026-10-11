@@ -1,0 +1,40 @@
+{
+  "id": "own-members",
+  "title": "members + requests (unchanged)",
+  "column": "owner",
+  "order": 20,
+  "path": "GET /c/:club/owner/members",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv DC",
+    "active": "Members",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "members · 24 · 1 request"
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "demo-nina",
+          "mut::“I debated at school… · @nina_tg”",
+          "<a href=\"#\">approve</a> <a href=\"#\">decline</a>"
+        ],
+        [
+          "Bohdan Shevchenko",
+          "mut::member · Apr 2026",
+          "<a href=\"#\">revoke</a>"
+        ]
+      ]
+    }
+  ]
+}

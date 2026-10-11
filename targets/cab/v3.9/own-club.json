@@ -1,0 +1,90 @@
+{
+  "id": "own-club",
+  "title": "/c/:club/owner — edit club, open session",
+  "column": "owner",
+  "order": 1,
+  "path": "GET /c/:club/owner",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Club",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Edit",
+    "segs": [
+      {
+        "label": "View as public",
+        "kind": "quiet"
+      },
+      {
+        "label": "Open new session",
+        "kind": "gold"
+      },
+      {
+        "label": "Save"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Club profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Exactly what visitors read on the club page.</p>",
+        "Club name, City, Meetings, About the club, Contacts",
+        "Format: BP | APF | other <span class=\"mut\">— tick all that apply</span>",
+        "Language: Ukrainian | English | other <span class=\"mut\">— tick all that apply</span>",
+        "Audience: school students | university students | open to all <span class=\"mut\">— tick all that apply</span>",
+        "Standings: public | members only <span class=\"mut\">— Members only also keeps the club out of the global standings. Everything else stays public.</span>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Club Sessions"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "Status"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">Thursday practice</a> <span class=\"mut\">2 Oct 2026</span>",
+          "st::done — won by Anna &amp; Bohdan (R1), Sofiia &amp; Yurii (R2)"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Open a session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Registration opens as soon as you open the session.</p>",
+        "Session name <span class=\"mut\">— defaults to the date</span>",
+        "Date and start time <span class=\"mut\">— Optional — when the session is planned to start, in your time zone.</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Gold moves: <b>Open new session</b> while no session is live; with a live session Save takes gold and a banner \"The current session lives under Rooms. Open\" appears. The typed time is converted to UTC in the browser. Renaming the club renames its engine organisation too: the engine is told first, and if it refuses, the old name stays in cab as well. Format, language and audience are part of the club profile: the club head keeps them here, the club page and the directory show them, and the public club API carries them for any service that lists clubs."
+    }
+  ],
+  "api": [
+    "POST events/:org",
+    "POST events/:id/rounds",
+    "PUT organisations/:id (on a rename)"
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "user-my-page",
+  "title": "/me — engine stats + history",
+  "column": "user",
+  "order": 2,
+  "path": "GET /me",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": "My page",
+    "profile": "anna, sign out"
+  },
+  "chrome": {
+    "crumb": "my page",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Anna Kovalenko</b> (anna)"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Stats"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Ballots",
+        "Ranked debates",
+        "Avg score",
+        "Highest",
+        "Lowest",
+        "1st places",
+        "Win rate"
+      ],
+      "rows": [
+        [
+          "22",
+          "22",
+          "77",
+          "84",
+          "70",
+          "8",
+          "36%"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Engine statistics, shown as reported — nothing is recomputed.</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "History"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Session",
+        "As",
+        "Result"
+      ],
+      "rows": [
+        [
+          "<a href=\"#\">2 Oct 2026</a> <span class=\"mut\">Kyiv Debate Club</span>",
+          "speaker",
+          "st::<b>won</b>"
+        ],
+        [
+          "<a href=\"#\">25 Sep 2026</a> <span class=\"mut\">Kyiv Debate Club</span>",
+          "judge",
+          "st::judged"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Two engine reads: <code>users/:id/stats</code> and ONE <code>users/history</code> — no per-session walk."
+    }
+  ],
+  "api": [
+    "GET users/:id/stats",
+    "GET users/history"
+  ]
+}

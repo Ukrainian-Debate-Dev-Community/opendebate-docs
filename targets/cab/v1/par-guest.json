@@ -1,0 +1,43 @@
+{
+  "id": "par-guest",
+  "title": "guest landing (personal link)",
+  "column": "participant",
+  "order": 20,
+  "path": "GET /l/:code",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Rooms"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "guest · Greta"
+  },
+  "chrome": {
+    "crumb": "Thursday practice · you: R1"
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Signed in through your personal link — it's your access to tonight; anyone with it acts as you."
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Taras &amp; Yuri",
+          "sd oo::Lera &amp; Ira",
+          "sd cg::Max &amp; Oles",
+          "sd co::<b>Greta</b>, iron",
+          "mut::Petro"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "the guest sees ONLY their session/room view — no club-local pages."
+    }
+  ]
+}

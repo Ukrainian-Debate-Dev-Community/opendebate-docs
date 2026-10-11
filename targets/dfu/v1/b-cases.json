@@ -1,0 +1,92 @@
+{
+  "id": "b-cases",
+  "title": "/cases, every case",
+  "column": "board",
+  "order": 15,
+  "path": "GET /cases",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Cases",
+    "profile": "<span class=\"who\">Karyna Kuznietsova</span>President<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Cases",
+    "segs": [
+      {
+        "label": "Open a case",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Open (4)",
+        "Waiting (2)",
+        "Closed (31)"
+      ],
+      "active": "Open (4)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Case",
+        "Subject",
+        "Responsible",
+        "Since",
+        ""
+      ],
+      "rows": [
+        [
+          "code::C-2026-08",
+          "Annual general meeting 2026",
+          "Polina Sorokolit",
+          "1 Oct",
+          "<span class=\"chip open\">Open</span>"
+        ],
+        [
+          "code::C-2026-07",
+          "Admission of the club Chernivtsi Debaty",
+          "Anton Yevtushok",
+          "28 Sep",
+          "<span class=\"chip open\">Open</span>"
+        ],
+        [
+          "code::C-2026-09",
+          "Phoenix Cup accreditation",
+          "Anton Yevtushok",
+          "10 Oct",
+          "<span class=\"chip open\">Open</span>"
+        ],
+        [
+          "code::C-2026-06",
+          "Partnership with the Ostroh Academy",
+          "Olha Polishchuk",
+          "15 Sep",
+          "<span class=\"chip open\">Open</span>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The board sees every case, assigns a responsible person and moves cases between Open, Waiting and Closed. Subjects and assignments are illustrative."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

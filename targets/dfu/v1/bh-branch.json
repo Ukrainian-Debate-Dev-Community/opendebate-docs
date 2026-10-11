@@ -1,0 +1,80 @@
+{
+  "id": "bh-branch",
+  "title": "/branches/:slug, my branch",
+  "column": "branch-head",
+  "order": 13,
+  "path": "GET /branches/:slug",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators",
+      "# Kyiv branch",
+      "Branch"
+    ],
+    "active": "Branch",
+    "profile": "<span class=\"who\">Kateryna Omelian</span>Kyiv branch head<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Branches / Kyiv",
+    "segs": [
+      {
+        "label": "Submit a document",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "For the Kyiv branch"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"rows\"><div class=\"rw unread\"><span class=\"ico\">PDF</span><div class=\"bd\"><span class=\"jnr\">IN-2026-043</span> <span class=\"tt\">Venue agreement for Kyiv Open 2026</span><span class=\"sub\">Secretariat, today 09:05</span></div><a href=\"#\">Open</a></div></div>"
+    },
+    {
+      "type": "section",
+      "title": "Members of the branch (2 of 14 shown)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Contact",
+        "Since",
+        "Status"
+      ],
+      "rows": [
+        [
+          "Taras Melnyk",
+          "@taras_m",
+          "2024",
+          "active"
+        ],
+        [
+          "Olena Bilyk",
+          "@olena_b",
+          "2026",
+          "candidate"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "A branch head sees their branch's members with contacts and the documents addressed to the branch, and sends documents to the Secretariat for registration. Names are illustrative."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

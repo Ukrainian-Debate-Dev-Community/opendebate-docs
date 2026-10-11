@@ -1,0 +1,53 @@
+{
+  "id": "mem-private",
+  "title": "/c/:club/members — a private club, from inside",
+  "column": "member",
+  "order": 1,
+  "path": "GET /c/:club/members",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Members",
+    "profile": "anna, sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › members",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Members (14)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Role",
+        "Since"
+      ],
+      "rows": [
+        [
+          "petro <span class=\"mut\">Petro</span>",
+          "head",
+          "1 Sep 2026"
+        ],
+        [
+          "anna <span class=\"mut\">Anna Kovalenko</span>",
+          "member",
+          "3 Sep 2026"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "What membership adds: when the owner sets standings to members only, the roster and the club's standings stay open to members (and to whoever played the shown session), while outsiders lose the sidenav item."
+    }
+  ]
+}

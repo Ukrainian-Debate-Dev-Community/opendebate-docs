@@ -1,0 +1,117 @@
+{
+  "id": "own-sess-signup",
+  "title": "session @ sign-ups — the live allocator",
+  "column": "owner",
+  "order": 10,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "petro · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › club › Thursday practice — sign-ups open",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Share to register without an account <span class=\"cpy\">cab.uadebate.com/r/328333f6</span> copy"
+    },
+    {
+      "type": "section",
+      "title": "Guest registrations · 1"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Role",
+        "Personal link",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Olena <span class=\"mut\">guest · guest-x7k2</span>",
+          "speaker",
+          "code::…/l/x7k2…",
+          "copy",
+          "<a href=\"#\">revoke</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Issue a link by hand"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Guest name · Signs up to: speak | judge → <b>Create link</b>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Signed up · 13 speakers, 1 judge"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Who",
+        "Role",
+        ""
+      ],
+      "rows": [
+        [
+          "Anna",
+          "speaker",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Olena <span class=\"mut\">guest — personal link above</span>",
+          "speaker",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Add a participant"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Member · Signs up to → <b>Add</b>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Allocation — 2 room(s), count automatic"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><div style=\"border:1px dashed var(--line);border-radius:8px;padding:6px;margin-bottom:6px;font-size:11px;\"><b>Unallocated · 3</b> &nbsp; <span class=\"cpy\">Marko</span> <span class=\"cpy\">Taras</span> <span class=\"cpy\">Iryna (judge)</span></div><table class=\"t\"><tr><th></th><th>OG</th><th>OO</th><th>CG</th><th>CO</th><th>Judge</th><th></th></tr><tr><td class=\"rk\">R1</td><td class=\"sd og\">Anna · Bohdan</td><td class=\"sd oo\">Daryna · Olesia</td><td class=\"sd cg\">Hlib · ▢</td><td class=\"sd co\">▢ ▢</td><td>Petro</td><td class=\"st\">3 of 8 seats empty</td></tr><tr><td class=\"rk\">R2</td><td class=\"sd og\">▢ ▢</td><td class=\"sd oo\">▢ ▢</td><td class=\"sd cg\">▢ ▢</td><td class=\"sd co\">▢ ▢</td><td>▢</td><td class=\"st\">empty</td></tr></table><p class=\"mut\">Drag chips into slots; drop on a taken slot to swap; drag back to the tray to unassign. A team with one speaker becomes an iron.</p></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Room COUNT = ceil(speakers ÷ 8), at least 1 — 13 speakers → 2 rooms. <b>Nobody is placed automatically.</b> The Allocator hook only reports drops (<code>place {id, slot}</code> / <code>unplace {id}</code>); the server keeps the draft (<code>draft_allocation</code>) and re-renders — every open owner tab sees the same draft. <b>Start session</b> closes registration and turns the draft into engine rooms."
+    }
+  ],
+  "api": [
+    "POST rounds/:id/rooms on Start"
+  ]
+}

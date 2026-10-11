@@ -1,0 +1,68 @@
+{
+  "id": "pub-standings-teams",
+  "title": "/standings/teams — global, latest session",
+  "column": "public",
+  "order": 20,
+  "path": "GET /standings/teams",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Teams"
+    },
+    {
+      "type": "section",
+      "title": "Teams"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice</b>, 2 Oct, Kyiv Debate Club"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Team",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Team Anna",
+          "num::3"
+        ],
+        [
+          "rk::2",
+          "Team Bohdan",
+          "num::2"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Platform-wide scope = the latest finished session of any public, non-archived club, read from cab's records. Speakers and Judges tabs render the same card + table (Speaker/Points; Judge/Rooms judged/Avg feedback)."
+    }
+  ],
+  "api": [
+    "GET events/:id/standings/calculated/teams"
+  ]
+}

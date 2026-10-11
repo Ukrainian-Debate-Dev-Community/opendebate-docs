@@ -1,0 +1,75 @@
+{
+  "id": "own-members",
+  "title": "/c/:club/owner/members — requests + roster",
+  "column": "owner",
+  "order": 2,
+  "path": "GET /c/:club/owner/members",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Members",
+    "profile": "petro, sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › members",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Join requests (1)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Who",
+        "About them",
+        "Requested",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "olena <span class=\"mut\">signed-in user</span>",
+          "First year, debated at school <span class=\"mut\">contact: t.me/olena</span>",
+          "7 Oct 2026",
+          "<a href=\"#\">approve</a>",
+          "<a href=\"#\">decline</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Members (14)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Role",
+        "Since",
+        ""
+      ],
+      "rows": [
+        [
+          "petro",
+          "head",
+          "1 Sep 2026",
+          ""
+        ],
+        [
+          "anna",
+          "member",
+          "3 Sep 2026",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    }
+  ]
+}

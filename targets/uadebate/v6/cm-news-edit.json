@@ -1,0 +1,18 @@
+{
+  "id": "cm-news-edit",
+  "title": "/manage/news/:id/edit (article editor)",
+  "column": "content-manager",
+  "order": 2,
+  "path": "GET /manage/news/:id/edit",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"ua\"><header class=\"ua-top\"><a class=\"ua-brand wordmark\" href=\"#\">UAdebates</a><nav class=\"ua-nav\"><a href=\"#\">Home</a><a class=\"on\" href=\"#\">News</a><a href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></nav><div class=\"ua-right\"><span class=\"ua-lang\"><b>EN</b> | <a href=\"#\">UA</a></span><a class=\"ua-btn ua-btn--line ua-btn--sm\" href=\"#\">Cabinet</a></div></header><div class=\"ua-cmbar\"><span class=\"ua-cmrole\">Content manager</span><a href=\"#\">Overview</a><a class=\"on\" href=\"#\">News</a><a href=\"#\">Calendar</a><span class=\"ua-cmme\"><span class=\"ua-av\">OK</span>Olena Koval</span><a class=\"ua-cmlink\" href=\"#\">View site</a><a class=\"ua-cmlink\" href=\"#\">Sign out</a></div><main class=\"ua-main\"><div class=\"ua-cmd\"><div class=\"cr\"><a href=\"#\">News</a> / How to prepare for your first BP tournament</div><div class=\"seg\"><a class=\"\" href=\"#\">Preview</a><a class=\"\" href=\"#\">Save draft</a><a class=\"go\" href=\"#\">Publish</a></div></div><div class=\"form ua-card\"><div class=\"f-head\"><h3>Edit article</h3><p>Draft, edited 9 October 2026</p></div><div class=\"f-block\"><label class=\"q\">Title <span class=\"req\">*</span></label><input type=\"text\" value=\"How to prepare for your first BP tournament\"></div><div class=\"f-block\"><div class=\"half\"><div><label class=\"q\">Rubric</label><select><option>Tips</option></select></div><div><label class=\"q\">Publish at</label><input type=\"text\" value=\"12 October 2026, 10:00\"></div></div></div><div class=\"f-block\"><label class=\"q\">Cover</label><div class=\"ua-drop\">Drop an image here or <a href=\"#\">choose a file</a></div><div class=\"hint\">JPG or PNG, at least 1200 by 630 pixels</div></div><div class=\"f-block\"><label class=\"q\">Text <span class=\"req\">*</span></label><div class=\"ua-rte\"><div class=\"ua-rte-bar\"><b>B</b><i>I</i><span>Heading</span><span>Quote</span><span>Link</span></div><textarea rows=\"6\">A first British Parliamentary tournament means four teams of two speakers, seven minutes a speech and fifteen minutes of preparation. Here is what to do beforehand.</textarea></div></div><div class=\"f-block\"><label class=\"q\">On the home page</label><div class=\"opts\"><label><input type=\"checkbox\" checked> Show in the news block</label><label><input type=\"checkbox\"> Make it the announcement above the hero</label></div></div></div></main><footer class=\"ua-foot\"><div class=\"ua-foot-in ua-foot-in--3\"><div><a class=\"wordmark ua-foot-mark\" href=\"#\">UAdebates</a><p>Debate Federation of Ukraine</p><p>A debate community since 2011</p></div><div><b>Site</b><a href=\"#\">News</a><a href=\"#\">Calendar</a><a href=\"#\">Clubs</a><a href=\"#\">About</a></div><div><b>Platform</b><a href=\"#\">Cabinet (cab)</a><a href=\"#\">Privacy policy</a><a href=\"#\">Terms of use</a></div><div><b>Contact</b><a href=\"#\">ngo.dfu@uadebate.com</a><a href=\"#\">support@uadebate.com</a><a href=\"#\">t.me/fdu_ua</a></div></div></footer></div>"
+    },
+    {
+      "type": "note",
+      "text": "The command sits in the bar, as in cab: the form has no button of its own. Publish is the one gold action."
+    }
+  ]
+}

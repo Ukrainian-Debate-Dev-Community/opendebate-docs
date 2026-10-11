@@ -1,0 +1,53 @@
+{
+  "id": "pub-privacy",
+  "title": "/privacy — Privacy&Policy",
+  "column": "public",
+  "order": 6,
+  "path": "GET /privacy",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": null,
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "Privacy&amp;Policy",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "What cab stores"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Accounts:</b> username, display name and e-mail from the sign-in provider (GitHub today).",
+        "<b>Participation:</b> signups, draws, ballots and judges' scores.",
+        "<b>Guests:</b> the name entered and a personal link scoped to one session; leaving, or being removed by the head, deletes both."
+      ]
+    },
+    {
+      "type": "section",
+      "title": "What cab does not do"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "No analytics trackers, no advertising, no sale or transfer of data. One cookie: the session cookie."
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Your requests"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Export, correction or deletion — write to support@uadebate.com; answered within 30 days."
+      ]
+    }
+  ]
+}

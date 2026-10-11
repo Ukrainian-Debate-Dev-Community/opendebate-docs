@@ -1,0 +1,22 @@
+{
+  "public": {
+    "title": "1. Public (anonymous)",
+    "cond": "<b>uadebate.com, the federation's site, in English for now, in cab's look.</b> One header on every page: the UAdebates wordmark in Cedarville Cursive, Home, News, Calendar, Clubs, About, the language slot, Sign in and Cabinet, which leads to cab. One footer: the site pages, cab with its Policy and Terms, and the federation's real addresses (ngo.dfu@ and support@uadebate.com, Telegram). cab's tokens light and dark; at most one gold action per page; no middle dots, no arrows. The calendar is mostly tournaments and shows public events only. About carries the history ported from the Wix About page. Accounts live in cab: sign-in starts there."
+  },
+  "user": {
+    "title": "2. User (signed in)",
+    "cond": "<b>All public pages +</b> an identity from cab's sign-in: the header shows the person and keeps Cabinet, Sign in is gone. Nothing else changes, so only the home page is drawn."
+  },
+  "content-manager": {
+    "title": "3. Content manager",
+    "cond": "<b>All user pages +</b> Edit site: news, the calendar and the club directory. A role on uadebate.com only, granted by an admin: not a cab admin, and cab roles do not grant it. The calendar shows private events too, each with a Public / Private switch; private events never leave this column. Forms follow cab's: the command sits in the bar, one gold action."
+  },
+  "admin": {
+    "title": "4. Admin",
+    "cond": "<b>All content-manager pages +</b> Roles: grant and revoke the content-manager role for cab accounts. cab roles are never changed from here."
+  },
+  "phoenix-api": {
+    "title": "5. Phoenix API, /api/v1 (uadebate.com)",
+    "cond": "<b>Every page verb above maps to one of these</b>, with the same ladder: public reads for everyone, writes for content managers, roles for admins. The site keeps its own content (news, events, directory entries, roles); people and clubs stay cab's. Green = the cab call behind it."
+  }
+}

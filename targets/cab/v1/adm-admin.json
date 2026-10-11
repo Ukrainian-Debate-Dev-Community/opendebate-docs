@@ -1,0 +1,52 @@
+{
+  "id": "adm-admin",
+  "title": "/admin",
+  "column": "admin",
+  "order": 10,
+  "path": "GET /admin · POST /admin/clubs · /admin/head · /admin/clubs/:uuid/archive",
+  "api": [
+    "POST organisations · owner swap"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "Admin"
+    ],
+    "active": "Admin",
+    "profile": "merv1n34k · sign out"
+  },
+  "chrome": {
+    "crumb": "admin",
+    "segs": [
+      {
+        "label": "Create club",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Kyiv Debate Club",
+          "mut::Kyiv · head Anna K.",
+          "<a href=\"#\">change head</a> <a href=\"#\">archive</a>"
+        ],
+        [
+          "Lviv Debate Society",
+          "mut::Lviv · head Ostap B.",
+          "<a href=\"#\">change head</a> <a href=\"#\">archive</a>"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "create: name · city · university · head (dropdown) → <b>Create</b>"
+      ]
+    }
+  ]
+}

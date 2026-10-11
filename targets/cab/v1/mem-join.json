@@ -1,0 +1,37 @@
+{
+  "id": "mem-join",
+  "title": "join request form (standalone page)",
+  "column": "member",
+  "order": 20,
+  "path": "GET/POST /c/:club/join",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings"
+    ],
+    "context": "Lviv DS",
+    "active": "Club",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "join Lviv Debate Society",
+    "segs": [
+      {
+        "label": "Send request",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "about me + contact — both REQUIRED fields",
+        "the head reads the answers in Requests — never a bare button"
+      ]
+    }
+  ]
+}

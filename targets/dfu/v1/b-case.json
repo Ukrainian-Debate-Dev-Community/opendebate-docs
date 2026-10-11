@@ -1,0 +1,58 @@
+{
+  "id": "b-case",
+  "title": "/cases/:no, run a case",
+  "column": "board",
+  "order": 16,
+  "path": "GET /cases/:no",
+  "nav": {
+    "items": [
+      "# Records",
+      "Inbox <span class=\"n\">3</span>",
+      "Cases",
+      "Votes <span class=\"n\">1</span>",
+      "Announcements",
+      "Documents",
+      "# Organisation",
+      "Members",
+      "Branches",
+      "Leadership",
+      "Adjudicators"
+    ],
+    "active": "Cases",
+    "profile": "<span class=\"who\">Karyna Kuznietsova</span>President<br><a href=\"#\">Cabinet</a><br><a href=\"#\">uadebate.com</a><br>Sign out"
+  },
+  "chrome": {
+    "crumb": "Cases / C-2026-09",
+    "segs": [
+      {
+        "label": "Attach a document"
+      },
+      {
+        "label": "Start a vote",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><span class=\"jnr\">C-2026-09</span> <span class=\"chip open\">Open</span><h4 style=\"font-size:.9rem;margin:5px 0 8px\">Phoenix Cup accreditation</h4><dl class=\"kv\"><dt>Responsible</dt><dd>Anton Yevtushok <a href=\"#\">change</a></dd><dt>Vote</dt><dd><span class=\"jnr\">D-2026-12</span> board, 3 of 5 signed</dd><dt>Status</dt><dd><span class=\"pick\"><b class=\"on\">Open</b><b>Waiting</b><b>Closed</b></span></dd></dl></div></div>"
+    },
+    {
+      "type": "section",
+      "title": "Documents in order"
+    },
+    {
+      "type": "raw",
+      "html": "<ul class=\"tl\"><li><span class=\"jnr\">IN-2026-040</span> Request to accredit the Phoenix Cup<span class=\"sub\">Kharkiv branch, 10 October</span></li><li><span class=\"jnr\">IN-2026-044</span> Opinion of the AKS on the adjudicator core<span class=\"sub\">AKS, 11 October</span></li></ul>"
+    },
+    {
+      "type": "note",
+      "text": "Closing a case asks for a closing note, which becomes the case's last document. A vote started from a case is linked both ways."
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"foot\">Debate Federation of Ukraine (NGO). dfu.uadebate.com is for members of the organisation only.</div>"
+    }
+  ]
+}

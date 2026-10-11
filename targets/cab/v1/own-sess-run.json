@@ -1,0 +1,52 @@
+{
+  "id": "own-sess-run",
+  "title": "session live — owner monitors only",
+  "column": "owner",
+  "order": 40,
+  "path": "GET /c/:club/owner/s/:sess (live)",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice <span class=\"st\">· running</span>",
+    "segs": [
+      {
+        "label": "Finish session",
+        "kind": "gold"
+      },
+      {
+        "label": "Cancel session",
+        "kind": "quiet"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "mut::motion released 18:42 · <b>debating</b>"
+        ],
+        [
+          "rk::R2",
+          "mut::ballot in"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "MONITOR only — written-out status words, NO play actions: set/release motion, edit room, ballot and finish room belong to each room's judge."
+    }
+  ]
+}

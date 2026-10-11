@@ -1,0 +1,68 @@
+{
+  "id": "pub-standings-clubs",
+  "title": "/standings/clubs — plain counts",
+  "column": "public",
+  "order": 53,
+  "path": "GET /standings/clubs",
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Clubs"
+    },
+    {
+      "type": "section",
+      "title": "Clubs — plain counts only"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Club",
+        "City",
+        "Members",
+        "Sessions",
+        "Rooms"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "<a href=\"#\">Kyiv Debate Club</a>",
+          "Kyiv",
+          "24",
+          "38",
+          "71"
+        ],
+        [
+          "rk::2",
+          "<a href=\"#\">Lviv Debate Society</a>",
+          "Lviv",
+          "17",
+          "21",
+          "39"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "plain counts (members, sessions, rooms) — no cab-side math."
+    }
+  ]
+}

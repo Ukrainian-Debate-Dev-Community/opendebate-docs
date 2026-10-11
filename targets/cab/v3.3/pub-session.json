@@ -1,0 +1,81 @@
+{
+  "id": "pub-session",
+  "title": "/c/:club/s/:sess — running: the rooms",
+  "column": "public",
+  "order": 31,
+  "path": "GET /c/:club/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "Sign in"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Thursday practice — running",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Registration is closed for this session."
+    },
+    {
+      "type": "section",
+      "title": "Session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Thursday practice</b>",
+        "9 Oct 2026"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Judge",
+        "Status"
+      ],
+      "rows": [
+        [
+          "rk::<a href=\"#\">R41</a>",
+          "sd og::Team Anna",
+          "sd oo::Team Daryna",
+          "sd cg::Team Hlib",
+          "sd co::Taras (iron)",
+          "Petro",
+          "st::motion set, debating — waiting for the ballot"
+        ],
+        [
+          "rk::<a href=\"#\">R42</a>",
+          "sd og::Team Olesia",
+          "sd oo::Team Marko",
+          "sd cg::—",
+          "sd co::—",
+          "Iryna",
+          "st::motion pending, waiting to start"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "A room IS its row — R# opens the room page. Status in words, never pills. LiveView: re-renders the moment anything in the session changes (PubSub topic <code>session:&lt;uuid&gt;</code>) — no refresh, no polling."
+    }
+  ]
+}

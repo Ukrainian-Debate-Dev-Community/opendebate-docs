@@ -1,0 +1,71 @@
+{
+  "id": "pub-standings-speakers",
+  "title": "/standings/speakers — engine output verbatim",
+  "column": "public",
+  "order": 50,
+  "path": "GET /standings/speakers",
+  "api": [
+    "GET events/:id/standings/calculated/speakers"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "sign in"
+  },
+  "chrome": {
+    "crumb": "standings"
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Judges",
+        "Clubs"
+      ],
+      "active": "Speakers"
+    },
+    {
+      "type": "section",
+      "title": "Speakers · session: Thursday practice, 2 Oct (latest finished)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Speaker",
+        "Club",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Anna Kovalenko",
+          "Kyiv Debate Club",
+          "101.53"
+        ],
+        [
+          "rk::2",
+          "Bohdan Shevchenko",
+          "Kyiv Debate Club",
+          "92.40"
+        ],
+        [
+          "rk::3",
+          "Ostap Bondar",
+          "Lviv Debate Society",
+          "83.60"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "engine calculated total_points for ONE session, verbatim; default = latest finished. No cab-side math."
+    }
+  ]
+}

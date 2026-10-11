@@ -1,0 +1,152 @@
+{
+  "id": "phoenix-api",
+  "kind": "swagger",
+  "column": "phoenix-api",
+  "order": 1,
+  "groups": [
+    {
+      "title": "public pages",
+      "rows": [
+        {
+          "id": "api-news",
+          "t": "GET /news",
+          "method": "GET",
+          "path": "/news",
+          "desc": "public, published articles; ?rubric, ?q, ?page"
+        },
+        {
+          "id": "api-news-get",
+          "t": "GET /news/:slug",
+          "method": "GET",
+          "path": "/news/:slug",
+          "desc": "public, one published article"
+        },
+        {
+          "id": "api-events",
+          "t": "GET /events",
+          "method": "GET",
+          "path": "/events",
+          "desc": "public, public events only; ?from, ?to, ?kind"
+        },
+        {
+          "id": "api-ics",
+          "t": "GET /calendar.ics",
+          "method": "GET",
+          "path": "/calendar.ics",
+          "desc": "public, the iCal feed of public events only"
+        },
+        {
+          "id": "api-clubs",
+          "t": "GET /clubs",
+          "method": "GET",
+          "path": "/clubs",
+          "desc": "public, published directory entries; ?city, ?format, ?language, ?for, ?q"
+        },
+        {
+          "id": "api-club-get",
+          "t": "GET /clubs/:slug",
+          "method": "GET",
+          "path": "/clubs/:slug",
+          "desc": "public, one entry plus its cab club's sessions and member count",
+          "api": "cab GET /api/v1/clubs/:uuid"
+        }
+      ]
+    },
+    {
+      "title": "content manager (404 without the role, signed out included)",
+      "rows": [
+        {
+          "id": "api-m-events",
+          "t": "GET /manage/events",
+          "method": "GET",
+          "path": "/manage/events",
+          "desc": "content manager, every event with its visibility, private ones too"
+        },
+        {
+          "id": "api-news-post",
+          "t": "POST /manage/news",
+          "method": "POST",
+          "path": "/manage/news",
+          "desc": "content manager, a new draft"
+        },
+        {
+          "id": "api-news-patch",
+          "t": "PATCH /manage/news/:id",
+          "method": "PATCH",
+          "path": "/manage/news/:id",
+          "desc": "content manager, edit a draft or an article"
+        },
+        {
+          "id": "api-news-publish",
+          "t": "POST /manage/news/:id/publish",
+          "method": "POST",
+          "path": "/manage/news/:id/publish",
+          "desc": "content manager, publish now or at a time"
+        },
+        {
+          "id": "api-event-post",
+          "t": "POST /manage/events",
+          "method": "POST",
+          "path": "/manage/events",
+          "desc": "content manager, a new event with its visibility"
+        },
+        {
+          "id": "api-event-patch",
+          "t": "PATCH /manage/events/:id",
+          "method": "PATCH",
+          "path": "/manage/events/:id",
+          "desc": "content manager, edit an event"
+        },
+        {
+          "id": "api-event-vis",
+          "t": "PATCH /manage/events/:id/visibility",
+          "method": "PATCH",
+          "path": "/manage/events/:id/visibility",
+          "desc": "content manager, public or private, from the calendar switch"
+        },
+        {
+          "id": "api-club-post",
+          "t": "POST /manage/clubs",
+          "method": "POST",
+          "path": "/manage/clubs",
+          "desc": "content manager, a new directory entry"
+        },
+        {
+          "id": "api-club-patch",
+          "t": "PATCH /manage/clubs/:id",
+          "method": "PATCH",
+          "path": "/manage/clubs/:id",
+          "desc": "content manager, edit, publish or unpublish an entry"
+        }
+      ]
+    },
+    {
+      "title": "admin (a cab admin; 404 for everyone else)",
+      "rows": [
+        {
+          "id": "api-people",
+          "t": "GET /manage/people",
+          "method": "GET",
+          "path": "/manage/people",
+          "desc": "admin, who holds the content-manager role",
+          "api": "cab is_admin"
+        },
+        {
+          "id": "api-people-post",
+          "t": "POST /manage/people",
+          "method": "POST",
+          "path": "/manage/people",
+          "desc": "admin, grant the role to a cab account",
+          "api": "cab account lookup"
+        },
+        {
+          "id": "api-people-del",
+          "t": "DEL /manage/people/:user_id",
+          "method": "DEL",
+          "path": "/manage/people/:user_id",
+          "desc": "admin, revoke the role"
+        }
+      ]
+    }
+  ]
+}

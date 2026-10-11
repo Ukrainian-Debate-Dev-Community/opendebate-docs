@@ -1,0 +1,68 @@
+{
+  "id": "pub-standings-teams",
+  "title": "/standings/teams — global, latest session",
+  "column": "public",
+  "order": 20,
+  "path": "GET /standings/teams",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": "Standings",
+    "profile": "Sign in ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Standings",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "tabs",
+      "items": [
+        "Teams",
+        "Speakers",
+        "Adjudicators",
+        "Clubs"
+      ],
+      "active": "Teams"
+    },
+    {
+      "type": "section",
+      "title": "Teams"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "session: <b>Thursday practice</b>, Thu 2 Oct, Kyiv Debate Club"
+      ]
+    },
+    {
+      "type": "table",
+      "head": [
+        "#",
+        "Team",
+        "Points"
+      ],
+      "rows": [
+        [
+          "rk::1",
+          "Anna &amp; Bohdan",
+          "num::3"
+        ],
+        [
+          "rk::2",
+          "Daryna &amp; Olesia",
+          "num::2"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Platform-wide scope = the latest finished session of any public, non-archived club, read from cab's records. Engine calculated standings verbatim. Speakers renders the same card + Speaker/Points. Empty: \"No results for this session yet.\"; no finished session: \"No finished session yet. Standings show the latest finished session.\""
+    }
+  ],
+  "api": [
+    "GET events/:id/standings/calculated/teams"
+  ]
+}

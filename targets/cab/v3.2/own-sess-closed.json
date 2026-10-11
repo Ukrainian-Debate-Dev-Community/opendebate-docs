@@ -1,0 +1,69 @@
+{
+  "id": "own-sess-closed",
+  "title": "session @ sign-ups closed",
+  "column": "owner",
+  "order": 11,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "petro · sign out"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › club › Thursday practice — sign-ups closed",
+    "segs": [
+      {
+        "label": "Make these rooms",
+        "kind": "gold"
+      },
+      {
+        "label": "Reopen sign-ups"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Signed up · 13 speakers, 1 judge"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Who",
+        "Role"
+      ],
+      "rows": [
+        [
+          "Anna",
+          "speaker"
+        ],
+        [
+          "Petro",
+          "adjudicator"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Allocation — 2 room(s), count automatic"
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><div style=\"border:1px dashed var(--line);border-radius:8px;padding:6px;margin-bottom:6px;font-size:11px;\"><b>Unallocated · 3</b> &nbsp; <span class=\"cpy\">Marko</span> <span class=\"cpy\">Taras</span> <span class=\"cpy\">Iryna (judge)</span></div><table class=\"t\"><tr><th></th><th>OG</th><th>OO</th><th>CG</th><th>CO</th><th>Judge</th><th></th></tr><tr><td class=\"rk\">R1</td><td class=\"sd og\">Anna · Bohdan</td><td class=\"sd oo\">Daryna · Olesia</td><td class=\"sd cg\">Hlib · ▢</td><td class=\"sd co\">▢ ▢</td><td>Petro</td><td class=\"st\">3 of 8 seats empty</td></tr><tr><td class=\"rk\">R2</td><td class=\"sd og\">▢ ▢</td><td class=\"sd oo\">▢ ▢</td><td class=\"sd cg\">▢ ▢</td><td class=\"sd co\">▢ ▢</td><td>▢</td><td class=\"st\">empty</td></tr></table><p class=\"mut\">Drag chips into slots; drop on a taken slot to swap; drag back to the tray to unassign. A team with one speaker becomes an iron.</p></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Same allocator, same server draft; the gold action turns it into rooms without reopening anything."
+    }
+  ],
+  "api": [
+    "POST rounds/:id/rooms"
+  ]
+}

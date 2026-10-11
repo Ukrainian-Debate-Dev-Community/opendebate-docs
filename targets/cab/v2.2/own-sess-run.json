@@ -1,0 +1,55 @@
+{
+  "id": "own-sess-run",
+  "title": "session live — owner full control",
+  "column": "owner",
+  "order": 40,
+  "path": "GET /c/:club/owner/s/:sess (live)",
+  "api": [
+    "motion publish · scores · edit ballot (resubmit replaces, re-confirms)"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice · live",
+    "segs": [
+      {
+        "label": "Reopen registration"
+      },
+      {
+        "label": "Finish session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        [
+          "rk::R1",
+          "mut::motion published 18:42 · <b>ballot confirmed</b>",
+          "<a href=\"#\">edit ballot</a>"
+        ],
+        [
+          "rk::R2",
+          "mut::motion draft (hidden)",
+          "<a href=\"#\">motion</a> <a href=\"#\">publish</a> <a href=\"#\">ballot</a>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "owner = full control on every room: set/publish motion, view/edit/confirm ballots, edit allocation — judge or not"
+    }
+  ]
+}

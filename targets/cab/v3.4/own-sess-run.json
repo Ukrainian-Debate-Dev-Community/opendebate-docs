@@ -1,0 +1,138 @@
+{
+  "id": "own-sess-run",
+  "title": "session @ running — rooms, motions, ballots",
+  "column": "owner",
+  "order": 13,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"m8b\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club › Club › Thursday practice — running",
+    "segs": [
+      {
+        "label": "Fill ballot — R1"
+      },
+      {
+        "label": "Delete rooms",
+        "kind": "quiet"
+      },
+      {
+        "label": "Finish session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Rooms"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "OG",
+        "OO",
+        "CG",
+        "CO",
+        "Adjudicator",
+        "Ballot",
+        ""
+      ],
+      "rows": [
+        [
+          "rk::R1",
+          "sd og::Anna &amp; Bohdan",
+          "sd oo::Daryna &amp; Olesia",
+          "sd cg::Hlib &amp; Marko",
+          "sd co::Taras (iron)",
+          "Oleksii Stroganov",
+          "st::debating — waiting for the ballot",
+          "<a href=\"#\">ballot</a>"
+        ],
+        [
+          "rk::R2",
+          "sd og::Kateryna &amp; Maksym",
+          "sd oo::Sofiia &amp; Yurii",
+          "sd cg::—",
+          "sd co::—",
+          "Iryna",
+          "st::waiting to start",
+          ""
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Motions"
+    },
+    {
+      "type": "table",
+      "head": [
+        "",
+        "Motion",
+        "Infoslide",
+        "Keyword"
+      ],
+      "rows": [
+        [
+          "rk::R1",
+          "<b>This House would ban homework</b>",
+          "Most clubs release motions 15 minutes before the debate.",
+          "education"
+        ],
+        [
+          "rk::R2",
+          "<span class=\"mut\">not published yet</span>",
+          "—",
+          "—"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "People (14 people)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Seat",
+        "Personal link",
+        ""
+      ],
+      "rows": [
+        [
+          "Anna <span class=\"mut\">member</span>",
+          "R1 OG",
+          "—",
+          ""
+        ],
+        [
+          "Marko <span class=\"mut\">signed-in user</span>",
+          "waiting",
+          "—",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Clicking anywhere on a room's row (both tables) opens the room page; the <b>ballot</b> link appears only after that room's motion is published, and reads <b>edit ballot</b> once a ballot is in (lock handling is internal). <b>Fill ballot — R#</b> shows when the head chairs a room. <b>Delete rooms</b> (rooms gone, registration open again) shows only while every room is waiting to start. Finish records the winners on the session row. A head opening the participant page of an unfinished session is sent here."
+    }
+  ],
+  "api": [
+    "PUT events/:id on Finish",
+    "DEL rooms/:id"
+  ]
+}

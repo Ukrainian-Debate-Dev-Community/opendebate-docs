@@ -1,0 +1,41 @@
+{
+  "id": "mem-session",
+  "title": "session (member) — register",
+  "column": "member",
+  "order": 30,
+  "path": "GET /c/:club/member/s/:sess",
+  "api": [
+    "POST participants on register"
+  ],
+  "m8b": false,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Sessions",
+      "Standings",
+      "Members"
+    ],
+    "context": "Kyiv DC",
+    "active": "Rooms",
+    "profile": "anna"
+  },
+  "chrome": {
+    "crumb": "Thursday practice <span class=\"st\">· sign-ups open</span>",
+    "segs": [
+      {
+        "label": "Register",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "lines": [
+        "speaker|judge pills → <b>Register</b>",
+        "cancel own registration while sign-ups are open; stage words live in the crumb"
+      ]
+    }
+  ]
+}

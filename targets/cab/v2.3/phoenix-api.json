@@ -1,0 +1,164 @@
+{
+  "id": "phoenix-api",
+  "column": "phoenix-api",
+  "kind": "swagger",
+  "order": 10,
+  "groups": [
+    {
+      "title": "clubs & membership",
+      "rows": [
+        {
+          "id": "api-club-get",
+          "t": "GET /clubs/:uuid",
+          "method": "GET",
+          "path": "/clubs/:uuid",
+          "m8b": false,
+          "desc": "public → {name, city, university, head, schedule, contacts, head_message, sessions:[{no, name, date, rooms, status done|live|open}]}",
+          "api": "GET organisations/:id events + rooms"
+        },
+        {
+          "id": "api-club-patch",
+          "t": "PATCH /clubs/:uuid",
+          "method": "PATCH",
+          "path": "/clubs/:uuid",
+          "m8b": false,
+          "desc": "head — profile incl. university + head_message (gateway)"
+        },
+        {
+          "id": "api-join-post",
+          "t": "POST join-requests",
+          "method": "POST",
+          "path": "/clubs/:uuid/join-requests",
+          "m8b": false,
+          "desc": "signed-in — {message, contact} required → 201 pending"
+        },
+        {
+          "id": "api-join-patch",
+          "t": "PATCH /join-requests/:id",
+          "method": "PATCH",
+          "m8b": false,
+          "path": "/join-requests/:id {action} · <span class=\"m del\" style=\"width:auto\">DEL</span> /clubs/:uuid/members/:uid",
+          "desc": "head — approve | decline · revoke"
+        }
+      ]
+    },
+    {
+      "title": "sessions — lifecycle v2",
+      "rows": [
+        {
+          "id": "api-sess-post",
+          "t": "POST sessions",
+          "method": "POST",
+          "path": "/clubs/:uuid/sessions",
+          "m8b": false,
+          "desc": "head — {name, scheduled_at?} → 201 {uuid, stage:\"signup\"}",
+          "api": "POST events + rounds"
+        },
+        {
+          "id": "api-sess-get",
+          "t": "GET /sessions/:uuid",
+          "method": "GET",
+          "path": "/sessions/:uuid",
+          "m8b": false,
+          "desc": "public → session + signups + LIVE ALLOCATION (auto, editable state) + rooms + winner; no stage tags in UI",
+          "api": "GET event + rounds + rooms + participants"
+        },
+        {
+          "id": "api-start",
+          "t": "POST start-session",
+          "method": "POST",
+          "m8b": true,
+          "path": "/sessions/:uuid/start <span class=\"m8b\">M9</span>",
+          "desc": "head — closes PUBLIC registration + creates rooms from the current allocator state (auto count; >8 spk + judge = 2nd room) → {stage:\"live\"}",
+          "api": "POST rounds/:id/rooms (temp teams)"
+        },
+        {
+          "id": "api-reopen-reg",
+          "t": "POST reopen-registration",
+          "method": "POST",
+          "m8b": true,
+          "path": "/sessions/:uuid/reopen-registration <span class=\"m8b\">M9</span>",
+          "desc": "head — deletes pending rooms, reopens public registration",
+          "api": "DELETE rooms/:id each"
+        },
+        {
+          "id": "api-signup",
+          "t": "POST signups",
+          "method": "POST",
+          "m8b": false,
+          "path": "/sessions/:uuid/signups · <span class=\"m del\" style=\"width:auto\">DEL</span> /:pid",
+          "desc": "self {as} · head +{username} anytime (owner edits after start too); public only while registration open",
+          "api": "POST/DELETE participants"
+        },
+        {
+          "id": "api-finish",
+          "t": "POST finish",
+          "method": "POST",
+          "path": "/sessions/:uuid/finish",
+          "m8b": false,
+          "desc": "head → completed; winner from confirmed ballots. (DELETE /sessions stays API-only — no cancel in UI)",
+          "api": "PUT rounds + event completed"
+        }
+      ]
+    },
+    {
+      "title": "rooms & play",
+      "rows": [
+        {
+          "id": "api-motion",
+          "t": "motion set/publish",
+          "method": "POST",
+          "m8b": true,
+          "path": "/rooms/:id/motion · /rooms/:id/publish-motion <span class=\"m8b\">M9</span>",
+          "desc": "room judge OR head — set {motion, infoslide, keyword} (hidden draft, gateway); PUBLISH → engine motion + released_at; prep = +15:00",
+          "api": "POST rooms/:id/motion (on publish)"
+        },
+        {
+          "id": "api-ballot",
+          "t": "POST ballot",
+          "method": "POST",
+          "m8b": false,
+          "path": "/rooms/:id/ballot",
+          "desc": "room judge OR head; a CONFIRMED ballot is head-only to edit — one POST, cab handles the lock dance; 8 scores 50-100/0.5, tied totals 422",
+          "api": "POST scores (resubmit replaces) + PATCH confirm — for a confirmed ballot cab unconfirms as head first (internal, never a page verb)"
+        }
+      ]
+    },
+    {
+      "title": "registration & links",
+      "rows": [
+        {
+          "id": "api-reg",
+          "t": "/r/:sess registration",
+          "method": "POST",
+          "path": "/r/:sess (html)",
+          "m8b": true,
+          "desc": "anonymous or signed-in (prefilled) — {name, as} → personal /l/:code shown + EMAILED from noreply@uadebate.com <span class=\"m8b\">M9: mailer</span>",
+          "api": "POST users (shadow) + participants"
+        },
+        {
+          "id": "api-links",
+          "t": "links",
+          "method": "GET",
+          "m8b": false,
+          "path": "/sessions/:uuid/links · <span class=\"m post\" style=\"width:auto\">POST</span> {name, as} · <span class=\"m del\" style=\"width:auto\">DEL</span> /links/:id",
+          "desc": "head — list, issue by hand, revoke (URL dies, signup stays)"
+        }
+      ]
+    },
+    {
+      "title": "stats (pages; keyed api later)",
+      "rows": [
+        {
+          "id": "api-standings",
+          "t": "standings pages",
+          "method": "GET",
+          "m8b": false,
+          "path": "/standings/:tab · /c/:club/standings/:tab · /me",
+          "desc": "rule 0: ENGINE-NEW stats verbatim (speakers total/avg/std · teams totals+1st/4th · clubs strength · judges rooms+feedback)",
+          "api": "GET …/stats/* (M9a)"
+        }
+      ]
+    }
+  ]
+}

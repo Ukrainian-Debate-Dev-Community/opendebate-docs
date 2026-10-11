@@ -1,0 +1,98 @@
+{
+  "id": "user-account",
+  "title": "/account — profile, time zone, sign-in methods",
+  "column": "user",
+  "order": 3,
+  "path": "GET/POST /account",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": null,
+    "profile": "anna, Sign out ◐ EN"
+  },
+  "chrome": {
+    "crumb": "Account",
+    "segs": [
+      {
+        "label": "Save",
+        "kind": "gold"
+      },
+      {
+        "label": "Sign out",
+        "kind": "quiet"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Profile"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Display name <span class=\"mut\">— Shown instead of your username on rosters and draws.</span>",
+        "Time zone: This device's time zone | Europe/Kyiv | … <span class=\"mut\">— Session times show in this zone. cab keeps every time in UTC.</span>",
+        "Username: <b>anna</b>, anna@example.com"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Guest history"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Played as a guest? Paste that session's personal link to move its results onto this account.</p>",
+        "Personal link → <b>Add to my account</b> <span class=\"mut\">The link stops working once its history is yours.</span>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Sign-in methods"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Method",
+        "Status",
+        ""
+      ],
+      "rows": [
+        [
+          "GitHub",
+          "linked",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Google",
+          "linked",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Linking lets you sign in to this same account with either. Separate accounts are fine too: link only if you want them to be one. If the method you link already has its own cab account, you can merge the two.</p>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Your data"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Data requests or deletion: support@uadebate.com."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "An unlinked method reads \"not linked\" with <i>link Google</i>; the last method reads \"your only sign-in\" and cannot be removed. Linking a method that has its own account opens /account/merge."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "public": {
+    "title": "1. Public (everyone)",
+    "cond": "<b>The federation's front door, uadebate.com.</b> Ported as is from legacy/design/uadebate.html, Ukrainian text kept: announcement, hero, news, speaker rating, upcoming tournaments, community numbers, footer. Its <b>Кабінет</b> link and the footer lead to cab."
+  }
+}
