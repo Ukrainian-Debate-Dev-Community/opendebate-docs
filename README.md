@@ -158,7 +158,7 @@ default the directory name), `order` (switch position), `lang` (the board's
 
 ## Add a version
 
-1. Copy the latest version of the platform: `cp -r targets/cab/v3.8 targets/cab/v3.9`.
+1. Copy the latest version of the platform: `cp -r targets/cab/v3.9 targets/cab/v3.10`.
 2. Edit the specs (and `_columns.json`): only what actually changed.
 3. `bun run test`, and add the version's own checks to `check.ts`.
 
