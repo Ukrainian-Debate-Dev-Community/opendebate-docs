@@ -49,9 +49,9 @@ assert(!existsSync(join(ROOT, "dist", "cab.html")), "one page: dist/cab.html is 
 const pfSwitch = visible.match(/<div class="wb-seg" id="platform"[\s\S]*?<\/div>/)?.[0] ?? "";
 assert(pfSwitch.includes('data-platform="cab"') && pfSwitch.includes('data-platform="uadebate"'), "platform switch offers cab and uadebate");
 assert(pfSwitch.includes(">main (uadebate.com)</button>"), "the uadebate platform is labelled main (uadebate.com)");
-assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.10"[^>]*selected/.test(visible), "version switch present, cab v3.10 selected by default");
+assert(/<select id="version"[^>]*>[\s\S]*?<option value="v3.11"[^>]*selected/.test(visible), "version switch present, cab v3.11 selected by default");
 assert(pfSwitch.includes('data-platform="dfu"') && pfSwitch.includes(">dfu (dfu.uadebate.com)</button>"), "platform switch offers dfu, labelled dfu (dfu.uadebate.com)");
-for (const [pf, v] of [["cab", "v3.8"], ["cab", "v3.9"], ["cab", "v3.10"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["uadebate", "v6"], ["uadebate", "v7"], ["dfu", "v1"]]) {
+for (const [pf, v] of [["cab", "v3.8"], ["cab", "v3.9"], ["cab", "v3.10"], ["cab", "v3.11"], ["uadebate", "v1"], ["uadebate", "v2"], ["uadebate", "v3"], ["uadebate", "v4"], ["uadebate", "v5"], ["uadebate", "v6"], ["uadebate", "v7"], ["dfu", "v1"]]) {
   assert(chunk(pf, v).length > 0, `${pf} ${v} board present`);
 }
 const versionsInPage = [...html.matchAll(/<section class="version[^"]*" data-platform="([^"]+)" data-version="([^"]+)"/g)].map((m) => `${m[1]}/${m[2]}`);
@@ -79,13 +79,13 @@ for (const pf of ["cab", "uadebate", "dfu"]) {
 
 /* ---------- cab history ---------- */
 const v = (ver: string) => chunk("cab", ver);
-const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38, v39, v310] =
-  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10"].map(v);
+const [v1, v2, v21, v22, v23, v3, v31, v32, v33, v34, v35, v36, v37, v38, v39, v310, v311] =
+  ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10", "v3.11"].map(v);
 
 /* column count is computed and printed: 8 up to v3, 9 from v3.1 (the user column) */
-const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10"]
+const counts = ["v1", "v2", "v2.1", "v2.2", "v2.3", "v3", "v3.1", "v3.2", "v3.3", "v3.4", "v3.5", "v3.6", "v3.7", "v3.8", "v3.9", "v3.10", "v3.11"]
   .map((ver) => v(ver).match(/<p class="vsub">(\d+) columns?/)?.[1]);
-assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
+assert(counts.join(",") === "8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9", `computed column counts per version (got: ${counts.join(", ")})`);
 
 /* v1-only pages exist in v1 and not in v2; the v2 changelog compares with v1 */
 for (const id of ["own-compose", "own-sessions"]) {
@@ -220,7 +220,7 @@ function houseRules(ver: string, c: string) {
   assert(!/\bJudge\b/.test(pages), `${ver} pages say Adjudicator, never Judge`);
   assert(goldOffenders(pages) === 0, `${ver} pages carry at most one gold action (offenders: ${goldOffenders(pages)})`);
 }
-for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) houseRules(ver, c);
+for (const [ver, c] of [["v3.4", v34], ["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310], ["v3.11", v311]] as const) houseRules(ver, c);
 
 /* feedback, as built from v3.5 on */
 function feedbackPages(ver: string, c: string) {
@@ -233,7 +233,7 @@ function feedbackPages(ver: string, c: string) {
     `${ver} adjudicator feedback names no team`);
   assert(pages.includes("Your team already sent feedback.") && pages.includes("Give feedback"), `${ver} shows giving and already-sent feedback`);
 }
-for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) feedbackPages(ver, c);
+for (const [ver, c] of [["v3.5", v35], ["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310], ["v3.11", v311]] as const) feedbackPages(ver, c);
 
 /* one command, one place (from v3.6): a page whose top bar carries commands draws no in-page button repeating one */
 function noDoubleActions(ver: string, c: string) {
@@ -249,10 +249,10 @@ function noDoubleActions(ver: string, c: string) {
   const members = pageChunk(pagesOf(c), "own-members");
   assert(members.length > 0 && !members.includes("signed-in user"), `${ver} join requests and members carry no account kind`);
 }
-for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) noDoubleActions(ver, c);
+for (const [ver, c] of [["v3.6", v36], ["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310], ["v3.11", v311]] as const) noDoubleActions(ver, c);
 
 /* feedback lives in the engine (from v3.7) */
-for (const [ver, c] of [["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310]] as const) {
+for (const [ver, c] of [["v3.7", v37], ["v3.8", v38], ["v3.9", v39], ["v3.10", v310], ["v3.11", v311]] as const) {
   assert(!/kept by cab|engine is not involved|Avg feedback is cab's own/i.test(c), `${ver} never says feedback is kept by cab`);
   assert(c.includes("/api/events/:eventId/feedback-questions"), `${ver} engine column lists the feedback questions`);
   assert(c.includes("stats/adjudicators?base=5"), `${ver} reads the adjudicator average with the base vote from the engine`);
@@ -732,6 +732,20 @@ assert((pageChunk(v310, "pub-signin").match(/class="beta-tag">beta</g) ?? []).le
   "v3.10 sign-in shows the beta tag on the brand panel and the form crest");
 assert(pageChunk(v310, "pub-signin-existing").includes("beta-tag") && pageChunk(v310, "pub-error").includes("beta-tag"),
   "v3.10 existing-account sign-in and the error page carry the beta tag");
+
+/* cab v3.11: an admin invites a club head by e-mail */
+assert(chlogOf(v311).includes("Compared with v3.10"), "v3.11 changelog compares with v3.10");
+assert(pageChunk(v311, "adm-admin").includes("username or e-mail") && pageChunk(v311, "adm-admin").includes("Their name"),
+  "v3.11 admin: the head field takes a username or an e-mail, with a name for an invitation");
+assert(pageChunk(v311, "adm-admin").includes("Pending head invitations") && pageChunk(v311, "adm-admin").includes(">resend<")
+  && pageChunk(v311, "adm-admin").includes(">cancel<"), "v3.11 admin lists pending head invitations with resend and cancel");
+assert(pageChunk(v311, "adm-head-invite-email").includes("you are invited to be its head")
+  && pageChunk(v311, "adm-head-invite-email").includes("expires on"), "v3.11 shows the invitation e-mail");
+assert(pageChunk(v311, "pub-signin-head").includes("Sign in to become the head of"), "v3.11 sign-in names the club of a pending invitation");
+assert(pageChunk(v311, "pub-head-invite-invalid").includes("This invitation has expired."), "v3.11 has the page for a link that no longer works");
+assert(!pageChunk(v310, "adm-admin").includes("Pending head invitations"), "v3.10 stays without head invitations");
+assert(!/[\u2190-\u21ff]/.test((pageChunk(v311, "adm-admin").split("Create a club")[1] ?? "").split("Merge two accounts")[0]),
+  "v3.11 new admin text uses no arrows");
 
 /* main (uadebate.com) v7: beta tag, theme and language buttons, the admin-only calendar switch, Ukrainian */
 const u7 = chunk("uadebate", "v7");

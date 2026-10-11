@@ -1,0 +1,18 @@
+{
+  "id": "pub-signin",
+  "title": "/signin \u2014 sign-in (split)",
+  "column": "public",
+  "order": 5,
+  "path": "GET /signin",
+  "bare": true,
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div class=\"shell\" style=\"min-height:190px;\"><div style=\"flex:1; background:var(--brand-fill); color:var(--on-brand); padding:22px; display:flex; flex-direction:column; justify-content:center;\"><div style=\"font-family:'Cedarville Cursive',cursive; font-size:2.4rem; line-height:1;\">cab<span class=\"beta-tag\">beta</span></div><div style=\"font-size:.85rem; font-weight:700; max-width:240px; margin-top:6px;\">The home of Ukrainian debate clubs</div><div style=\"font-size:.7rem; opacity:.8; max-width:240px; margin-top:6px;\">register for a club session with one link<br>adjudicators fill the ballot right in their room<br>per-session standings and your own history</div></div><div style=\"width:300px; background:var(--surface,#fff); padding:20px 18px; display:flex; flex-direction:column; justify-content:center;\"><div style=\"font-family:'Cedarville Cursive',cursive; font-size:1.8rem; color:var(--brand);\">cab<span class=\"beta-tag\">beta</span></div><b style=\"font-size:.9rem;\">Sign in</b><p style=\"font-size:.74rem; color:var(--muted); margin-bottom:10px;\">Use one of the following sign-in methods. We don't use passwords.</p><a style=\"display:block; padding:8px; border-radius:8px; text-align:center; font-weight:650; font-size:.76rem; text-decoration:none; color:#fff; background:#24292f; margin-bottom:6px;\" href=\"#\">Continue with GitHub</a><a style=\"display:block; padding:8px; border:1px solid var(--line); border-radius:8px; text-align:center; font-weight:650; font-size:.76rem; text-decoration:none; color:var(--ink); margin-bottom:6px;\" href=\"#\">Continue with Google</a><div style=\"font-size:.68rem; background:var(--brand-50,#F7F3FA); border-radius:8px; padding:6px 8px;\">First sign-in creates your account automatically.</div><div style=\"border-top:1px solid var(--line); margin-top:10px; padding-top:8px; font-size:.68rem; color:var(--muted);\">Got a personal link from your club? Just open it \u2014 no account needed.<br>By continuing you agree to the <a href=\"#\" style=\"color:var(--brand)\">Terms</a> and <a href=\"#\" style=\"color:var(--brand)\">Policy</a>.</div></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "the pages without the shell: this bare split sign-in page (auth entry) and the error page. GitHub and Google each sign in their own cab account unless linked on /account."
+    }
+  ]
+}

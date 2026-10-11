@@ -1,0 +1,53 @@
+{
+  "id": "user-merge",
+  "title": "/account/merge \u2014 one person, two accounts",
+  "column": "user",
+  "order": 4,
+  "path": "GET/POST /account/merge",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page"
+    ],
+    "active": null,
+    "profile": "anna, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Account \u203a Merge accounts",
+    "segs": [
+      {
+        "label": "Keep them separate",
+        "kind": "quiet"
+      },
+      {
+        "label": "Merge the accounts",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "That sign-in has its own account"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "It belongs to <b>Anna K</b> (anna-k). You can keep the two accounts apart, or merge them into one.",
+        "Its clubs: Kyiv Debate Club.",
+        "The merged account is <b>anna-k</b>: the one that heads a club, or else the older one. It gets the other account's debate history (shown under its name), clubs, club head positions, invitations and sign-in methods, and you stay signed in to it. The other account is closed. A club where both are members keeps the stronger membership. It cannot be undone.",
+        "<p class=\"mut\">The merge is refused when both accounts took part in the same session; nothing changes then.</p>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The kept account is chosen by what the accounts hold, not by which is signed in. The engine hands the folded account's clubs to the kept one first and back if the merge is refused; a merge that stopped halfway finishes when run again."
+    }
+  ],
+  "api": [
+    "POST organisations/:id/owners",
+    "DEL organisations/:id/owners/:uid",
+    "POST admins/merge"
+  ]
+}
