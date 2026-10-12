@@ -107,6 +107,25 @@
   window.addEventListener('hashchange', fromHash);
   fromHash();
 
+  /* view: Desktop draws the frames at their board width; Mobile draws them at an
+     iPhone's width (393px), where versions with a phone layout switch to it.
+     The choice is this viewer's own, kept in localStorage. */
+  var viewBox = document.getElementById('view');
+  function view(state) {
+    if (state !== 'mobile') state = 'desktop';
+    document.body.dataset.view = state;
+    viewBox.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b.dataset.view === state));
+    });
+  }
+  view(load('webdesign-view', 'desktop'));
+  viewBox.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    save('webdesign-view', b.dataset.view);
+    view(b.dataset.view);
+  });
+
   /* theme: auto follows the system; light and dark pin it, like cab's own switch */
   var themeBtn = document.getElementById('theme');
   var LABEL = { auto: 'Auto', light: 'Light', dark: 'Dark' }, NEXT = { auto: 'light', light: 'dark', dark: 'auto' };

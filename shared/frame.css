@@ -114,6 +114,17 @@ body { font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif;
 .frame { border:1px solid var(--wb-bd); border-radius:var(--r); overflow:hidden; background:var(--bg);
          box-shadow:var(--wb-shadow); isolation:isolate; transition:border-color .12s, box-shadow .12s; }
 .page:hover .frame { border-color:var(--brand); }
+/* every frame is a container, so a board's phone rules can follow the frame's
+   width (@container frame) rather than the browser window's */
+.frame { container-type:inline-size; container-name:frame; }
+
+/* ---- Mobile view: every frame at an iPhone's width (393px), in a thin phone
+   outline; versions with a phone layout switch to it, older ones only narrow ---- */
+body[data-view="mobile"] .col { flex-basis:425px !important; }
+body[data-view="mobile"] .page .frame { width:393px; box-sizing:content-box; margin:0 auto;
+  border:6px solid var(--wb-bd); border-radius:30px; }
+body[data-view="mobile"] .page .cap { max-width:405px; margin-left:auto; margin-right:auto; }
+body[data-view="mobile"] .swag { max-width:405px; }
 
 /* ---- API columns: a flat reference ---- */
 .swag { border:1px solid var(--wb-bd); border-radius:var(--r); background:var(--surface); overflow:hidden;
