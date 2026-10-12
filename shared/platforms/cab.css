@@ -93,3 +93,83 @@
                     font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif; font-size:max(8px,.2em);
                     font-weight:700; line-height:1.3; letter-spacing:.08em; text-transform:uppercase;
                     border:1px solid currentColor; border-radius:4px; padding:0 .45em; }
+
+/* v3.12: cab on a phone. The rules of app.css's @media (max-width:760px) block,
+   written as container queries on the frame so they follow the frame's width:
+   a desktop frame (720px) keeps the desktop layout, a Mobile-view frame (393px)
+   takes the phone one. The 500px threshold sits between the two. */
+@container frame (max-width: 500px) {
+  /* the sidebar becomes a top bar: wordmark, place, Menu */
+  .pf-cab[data-version="v3.12"] .shell { flex-direction:column; }
+  .pf-cab[data-version="v3.12"] .nav { width:auto; flex-direction:row; flex-wrap:wrap; align-items:center;
+    border-right:none; border-bottom:1px solid var(--line); padding:6px 10px; gap:0 8px; }
+  .pf-cab[data-version="v3.12"] .nav .cp { order:1; padding:0; font-size:1.3rem; }
+  .pf-cab[data-version="v3.12"] .nav .sc { order:2; padding:0; letter-spacing:.06em; min-width:0;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1 1 0; }
+  .pf-cab[data-version="v3.12"] .nav::after { content:"Menu"; order:3; margin-left:auto; border:1px solid var(--line);
+    border-radius:8px; padding:7px 12px; font-weight:700; font-size:.78rem; color:var(--ink); background:var(--surface); }
+  .pf-cab[data-version="v3.12"] .nav a, .pf-cab[data-version="v3.12"] .nav .pf,
+  .pf-cab[data-version="v3.12"] .nav .sc ~ .sc { display:none; order:5; }
+  /* the Menu open: the same items, the profile, theme and language */
+  .pf-cab[data-version="v3.12"] .nav-open .nav::after { background:var(--brand-50); border-color:var(--brand); }
+  .pf-cab[data-version="v3.12"] .nav-open .nav::before { content:""; order:4; flex-basis:100%; height:6px; }
+  .pf-cab[data-version="v3.12"] .nav-open .nav a { display:block; flex-basis:100%; padding:9px 4px; font-size:.84rem; }
+  .pf-cab[data-version="v3.12"] .nav-open .nav a.on { padding-left:8px; }
+  .pf-cab[data-version="v3.12"] .nav-open .nav .pf { display:block; flex-basis:100%; margin-top:6px; padding:9px 4px; }
+
+  /* the command bar: the place on one line, the commands under it, gold first and full width */
+  .pf-cab[data-version="v3.12"] .chrome { height:auto; flex-wrap:wrap; }
+  .pf-cab[data-version="v3.12"] .chrome .cr { flex:1 1 100%; min-height:32px; }
+  .pf-cab[data-version="v3.12"] .chrome .seg { flex:1 1 100%; margin-left:0; border-left:none;
+    border-top:1px solid var(--line); flex-wrap:wrap; }
+  .pf-cab[data-version="v3.12"] .chrome .seg > * { flex:1 1 auto; justify-content:center; min-height:38px; }
+  .pf-cab[data-version="v3.12"] .chrome .seg .go { order:-1; flex-basis:100%; border-right:none; }
+  .pf-cab[data-version="v3.12"] .tabs { overflow-x:auto; }
+  .pf-cab[data-version="v3.12"] .tabs a { flex:none; }
+
+  /* every table folds into cards: the first column the title (rank beside it), the
+     others label and value lines, unlabelled columns (actions) beside the title */
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc), .pf-cab[data-version="v3.12"] table.t:not(.alloc) tbody { display:block; width:100%; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) thead { display:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) tr { display:grid; grid-template-columns:auto 1fr auto auto;
+    column-gap:8px; padding:8px 10px; border-bottom:1px solid var(--line); }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) tbody tr:last-child { border-bottom:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td { grid-column:1 / -1; display:flex; align-items:baseline;
+    justify-content:space-between; gap:10px; padding:2px 0; border:none; text-align:right; min-width:0; overflow-wrap:anywhere; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td::before { content:attr(data-label); flex:none; text-align:left;
+    color:var(--muted); font-size:.56rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td:first-child { display:block; grid-row:1; grid-column:1 / 3;
+    text-align:left; font-weight:650; font-size:.84rem; padding-bottom:4px; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td:first-child::before { content:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td.rk { grid-column:1; width:auto; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td.rk + td { display:block; grid-row:1; grid-column:2 / -1;
+    text-align:left; font-weight:650; font-size:.84rem; padding-bottom:4px; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td.rk + td::before { content:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td[data-label=""]:not(:first-child):not(.rk + td) { grid-row:1; grid-column:3; align-self:start; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td[data-label=""]:not(:first-child) ~ td[data-label=""]:not(:first-child) { grid-column:4; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td[data-label=""]::before { content:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td[data-label=""]:empty { display:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td.wide-only { display:none; }
+  .pf-cab[data-version="v3.12"] table.t:not(.alloc) td.sd { border-left:3px solid; padding-left:6px; }
+
+  /* the allocator: one block per room, the four teams two by two, the adjudicator under them */
+  .pf-cab[data-version="v3.12"] table.alloc, .pf-cab[data-version="v3.12"] table.alloc tbody { display:block; }
+  .pf-cab[data-version="v3.12"] table.alloc tr:first-child { display:none; }
+  .pf-cab[data-version="v3.12"] table.alloc tr { display:grid; grid-template-columns:1fr 1fr; gap:6px;
+    padding:8px 0; border-bottom:1px solid var(--line); }
+  .pf-cab[data-version="v3.12"] table.alloc td { display:block; border:none; padding:4px 6px; }
+  .pf-cab[data-version="v3.12"] table.alloc td.rk { grid-column:1 / -1; font-size:.9rem; }
+  .pf-cab[data-version="v3.12"] table.alloc td.sd { border-left:3px solid; min-height:44px; background:var(--surface-2); }
+  .pf-cab[data-version="v3.12"] table.alloc td.sd::before { display:block; font-size:.56rem; font-weight:800;
+    letter-spacing:.08em; color:var(--muted); }
+  .pf-cab[data-version="v3.12"] table.alloc td.og::before { content:"OG"; }
+  .pf-cab[data-version="v3.12"] table.alloc td.oo::before { content:"OO"; }
+  .pf-cab[data-version="v3.12"] table.alloc td.cg::before { content:"CG"; }
+  .pf-cab[data-version="v3.12"] table.alloc td.co::before { content:"CO"; }
+  .pf-cab[data-version="v3.12"] table.alloc td:nth-child(6) { grid-column:1 / -1; }
+  .pf-cab[data-version="v3.12"] table.alloc td:nth-child(6)::before { content:"ADJUDICATOR"; display:block;
+    font-size:.56rem; font-weight:800; letter-spacing:.08em; color:var(--muted); }
+  .pf-cab[data-version="v3.12"] table.alloc td.st { grid-column:1 / -1; }
+
+  .pf-cab[data-version="v3.12"] .body { padding:10px; }
+}

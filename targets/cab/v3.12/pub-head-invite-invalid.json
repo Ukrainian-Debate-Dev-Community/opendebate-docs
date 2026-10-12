@@ -1,0 +1,35 @@
+{
+  "id": "pub-head-invite-invalid",
+  "title": "/head-invitations/:token - a link that no longer works",
+  "column": "public",
+  "order": 13,
+  "path": "GET /head-invitations/:token (410)",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": null,
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Invitation",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "This invitation has expired."
+    },
+    {
+      "type": "card",
+      "lines": [
+        "Ask the admin who invited you to send a new link."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "The same calm page says \"already accepted\", \"cancelled\" or \"not valid\" for the other cases."
+    }
+  ]
+}

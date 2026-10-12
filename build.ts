@@ -36,6 +36,7 @@ type Block = {
 type PageSpec = {
   id: string; title?: string; column: string; order?: number; path?: string;
   api?: string[]; bare?: boolean;
+  navOpen?: boolean; // a phone page drawn with its Menu open
   nav?: { items: string[]; context?: string; active?: string; profile?: string };
   chrome?: { crumb: string; segs?: Seg[] };
   blocks?: Block[];
@@ -44,7 +45,7 @@ type PageSpec = {
 };
 type SwagRow = { id: string; method: string; path: string; desc: string; api?: string; apiNone?: boolean; t?: string };
 type Columns = Record<string, { title: string; cond: string }>;
-type Version = { name: string; columns: Columns; pages: PageSpec[]; lang?: string; brandTag?: string };
+type Version = { name: string; columns: Columns; pages: PageSpec[]; lang?: string; brandTag?: string; phone?: boolean };
 // targets/<platform>/platform.json — all fields optional
 type Platform = { id: string; label: string; order: number; lang: string; frameWidth: number; versions: Version[] };
 
@@ -88,6 +89,7 @@ function loadVersion(dir: string, name: string): Version {
   let columns: Columns = {};
   let lang: string | undefined;
   let brandTag: string | undefined;
+  let phone: boolean | undefined;
   const pages: PageSpec[] = [];
   for (const f of files) {
     const data = dropPlanning(JSON.parse(readFileSync(join(dir, f), "utf8")));
@@ -95,11 +97,12 @@ function loadVersion(dir: string, name: string): Version {
     else if (f === "_version.json") {
       lang = data.lang; // a version may speak another language than its platform
       brandTag = data.brandTag; // a tag beside the wordmark, e.g. beta
+      phone = data.phone; // the version draws its phone layout in Mobile view
     }
     else if (!f.startsWith("_")) pages.push(data);
   }
   pages.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.id.localeCompare(b.id));
-  return { name, columns, pages, lang, brandTag };
+  return { name, columns, pages, lang, brandTag, phone };
 }
 
 // versions are v<major> or v<major>.<minor> (v2 = v2.0), sorted numerically
@@ -127,13 +130,25 @@ function columnsOf(v: Version): string[] {
 }
 
 /* ---------- block renderers ---------- */
-function cell(raw: string): string {
+// set per column: only versions with a phone layout label their cells, so the
+// HTML of every older version stays exactly as it was
+let LABEL_CELLS = false;
+// a cell carries its column's label, so a phone frame can fold the row into a card
+// a header label as plain text: tags stripped until none are left
+function plain(html: string): string {
+  let out = html;
+  for (let prev = ""; prev !== out; ) { prev = out; out = out.replace(/<[^>]*>/g, ""); }
+  return out;
+}
+
+function cell(raw: string, label?: string): string {
+  const lab = label === undefined ? "" : ` data-label="${escAttr(plain(label))}"`;
   const i = raw.indexOf("::");
   if (i > 0) {
     const cls = raw.slice(0, i);
-    if (/^[a-z][a-z0-9 -]*$/.test(cls)) return `<td class="${cls}">${raw.slice(i + 2)}</td>`;
+    if (/^[a-z][a-z0-9 -]*$/.test(cls)) return `<td class="${cls}"${lab}>${raw.slice(i + 2)}</td>`;
   }
-  return `<td>${raw}</td>`;
+  return `<td${lab}>${raw}</td>`;
 }
 
 function renderTable(b: Block): string {
@@ -142,7 +157,7 @@ function renderTable(b: Block): string {
   h += `<tbody>`;
   (b.rows ?? []).forEach((row, i) => {
     const cls = b.rowClass?.[String(i)];
-    h += `<tr${cls ? ` class="${cls}"` : ""}>${row.map(cell).join("")}</tr>`;
+    h += `<tr${cls ? ` class="${cls}"` : ""}>${row.map((c, j) => cell(c, LABEL_CELLS ? b.head?.[j] ?? "" : undefined)).join("")}</tr>`;
   });
   return h + `</tbody></table></div>`;
 }
@@ -192,7 +207,7 @@ function renderPage(p: PageSpec, brand: string): string {
     const chrome = `<div class="chrome"><div class="cr">${p.chrome?.crumb ?? ""}</div>${segs}</div>`;
     const tabs = (p.blocks ?? []).filter((b) => b.type === "tabs").map(renderTabs).join("");
     const body = `<div class="body">\n${(p.blocks ?? []).filter((b) => b.type !== "tabs").map(renderBlock).join("\n")}\n</div>`;
-    inner = `<div class="shell">\n${nav}\n<div class="mainc">${chrome}\n${tabs}${body}</div>\n</div>`;
+    inner = `<div class="shell${p.navOpen ? " nav-open" : ""}">\n${nav}\n<div class="mainc">${chrome}\n${tabs}${body}</div>\n</div>`;
   }
   return `<div class="page" data-id="${escAttr(p.id)}" data-t="${escAttr(p.title ?? p.id)}">${cap}<span class="dot"></span>\n` +
          `<div class="frame">${inner}</div>\n</div>`;
@@ -217,6 +232,7 @@ function renderColumn(name: string, v: Version, pf: Platform): string {
   const meta = v.columns[name] ?? { title: name, cond: "" };
   const pages = v.pages.filter((p) => p.column === name);
   const brand = pf.id + (v.brandTag ? `<span class="beta-tag">${v.brandTag}</span>` : "");
+  LABEL_CELLS = !!v.phone;
   const body = pages.map((p) => (p.kind === "swagger" ? renderSwagger(p) : renderPage(p, brand))).join("\n\n");
   const intro = pages.find((p) => p.intro)?.intro;
   return `<div class="col ${COLUMN_CLASS[name] ?? ""}" data-col="${name}" style="flex-basis:${pf.frameWidth}px"><h3>${meta.title}</h3>\n` +
@@ -315,6 +331,8 @@ ${platforms.map((pf) => platformStyle(pf.id)).join("\n")}
       <div class="wb-seg" id="platform" role="tablist" aria-label="Platform">${pfButtons}</div></div>
     <label class="wb-field"><span class="wb-label">Version</span>
       <select id="version" aria-label="Version">${verOptions}</select></label>
+    <div class="wb-field"><span class="wb-label">View</span>
+      <div class="wb-seg" id="view" role="tablist" aria-label="View"><button type="button" role="tab" data-view="desktop" aria-selected="true">Desktop</button><button type="button" role="tab" data-view="mobile" aria-selected="false">Mobile</button></div></div>
     <span class="wb-hint">Click a page to leave a note. Captions show the route and, in green, the engine call behind it.</span>
     <button type="button" class="wb-theme" id="theme" data-state="auto" title="Theme: follows the system">Auto</button>
     <button type="button" class="wb-go" id="export">Export notes</button>

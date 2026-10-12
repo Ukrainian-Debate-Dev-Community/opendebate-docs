@@ -1,0 +1,35 @@
+{
+  "id": "own-phone-menu",
+  "title": "phone: the Menu open",
+  "column": "owner",
+  "order": 99,
+  "path": "GET /c/:club/owner/s/:sess (phone, Menu open)",
+  "navOpen": true,
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Club \u203a Thursday practice \u2014 registration open",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "note",
+      "text": "On a phone (Mobile view) the sidebar is a top bar: the wordmark with the beta tag, the place and a <b>Menu</b> button. Menu opens the same items, the profile, theme and language; picking an item or Escape closes it. On a desktop this page looks like any other."
+    }
+  ]
+}

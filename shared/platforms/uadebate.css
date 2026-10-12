@@ -544,3 +544,74 @@
   padding:12px 14px; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); }
 .ua-switchbar b { display:block; }
 .ua-switchbar .ua-meta { display:block; margin-top:2px; }
+
+/* v7.1: v7 on a phone. The frame rules are repeated for v7.1; the note that the site
+   is under construction is new; and the app's phone rules (its 860, 760 and 600px
+   blocks) are written as container queries on the frame, so a desktop frame (1120px)
+   keeps the desktop layout and a Mobile-view frame (393px) takes the phone one.
+   The 500px threshold sits between the two. */
+.pf-uadebate[data-version="v7.1"] .frame {
+  --ink:inherit; --muted:inherit; --line:inherit; --bg:inherit; --surface:inherit; --gold:inherit;
+  --ok:inherit; --ok-bg:inherit; --warn:inherit; --warn-bg:inherit; --radius:var(--r);
+  color-scheme:inherit; font-family:inherit; background:var(--bg);
+                                          color:var(--ink); font-size:14px; line-height:1.5; }
+.pf-uadebate[data-version="v7.1"] .frame a { color:var(--brand); }
+.pf-uadebate[data-version="v7.1"] .anno { font-size:.72rem; color:var(--muted); line-height:1.5; padding:8px 12px 9px;
+  margin:10px; border:1px dashed var(--line); border-radius:var(--r); background:var(--surface-2); }
+.pf-uadebate[data-version="v7.1"] .anno::before { content:"Note"; display:block; font-size:.56rem; letter-spacing:.12em;
+  text-transform:uppercase; font-weight:800; color:var(--brand); margin-bottom:2px; }
+.pf-uadebate[data-version="v7.1"] .anno b { color:var(--ink); }
+.pf-uadebate[data-version="v7.1"] .ua-wip { margin-bottom:14px; padding:9px 12px; font-size:.85rem; color:var(--muted); background:var(--surface-2);
+  border:1px dashed var(--line); border-radius:var(--r); }
+@container frame (max-width: 500px) {
+  .pf-uadebate[data-version="v7.1"] .ua-top { flex-wrap:wrap; padding:10px 16px; gap:10px; }
+  .pf-uadebate[data-version="v7.1"] .ua-nav { margin-left:0; order:3; width:100%; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; -webkit-mask-image:linear-gradient(to right, #000 85%, transparent); mask-image:linear-gradient(to right, #000 85%, transparent); padding-right:28px; }
+  .pf-uadebate[data-version="v7.1"] .ua-nav a { flex:none; white-space:nowrap; min-height:44px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-right { margin-left:auto; gap:6px; }
+  .pf-uadebate[data-version="v7.1"] .ua-ic { width:42px; height:42px; }
+  .pf-uadebate[data-version="v7.1"] .ua-right .ua-btn { min-height:42px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-brand { font-size:1.55rem; }
+  .pf-uadebate[data-version="v7.1"] .ua-main { padding:20px 16px 8px; }
+  .pf-uadebate[data-version="v7.1"] .ua-hero, .pf-uadebate[data-version="v7.1"] .ua-grid2, .pf-uadebate[data-version="v7.1"] .ua-clubs { grid-template-columns:1fr; }
+  .pf-uadebate[data-version="v7.1"] .ua-grid3, .pf-uadebate[data-version="v7.1"] .ua-story, .pf-uadebate[data-version="v7.1"] .ua-stats--4 { grid-template-columns:1fr 1fr; }
+  .pf-uadebate[data-version="v7.1"] .ua-foot-in, .pf-uadebate[data-version="v7.1"] .ua-foot-in--3 { grid-template-columns:1fr 1fr; }
+  .pf-uadebate[data-version="v7.1"] .ua-foot a { padding:8px 0; }
+  .pf-uadebate[data-version="v7.1"] .ua-blobs { height:auto; display:flex; flex-direction:column; gap:12px; }
+  .pf-uadebate[data-version="v7.1"] .ua-blob { position:static; width:auto !important; height:auto !important; padding:28px; }
+  .pf-uadebate[data-version="v7.1"] .ua-filters { flex-direction:column; align-items:stretch; gap:10px; }
+  .pf-uadebate[data-version="v7.1"] .ua-clubs > *, .pf-uadebate[data-version="v7.1"] .ua-filters, .pf-uadebate[data-version="v7.1"] .ua-filters label { min-width:0; max-width:100%; }
+  .pf-uadebate[data-version="v7.1"] .ua-seg { max-width:100%; overflow-x:auto; }
+  .pf-uadebate[data-version="v7.1"] .ua-seg a { white-space:nowrap; min-height:40px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-head { flex-direction:column; align-items:stretch; gap:14px; }
+  .pf-uadebate[data-version="v7.1"] .ua-head-act { flex-wrap:wrap; }
+  .pf-uadebate[data-version="v7.1"] .ua-head-act > * { flex:1 1 auto; justify-content:center; text-align:center; min-height:44px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-ev { flex-wrap:wrap; row-gap:10px; }
+  .pf-uadebate[data-version="v7.1"] .ua-ev-body { flex:1 1 0; min-width:60%; }
+  .pf-uadebate[data-version="v7.1"] .ua-ev > :not(.ua-date):not(.ua-ev-body) { flex:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-ev > .ua-ev-body ~ * { order:3; }
+  .pf-uadebate[data-version="v7.1"] .ua-ev::after { content:""; order:2; flex-basis:100%; height:0; }
+  .pf-uadebate[data-version="v7.1"] .ua-cal { display:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar { flex-wrap:wrap; row-gap:4px; padding:6px 12px; white-space:nowrap; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar .ua-cmrole { order:1; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar .ua-cmme { order:2; margin-left:8px; font-size:0; gap:0; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar .ua-cmme .ua-av { font-size:.62rem; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar a.ua-cmlink { order:3; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar .ua-cmme + a.ua-cmlink { margin-left:auto; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar::after { content:""; order:4; flex-basis:100%; height:0; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar a:not(.ua-cmlink) { order:5; flex:1 1 0; justify-content:center; text-align:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-cmbar a { min-height:40px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .ua-switchbar { flex-wrap:wrap; }
+  .pf-uadebate[data-version="v7.1"] .ua-vis button, .pf-uadebate[data-version="v7.1"] .ua-vis span { min-height:40px; padding:4px 14px; display:inline-flex; align-items:center; }
+  .pf-uadebate[data-version="v7.1"] .form input, .pf-uadebate[data-version="v7.1"] .form textarea, .pf-uadebate[data-version="v7.1"] .form select, .pf-uadebate[data-version="v7.1"] select, .pf-uadebate[data-version="v7.1"] input { font-size:16px; }
+  .pf-uadebate[data-version="v7.1"] .ua-t, .pf-uadebate[data-version="v7.1"] .ua-t tbody { display:block; width:100%; }
+  .pf-uadebate[data-version="v7.1"] .ua-t thead { display:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-t tr { display:grid; grid-template-columns:1fr auto auto; column-gap:10px; padding:12px 14px; border-top:1px solid var(--line); }
+  .pf-uadebate[data-version="v7.1"] .ua-t tbody tr:first-child { border-top:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td { grid-column:1 / -1; display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:3px 0; border:none; text-align:right; min-width:0; overflow-wrap:anywhere; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td::before { content:attr(data-label); flex:none; text-align:left; color:var(--muted); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td:first-child { grid-row:1; grid-column:1; display:block; text-align:left; padding-bottom:5px; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td:first-child::before, .pf-uadebate[data-version="v7.1"] .ua-t td:not([data-label])::before { content:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td[data-label]:empty { display:none; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td:not(:first-child):not([data-label]) { grid-row:1; grid-column:2; justify-self:end; align-self:start; }
+  .pf-uadebate[data-version="v7.1"] .ua-t td:not(:first-child):not([data-label]) ~ td:not([data-label]) { grid-column:3; }
+}

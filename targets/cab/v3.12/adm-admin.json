@@ -1,0 +1,123 @@
+{
+  "id": "adm-admin",
+  "title": "/admin \u2014 clubs, heads, account merges",
+  "column": "admin",
+  "order": 1,
+  "path": "GET /admin, POST /admin/clubs, /admin/head, /admin/merge, /admin/clubs/:uuid/archive, /admin/head-invitations/:id/resend|cancel",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings",
+      "My page",
+      "Admin"
+    ],
+    "active": "Admin",
+    "profile": "root, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Admin",
+    "segs": [
+      {
+        "label": "Create club",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Clubs"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Head",
+        "State",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Kyiv Debate Club <span class=\"mut\">Kyiv, 11 members</span>",
+          "oleksii-stroganov",
+          "live",
+          "<a href=\"#\">open</a>",
+          "<a href=\"#\">archive</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Create a club"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">Club creation is admin-only - users can only request membership.</p>",
+        "Club name, City",
+        "Head <span class=\"mut\">username or e-mail, with account suggestions while typing</span>",
+        "Their name <span class=\"mut\">only for an invitation: the name the e-mail greets</span>",
+        "-> Create club (top bar). An account heads the club at once; an e-mail no account uses sends an invitation, and you head the club until it is accepted."
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Change a club's head"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">The new head takes over; the old head retires.</p>",
+        "Club, New head <span class=\"mut\">username or e-mail</span>, Their name <span class=\"mut\">only for an invitation</span>",
+        "-> <b>Change head</b> <span class=\"mut\">An account takes over at once; an invitation once it is accepted.</span>"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Pending head invitations"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Club",
+        "Invited",
+        "Sent",
+        "Expires",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Lviv Debate Club",
+          "Olena Koval <span class=\"mut\">olena@example.com</span>",
+          "2026-10-12",
+          "2026-10-26",
+          "<a href=\"#\">resend</a>",
+          "<a href=\"#\">cancel</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Merge two accounts"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<p class=\"mut\">For one person who ended up with two accounts and cannot sign in to both. The account that heads a club is kept, or else the older one; it gets the other's history, clubs, head positions and sign-in methods. It cannot be undone.</p>",
+        "Account <span class=\"mut\">[username or e-mail]</span>, Same person's other account <span class=\"mut\">[username or e-mail]</span> -> <b>Merge accounts</b> <span class=\"mut\">Refused when both took part in the same session, or when both name the same account.</span>",
+        "<span class=\"mut\">Shown only when there are two accounts or more. The fields suggest usernames as you type; no account is listed openly.</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "is_admin only; archived clubs vanish everywhere else (404) and stay here. Changing the head also removes the old head as engine owner, so that account can be merged later. A head invitation: the link works once, expires after 14 days and keeps the address only while pending; one pending invitation per club (a new one cancels the old). Resend makes a new link; if the e-mail cannot be sent, the admin gets the link to pass on."
+    }
+  ],
+  "api": [
+    "POST organisations",
+    "POST/DEL organisations/:id/owners",
+    "POST admins/merge"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "own-sess-signup",
+  "title": "session @ registration open \u2014 add, people, allocator",
+  "column": "owner",
+  "order": 10,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Club \u203a Thursday practice \u2014 registration open",
+    "segs": [
+      {
+        "label": "Start session",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "banner",
+      "kind": "info",
+      "html": "Share to register without an account <span class=\"cpy\">cab.uadebate.com/r/328333f6</span> Copy"
+    },
+    {
+      "type": "section",
+      "title": "Add a person"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Member, registered user or guest</b> <span class=\"mut\">[Pick a member, or type a name, a user's username or email]</span>",
+        "<i>focused, nothing typed \u2014 every member not in the session yet, A to Z:</i>",
+        "<span class=\"cpy\">Andrii Kravets <span class=\"mut\">member</span></span> <span class=\"cpy\">Bohdan Moroz <span class=\"mut\">member</span></span> <span class=\"cpy\">Daryna Lysenko <span class=\"mut\">member</span></span> \u2026"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "People (14 people)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Name",
+        "Seat",
+        "Personal link",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Anna <span class=\"mut\">member</span>",
+          "R1 OG",
+          "wide-only::\u2014",
+          "",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Olena <span class=\"mut\">guest</span>",
+          "waiting",
+          "code wide-only::cab.uadebate.com/l/x7k2\u2026",
+          "Copy",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Oleh Bilyk <span class=\"mut\">invited, not accepted yet</span>",
+          "waiting",
+          "wide-only::\u2014",
+          "",
+          "<a href=\"#\">remove</a>"
+        ],
+        [
+          "Oleksii Stroganov <span class=\"mut\">member</span>",
+          "R1 adjudicator",
+          "wide-only::\u2014",
+          "",
+          "<a href=\"#\">remove</a>"
+        ]
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Allocation \u2014 2 room(s), count automatic"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "A room seats nine (eight speakers and an adjudicator), so the room count follows the sign-ups; <b>nobody is placed automatically</b> \u2014 drag people from the tray into the slots, then <b>Start session</b> closes registration and opens these rooms."
+      ]
+    },
+    {
+      "type": "raw",
+      "html": "<div class=\"card\"><div class=\"pad\"><div style=\"border:1px dashed var(--line);border-radius:8px;padding:6px;margin-bottom:6px;font-size:11px;\"><b>Waiting (2)</b> &nbsp; <span class=\"cpy\">Marko</span> <span class=\"cpy\">Iryna</span></div><table class=\"t alloc\" style=\"table-layout:fixed\"><tr><th style=\"width:30px\"></th><th>OG</th><th>OO</th><th>CG</th><th>CO</th><th>Adjudicator</th><th style=\"width:70px\"></th></tr><tr><td class=\"rk\">R1</td><td class=\"sd og\">Anna <b>SPK</b><br>Bohdan <b>SPK</b></td><td class=\"sd oo\">Daryna <b>SPK</b><br>Olesia <b>SPK</b></td><td class=\"sd cg\">Hlib <b>SPK</b><br>\u25a2</td><td class=\"sd co\">Taras <b>SPK</b><br>\u25a2</td><td>Oleksii Stroganov <b>ADJ</b></td><td class=\"st\">incomplete</td></tr><tr><td class=\"rk\">R2</td><td class=\"sd og\">\u25a2 \u25a2</td><td class=\"sd oo\">\u25a2 \u25a2</td><td class=\"sd cg\">\u25a2 \u25a2</td><td class=\"sd co\">\u25a2 \u25a2</td><td>\u25a2</td><td class=\"st\">empty</td></tr></table><p class=\"mut\">Drag chips into slots; drop on a taken slot to swap; drag a placed chip out of the table to unassign. A team with one speaker becomes an iron. On a touch screen, hold a person and drag them to a slot (the page scrolls at the edges), or tap a person, then a slot.</p></div></div>"
+    },
+    {
+      "type": "note",
+      "text": "Room COUNT = ceil(people \u00f7 9), at least 1. <b>Nobody is placed automatically.</b> Registration carries no role: any chip fits any slot, a placed chip reads SPK in a team and ADJ in the chair, and Start re-roles the chairs in the engine. The five seat columns share the width equally; long names end in an ellipsis. The Allocator hook reports drops (<code>place {id, slot}</code> / <code>unplace {id}</code>); the server keeps the draft (<code>draft_allocation</code>) \u2014 every open owner tab sees the same draft."
+    }
+  ],
+  "api": [
+    "POST rounds/:id/rooms on Start"
+  ]
+}

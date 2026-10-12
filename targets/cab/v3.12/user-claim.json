@@ -1,0 +1,53 @@
+{
+  "id": "user-claim",
+  "title": "/l/:code signed in \u2014 claim a guest history",
+  "column": "user",
+  "order": 5,
+  "path": "GET /l/:code, POST /l/:code/claim",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "anna, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Your guest history",
+    "segs": [
+      {
+        "label": "Not now",
+        "kind": "quiet"
+      },
+      {
+        "label": "Add to my account",
+        "kind": "gold"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "A personal link"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "This personal link belongs to <b>Olena</b>, a guest at Thursday practice in Kyiv Debate Club.",
+        "If that guest was you, add their results to your account. They show on My page under your name, and this link stops working."
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Claiming uses the engine's own one-time claim token (<code>POST users/claim-participant/:pid</code>), presented as the account; the place takes the account's name and a won night is credited to it. The guest's cab account and link are deleted. Another guest identity cannot claim."
+    }
+  ],
+  "api": [
+    "POST users/claim-participant/:pid",
+    "PUT events/:id/participants/:pid"
+  ]
+}

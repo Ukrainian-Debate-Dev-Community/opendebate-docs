@@ -22,6 +22,20 @@ reproducible source of truth for page setups.
   page with a note. Notes are kept in localStorage per platform+version+page, so
   switching never mixes them. **Export notes** downloads
   `<platform>-pages-notes-<version>.json` for the board on screen.
+- **View** (Desktop / Mobile): Desktop draws every frame at its board width, as
+  always. Mobile draws every frame at an iPhone's width (393px) in a thin phone
+  outline. The choice is this viewer's own, kept in localStorage.
+  - Every frame is a CSS container (`container-name: frame`), so a version's phone
+    rules can follow the frame's width rather than the browser window's. They are
+    written as `@container frame (max-width: 500px)`: the app switches to its phone
+    layout below 760px, but board frames are drawn smaller than the screens they
+    stand for (cab's desktop frame is 720px), so the board threshold sits between a
+    desktop frame and a 393px Mobile frame.
+  - Versions with a phone layout set `"phone": true` in their `_version.json`; their
+    table cells then carry the column label (`data-label`) for the phone cards.
+    Today: cab v3.12 and main (uadebate.com) v7.1.
+  - Older versions have no phone rules: in Mobile view they simply render narrow,
+    and in Desktop view they render exactly as before.
 - **Theme**: Auto follows the system; Light and Dark pin it, as in cab.
 - **Frames look like the product**: cab frames use cab's own tokens and component
   rules (`apps/cab/assets/css/app.css` in opendebate) and its Cedarville Cursive
@@ -51,6 +65,7 @@ webdesign/
     uadebate/v5/            v4 where public pages look the same to everyone; signed-in state only in the /manage ribbon
     uadebate/v6/            v5 where clubs are cab's: the directory reads cab, no club editor under /manage
     uadebate/v7/            v6 with the beta tag, theme and language buttons, the admin-only calendar switch, a Ukrainian home
+    uadebate/v7.1/          v7 with its phone layout (Mobile view), the under-construction note and the 9 active branches
     dfu/platform.json       label "dfu (dfu.uadebate.com)", English
     dfu/v1/                 the NGO cabinet, one column per scope as in cab
   dist/                     build output (gitignored)
@@ -82,6 +97,7 @@ The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 | v3.9 | the club profile gains format, language and audience, kept by the club head; GET /clubs lists every club's public profile for other services |
 | v3.10 | a beta tag beside the cab wordmark (sidenav, sign-in panel and form, error page), set by `brandTag` in the version's `_version.json` |
 | v3.11 | an admin invites a club head by e-mail: the head field takes a username or an e-mail (with a name for the invitation), pending invitations with resend and cancel, the invitation e-mail, the sign-in page naming the club, and the page for a link that no longer works |
+| v3.12 | cab on a phone (Mobile view): the sidebar becomes a top bar with the wordmark, the place and a Menu (one page shows it open); the command bar wraps with the gold action first and full width; every table folds into cards (first column the title, rank beside it, label and value lines, actions beside the title; People's personal-link column hidden); the allocator stacks one room per block with finger drag and drop; the ballot reads one team per row. Desktop unchanged, except that accounts are merged by typed username or e-mail, shown only with two accounts or more |
 
 ### main (uadebate.com)
 
@@ -94,6 +110,7 @@ The build also inlines `shared/fonts/cedarville-cursive.woff2` (a copy of cab's)
 | v5 | public pages look the same to everyone, content managers and admins included: they never read the session, so no name, avatar, Edit link, ribbon or private event shows outside /manage; the site header is the same under /manage, and the ribbon there is the one place with the role, the person, View site and Sign out; the content manager's calendar moves to /manage/calendar |
 | v6 | clubs are cab's: the directory and club page read cab's public club API (format, language, audience kept by the club head in cab) and cache it; map points come from a fixed city table; no club editor or club writes under /manage, the ribbon is Overview, News, Calendar |
 | v7 | the wordmark carries a beta tag; next to Cabinet a theme button (auto, light, dark) and a language menu (EN, UA, its own cookie); an admin-only switch keeps the whole calendar private (/calendar shows a calm note, the home page drops the announcement and events, the iCal feed is empty), content managers see a notice; a Ukrainian home page; the API adds GET /locale/:code and the admin calendar switch |
+| v7.1 | uadebate.com on a phone (Mobile view): tables as cards, filter rows scrolling sideways, page heads stacking their buttons, event rows with tags and actions on a second line, the month grid giving way to the list, the menu one scrolling line with a right-edge fade, the /manage ribbon in two rows, 16px form fields; the home page opens with the under-construction note; About shows the 9 active branches |
 
 ### dfu (dfu.uadebate.com)
 
@@ -162,7 +179,7 @@ default the directory name), `order` (switch position), `lang` (the board's
 
 ## Add a version
 
-1. Copy the latest version of the platform: `cp -r targets/cab/v3.11 targets/cab/v3.12`.
+1. Copy the latest version of the platform: `cp -r targets/cab/v3.12 targets/cab/v3.13`.
 2. Edit the specs (and `_columns.json`): only what actually changed.
 3. `bun run test`, and add the version's own checks to `check.ts`.
 
