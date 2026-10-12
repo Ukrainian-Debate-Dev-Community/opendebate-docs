@@ -134,8 +134,15 @@ function columnsOf(v: Version): string[] {
 // HTML of every older version stays exactly as it was
 let LABEL_CELLS = false;
 // a cell carries its column's label, so a phone frame can fold the row into a card
+// a header label as plain text: tags stripped until none are left
+function plain(html: string): string {
+  let out = html;
+  for (let prev = ""; prev !== out; ) { prev = out; out = out.replace(/<[^>]*>/g, ""); }
+  return out;
+}
+
 function cell(raw: string, label?: string): string {
-  const lab = label === undefined ? "" : ` data-label="${escAttr(label.replace(/<[^>]*>/g, ""))}"`;
+  const lab = label === undefined ? "" : ` data-label="${escAttr(plain(label))}"`;
   const i = raw.indexOf("::");
   if (i > 0) {
     const cls = raw.slice(0, i);
