@@ -1,0 +1,29 @@
+{
+  "id": "pub-terms",
+  "title": "/terms \u2014 terms of use (document)",
+  "column": "public",
+  "order": 8,
+  "path": "GET /terms",
+  "nav": {
+    "items": [
+      "Clubs",
+      "Standings"
+    ],
+    "active": null,
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Terms",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "raw",
+      "html": "<div style=\"max-width:72ch;margin:0 auto;font-size:11px;line-height:1.55;\"><h1 style=\"font-size:1.2rem;margin:0;\">Terms of use</h1><p class=\"mut\" style=\"margin:2px 0 8px;\">Last updated: 9 October 2026</p><p style=\"margin:0 0 6px;\">cab is a free service of the NGO Debate Federation of Ukraine for running debate clubs and their sessions. By using it you agree to these terms. How we handle personal data is in the <a href=\"#\">Policy</a>.</p><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">1.</span> Accounts and personal links</h3><p style=\"margin:0 0 6px;\">Sign in with your own account and keep it to yourself. A personal guest link is your access to one session: anyone holding it acts as you, so share it with no one.</p><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">2.</span> Club heads</h3><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">3.</span> Fair use</h3><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">4.</span> Results</h3><p style=\"margin:0 0 6px;\">Ballots and results are the record of a debate. Once a session is finished they stay, including in standings.</p><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">5.</span> Beta</h3><h3 style=\"font-size:.85rem;margin:10px 0 4px;\"><span style=\"color:var(--brand)\">6.</span> Changes and law</h3><p style=\"margin:0 0 6px;\">Questions: ngo.dfu@uadebate.com. Support: support@uadebate.com.</p></div>"
+    },
+    {
+      "type": "note",
+      "text": "Same document layout as the Policy; linked from the footer and from the sign-in page."
+    }
+  ]
+}

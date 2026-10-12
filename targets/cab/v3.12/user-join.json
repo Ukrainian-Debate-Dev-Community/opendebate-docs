@@ -1,0 +1,43 @@
+{
+  "id": "user-join",
+  "title": "/c/:club/join \u2014 join request",
+  "column": "user",
+  "order": 6,
+  "path": "GET/POST /c/:club/join",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Club",
+    "profile": "anna, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Join",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Join request"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "<b>Join Kyiv Debate Club</b>",
+        "<p class=\"mut\">The club head reads your answers before approving.</p>",
+        "About me <span class=\"mut\">\u2014 Who you are and why you want to debate here.</span>",
+        "Contact <span class=\"mut\">\u2014 Telegram, phone or email the head can reach you at.</span>",
+        "<b>Send request</b> <span class=\"mut\">The club head will review your request.</span>"
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Reached from the gold \"Request to join\" on the club page; the request shows on the head's Members page. A personal-link guest is sent to sign in first."
+    }
+  ]
+}

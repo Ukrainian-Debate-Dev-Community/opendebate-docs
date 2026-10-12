@@ -1,0 +1,79 @@
+{
+  "id": "own-sess-done",
+  "title": "session @ finished",
+  "column": "owner",
+  "order": 14,
+  "path": "GET /c/:club/owner/s/:sess <span class=\"live\">LIVE</span>",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Rooms",
+    "profile": "oleksii-stroganov, Sign out \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Club \u203a Thursday practice \u2014 finished",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Session"
+    },
+    {
+      "type": "card",
+      "lines": [
+        "This session is finished \u2014 results live on the <a href=\"#\">session page</a>.",
+        "Previous sessions live on the <a href=\"#\">club page</a>."
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Feedback"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Room",
+        "Team",
+        "Adjudicator",
+        "Accuracy",
+        "Reasoning",
+        "Average",
+        "Discussion"
+      ],
+      "rows": [
+        [
+          "rk::R1",
+          "Anna &amp; Bohdan",
+          "Petro",
+          "num::8",
+          "num::7",
+          "num::7.5",
+          "The call was right; the reasoning skipped the comparison between closing teams."
+        ],
+        [
+          "rk::R2",
+          "Sofiia &amp; Yurii",
+          "Iryna",
+          "num::9",
+          "num::9",
+          "num::9",
+          "Very clear oral adjudication."
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Feedback closes when the session is finished; the head keeps the full list with the sending teams (read from the engine), and the adjudicators now see theirs, anonymous."
+    }
+  ],
+  "api": [
+    "GET events/:id/feedback"
+  ]
+}

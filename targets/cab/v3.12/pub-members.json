@@ -1,0 +1,58 @@
+{
+  "id": "pub-members",
+  "title": "/c/:club/members \u2014 roster",
+  "column": "public",
+  "order": 12,
+  "path": "GET /c/:club/members",
+  "nav": {
+    "items": [
+      "Club",
+      "Rooms",
+      "Standings",
+      "Members",
+      "Register"
+    ],
+    "context": "Kyiv Debate Club",
+    "active": "Members",
+    "profile": "Sign in \u25d0 EN"
+  },
+  "chrome": {
+    "crumb": "Kyiv Debate Club \u203a Members",
+    "segs": []
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Members (11)"
+    },
+    {
+      "type": "table",
+      "head": [
+        "Member",
+        "Role",
+        "Since"
+      ],
+      "rows": [
+        [
+          "oleksii-stroganov <span class=\"mut\">Oleksii Stroganov</span>",
+          "head",
+          "9 Oct 2026"
+        ],
+        [
+          "olena-kovalenko <span class=\"mut\">Olena Kovalenko</span>",
+          "member",
+          "9 Oct 2026"
+        ],
+        [
+          "taras-shevchuk <span class=\"mut\">Taras Shevchuk</span>",
+          "member",
+          "9 Oct 2026"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "text": "Public for a public club. A private club keeps its roster for members \u2014 outsiders lose the sidebar item, signed-out visitors land on /signin, others get 403. Empty: \"No members yet.\""
+    }
+  ]
+}
